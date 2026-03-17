@@ -2,13 +2,58 @@
 <html>
 <head>
 <title>Nikhil Website</title>
-<link rel="stylesheet" href="style.css">
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:linear-gradient(120deg,#4facfe,#00f2fe);
+color:white;
+text-align:center;
+}
+
+nav{
+display:flex;
+justify-content:space-between;
+padding:20px 50px;
+background:rgba(0,0,0,0.2);
+}
+
+ul{
+display:flex;
+list-style:none;
+gap:20px;
+}
+
+.hero{
+margin-top:100px;
+}
+
+button{
+padding:12px 25px;
+border:none;
+background:white;
+color:black;
+font-size:16px;
+cursor:pointer;
+border-radius:5px;
+}
+
+button:hover{
+background:black;
+color:white;
+}
+
+</style>
+
 </head>
 
 <body>
 
 <nav>
-<h2>Nikhil Website</h2>
+
+<h2>Nikhil</h2>
 
 <ul>
 <li>Home</li>
@@ -18,30 +63,17 @@
 
 </nav>
 
-<section class="hero">
+<div class="hero">
 
-<h1>Hello, I am Nikhil 👋</h1>
+<h1>Hello 👋 I am Nikhil</h1>
+
 <p>I am learning Web Development</p>
 
-<button onclick="showMessage()">Contact Me</button>
+<button onclick="alert('Thanks for visiting my website 🚀')">
+Contact Me
+</button>
 
-</section>
-
-<section class="about">
-
-<h2>About Me</h2>
-<p>This is my first website.</p>
-
-<img src="myphoto.jpg" width="200">
-
-<a href="https://instagram.com">Instagram</a>
-<a href="https://linkedin.com">LinkedIn</a>
-
-
-
-</section>
-
-<script src="script.js"></script>
+</div>
 
 </body>
 </html>
