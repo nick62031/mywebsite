@@ -1,61 +1,111 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Nikhil Portfolio</title>
+<title>Nikhil Website</title>
 
 <style>
 
-body{
+*{
 margin:0;
-font-family:Arial;
-background:linear-gradient(120deg,#4facfe,#00f2fe);
-color:white;
-text-align:center;
+padding:0;
+box-sizing:border-box;
+font-family:-apple-system,BlinkMacSystemFont,Arial;
+}
+
+body{
+background:linear-gradient(to bottom,#ffffff,#f5f5f7);
+color:#111;
 }
 
 nav{
 display:flex;
 justify-content:space-between;
-padding:20px 40px;
-background:rgba(0,0,0,0.2);
+padding:20px 80px;
+background:white;
+box-shadow:0 2px 10px rgba(0,0,0,0.05);
 }
 
-ul{
+nav ul{
 display:flex;
+gap:25px;
 list-style:none;
-gap:20px;
+}
+
+nav li{
+cursor:pointer;
+color:#666;
+}
+
+nav li:hover{
+color:black;
 }
 
 .hero{
-margin-top:80px;
+text-align:center;
+padding:150px 20px;
 }
 
-img{
-width:150px;
-border-radius:50%;
-margin-top:20px;
+.hero h1{
+font-size:60px;
+font-weight:600;
 }
 
-button{
-padding:12px 25px;
+.hero p{
+margin-top:15px;
+font-size:22px;
+color:#555;
+}
+
+.btn{
+margin-top:30px;
+padding:14px 35px;
+background:#0071e3;
+color:white;
 border:none;
-background:white;
-color:black;
+border-radius:30px;
 font-size:16px;
 cursor:pointer;
-border-radius:5px;
+transition:0.3s;
 }
 
-button:hover{
-background:black;
-color:white;
+.btn:hover{
+background:#005edb;
+transform:scale(1.05);
 }
 
-.social a{
-color:white;
-margin:10px;
-text-decoration:none;
-font-size:18px;
+.section{
+padding:100px 20px;
+text-align:center;
+}
+
+.cards{
+display:flex;
+justify-content:center;
+gap:30px;
+flex-wrap:wrap;
+margin-top:50px;
+}
+
+.card{
+width:260px;
+padding:35px;
+background:rgba(255,255,255,0.7);
+backdrop-filter:blur(10px);
+border-radius:15px;
+box-shadow:0 10px 25px rgba(0,0,0,0.1);
+transition:0.3s;
+}
+
+.card:hover{
+transform:translateY(-10px);
+}
+
+.footer{
+margin-top:80px;
+padding:30px;
+background:#f5f5f7;
+text-align:center;
+color:#666;
 }
 
 </style>
@@ -71,6 +121,7 @@ font-size:18px;
 <ul>
 <li>Home</li>
 <li>About</li>
+<li>Skills</li>
 <li>Contact</li>
 </ul>
 
@@ -78,27 +129,52 @@ font-size:18px;
 
 <div class="hero">
 
-<h1>Hello 👋 I am Nikhil</h1>
+<h1>Welcome to My Website</h1>
 
-<p>Beginner Web Developer</p>
+<p>I build modern websites</p>
 
-<img src="https://picsum.photos/200">
-
-<p>I am learning website development.</p>
-
-<button onclick="alert('Email: nikhil@example.com')">
-Contact Me
+<button class="btn" onclick="alert('Welcome to my website')">
+Explore
 </button>
 
-<div class="social">
+</div>
 
-<p>Follow me:</p>
+<div class="section">
 
-<a href="#">Instagram</a>
-<a href="#">YouTube</a>
-<a href="#">LinkedIn</a>
+<h2>About Me</h2>
+
+<p>I am learning web development and building cool websites.</p>
 
 </div>
+
+<div class="section">
+
+<h2>My Skills</h2>
+
+<div class="cards">
+
+<div class="card">
+<h3>HTML</h3>
+<p>Structure of website</p>
+</div>
+
+<div class="card">
+<h3>CSS</h3>
+<p>Design and styling</p>
+</div>
+
+<div class="card">
+<h3>JavaScript</h3>
+<p>Website interaction</p>
+</div>
+
+</div>
+
+</div>
+
+<div class="footer">
+
+<p>© 2026 Nikhil | All Rights Reserved</p>
 
 </div>
 
