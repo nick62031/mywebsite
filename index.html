@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <title>Nikhil Website</title>
 
 <style>
@@ -9,36 +10,44 @@
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:-apple-system,BlinkMacSystemFont,Arial;
+font-family:-apple-system,BlinkMacSystemFont,Segoe UI;
 }
 
 body{
-background:linear-gradient(to bottom,#ffffff,#f5f5f7);
-color:#111;
+background:#0f0f0f;
+color:white;
 }
+
+/* Navbar */
 
 nav{
 display:flex;
 justify-content:space-between;
 padding:20px 80px;
-background:white;
-box-shadow:0 2px 10px rgba(0,0,0,0.05);
+background:#111;
+align-items:center;
+}
+
+nav h2{
+color:white;
 }
 
 nav ul{
 display:flex;
-gap:25px;
+gap:30px;
 list-style:none;
 }
 
 nav li{
 cursor:pointer;
-color:#666;
+color:#aaa;
 }
 
 nav li:hover{
-color:black;
+color:white;
 }
+
+/* Hero */
 
 .hero{
 text-align:center;
@@ -46,32 +55,35 @@ padding:150px 20px;
 }
 
 .hero h1{
-font-size:60px;
-font-weight:600;
+font-size:65px;
+background:linear-gradient(90deg,#00c6ff,#0072ff);
+-webkit-background-clip:text;
+color:transparent;
 }
 
 .hero p{
-margin-top:15px;
+margin-top:20px;
 font-size:22px;
-color:#555;
+color:#bbb;
 }
 
 .btn{
-margin-top:30px;
-padding:14px 35px;
-background:#0071e3;
-color:white;
+margin-top:35px;
+padding:14px 40px;
 border:none;
 border-radius:30px;
-font-size:16px;
+font-size:17px;
 cursor:pointer;
+background:linear-gradient(90deg,#00c6ff,#0072ff);
+color:white;
 transition:0.3s;
 }
 
 .btn:hover{
-background:#005edb;
-transform:scale(1.05);
+transform:scale(1.1);
 }
+
+/* Sections */
 
 .section{
 padding:100px 20px;
@@ -81,31 +93,31 @@ text-align:center;
 .cards{
 display:flex;
 justify-content:center;
-gap:30px;
 flex-wrap:wrap;
+gap:35px;
 margin-top:50px;
 }
 
 .card{
-width:260px;
+background:#1a1a1a;
 padding:35px;
-background:rgba(255,255,255,0.7);
-backdrop-filter:blur(10px);
+width:260px;
 border-radius:15px;
-box-shadow:0 10px 25px rgba(0,0,0,0.1);
 transition:0.3s;
+box-shadow:0 10px 25px rgba(0,0,0,0.4);
 }
 
 .card:hover{
 transform:translateY(-10px);
 }
 
+/* Footer */
+
 .footer{
-margin-top:80px;
-padding:30px;
-background:#f5f5f7;
+padding:35px;
 text-align:center;
-color:#666;
+background:#111;
+color:#aaa;
 }
 
 </style>
@@ -129,12 +141,12 @@ color:#666;
 
 <div class="hero">
 
-<h1>Welcome to My Website</h1>
+<h1>Build Amazing Websites</h1>
 
-<p>I build modern websites</p>
+<p>Modern Web Developer</p>
 
 <button class="btn" onclick="alert('Welcome to my website')">
-Explore
+Get Started
 </button>
 
 </div>
@@ -143,7 +155,7 @@ Explore
 
 <h2>About Me</h2>
 
-<p>I am learning web development and building cool websites.</p>
+<p>I create modern and fast websites.</p>
 
 </div>
 
@@ -155,12 +167,12 @@ Explore
 
 <div class="card">
 <h3>HTML</h3>
-<p>Structure of website</p>
+<p>Website structure</p>
 </div>
 
 <div class="card">
 <h3>CSS</h3>
-<p>Design and styling</p>
+<p>Design and layout</p>
 </div>
 
 <div class="card">
@@ -174,9 +186,13 @@ Explore
 
 <div class="footer">
 
-<p>© 2026 Nikhil | All Rights Reserved</p>
+<p>© 2026 Nikhil Website</p>
 
 </div>
 
 </body>
 </html>
+
+
+
+
