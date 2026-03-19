@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Merge PDF</title>
+
+<style>
+body{
+margin:0;
+font-family:sans-serif;
+background:linear-gradient(to right,#000428,#004e92);
+color:white;
+}
+
+/* Back Button */
+.back{
+position:absolute;
+top:20px;
+left:20px;
+text-decoration:none;
+color:white;
+background:linear-gradient(90deg,#00c6ff,#0072ff);
+padding:10px 20px;
+border-radius:25px;
+}
+
+/* Center Container */
+.container{
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+height:100vh;
+gap:20px;
+}
+
+/* Title */
+h1{
+color:#00c6ff;
+}
+
+/* Upload Box */
+.drop{
+border:2px dashed #00c6ff;
+padding:40px;
+border-radius:15px;
+cursor:pointer;
+}
+
+/* Button */
+button{
+padding:12px 25px;
+border:none;
+border-radius:25px;
+background:linear-gradient(90deg,#00c6ff,#0072ff);
+color:white;
+cursor:pointer;
+}
+</style>
+
+</head>
+
+<body>
+
+<a href="index.html" class="back">⬅ Back</a>
+
+<div class="container">
+
+<h1>Merge PDF</h1>
+
+<!-- FILE INPUT -->
+<input type="file" id="file" multiple>
+
+<!-- BUTTON -->
+<button onclick="mergePDF()">Merge & Download</button>
+
+</div>
+
+<script>
+async function mergePDF() {
+
+    const files = document.getElementById("file").files;
+
+    if(files.length < 2){
+        alert("2 PDF select karo");
+        return;
+    }
+
+    const formData = new FormData();
+
+    for (let i = 0; i < files.length; i++) {
+        formData.append("files", files[i]);
+    }
+
+    const response = await fetch("http://localhost:3000/merge", {
+        method: "POST",
+        body: formData
+    });
+
+    const blob = await response.blob();
+
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "merged.pdf";
+    link.click();
+}
+</script>
+
+</body>
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Merge PDF</title>
+
+<style>
+body{
+margin:0;
+font-family:sans-serif;
+background:linear-gradient(to right,#000428,#004e92);
+color:white;
+}
+
+/* Back Button */
+.back{
+position:absolute;
+top:20px;
+left:20px;
+text-decoration:none;
+color:white;
+background:linear-gradient(90deg,#00c6ff,#0072ff);
+padding:10px 20px;
+border-radius:25px;
+}
+
+/* Center Container */
+.container{
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+height:100vh;
+gap:20px;
+}
+
+/* Title */
+h1{
+color:#00c6ff;
+}
+
+/* Upload Box */
+.drop{
+border:2px dashed #00c6ff;
+padding:40px;
+border-radius:15px;
+cursor:pointer;
+}
+
+/* Button */
+button{
+padding:12px 25px;
+border:none;
+border-radius:25px;
+background:linear-gradient(90deg,#00c6ff,#0072ff);
+color:white;
+cursor:pointer;
+}
+</style>
+
+</head>
+
+<body>
+
+<a href="index.html" class="back">⬅ Back</a>
+
+<div class="container">
+
+<h1>Merge PDF</h1>
+
+<!-- FILE INPUT -->
+<input type="file" id="file" multiple>
+
+<!-- BUTTON -->
+<button onclick="mergePDF()">Merge & Download</button>
+
+</div>
+
+<script>
+async function mergePDF() {
+
+    const files = document.getElementById("file").files;
+
+    if(files.length < 2){
+        alert("2 PDF select karo");
+        return;
+    }
+
+    const formData = new FormData();
+
+    for (let i = 0; i < files.length; i++) {
+        formData.append("files", files[i]);
+    }
+
+    const response = await fetch("http://localhost:3000/merge", {
+        method: "POST",
+        body: formData
+    });
+
+    const blob = await response.blob();
+
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "merged.pdf";
+    link.click();
+}
+</script>
+
+</body>
+</html>
+
