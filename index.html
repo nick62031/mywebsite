@@ -1,96 +1,688 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Free PDF Tools</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AKR Firm Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0f1e;
+      --surface: #111827;
+      --surface2: #1a2236;
+      --border: rgba(99, 179, 237, 0.15);
+      --accent: #63b3ed;
+      --accent2: #76e4f7;
+      --gold: #f6c90e;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --success: #48bb78;
+      --danger: #fc8181;
+      --warning: #f6ad55;
+      --gst: #7c3aed;
+      --tax: #0891b2;
+      --acc: #047857;
+    }
 
-<style>
-body{
-margin:0;
-font-family:sans-serif;
-background:linear-gradient(to right,#000428,#004e92);
-color:white;
-}
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-/* Title */
-h1{
-text-align:center;
-margin-top:50px;
-font-size:40px;
-color:#00c6ff;
-}
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
 
-/* Cards Container */
-.tools{
-display:flex;
-justify-content:center;
-flex-wrap:wrap;
-gap:30px;
-margin-top:50px;
-}
+    /* TOP NAV */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 40px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
 
-/* Card Design */
-.card{
-background:rgba(255,255,255,0.05);
-padding:30px;
-width:220px;
-border-radius:20px;
-text-align:center;
-backdrop-filter:blur(12px);
-border:1px solid rgba(255,255,255,0.1);
-transition:0.3s;
-}
+    .nav-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      color: var(--accent2);
+      letter-spacing: 0.5px;
+    }
 
-.card:hover{
-transform:translateY(-8px);
-box-shadow:0 10px 30px rgba(0,0,0,0.5);
-}
+    .nav-brand span {
+      color: var(--gold);
+    }
 
-/* Button */
-.card button{
-margin-top:15px;
-padding:10px 20px;
-border:none;
-border-radius:25px;
-background:linear-gradient(90deg,#00c6ff,#0072ff);
-color:white;
-cursor:pointer;
-}
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
 
-/* Remove extra content issue */
-.page{
-max-width:1200px;
-margin:auto;
-}
-</style>
+    .nav-badge {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      color: var(--muted);
+    }
 
+    .logout-btn {
+      padding: 8px 20px;
+      background: transparent;
+      border: 1px solid var(--danger);
+      color: var(--danger);
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 13px;
+      font-family: 'DM Sans', sans-serif;
+      transition: all 0.2s;
+    }
+    .logout-btn:hover { background: var(--danger); color: white; }
+
+    /* MAIN LAYOUT */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 36px 24px;
+    }
+
+    /* STATS ROW */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-bottom: 36px;
+    }
+
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+      cursor: pointer;
+      transition: all 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+    }
+
+    .stat-card.gst::before { background: linear-gradient(90deg, var(--gst), #a78bfa); }
+    .stat-card.tax::before { background: linear-gradient(90deg, var(--tax), var(--accent2)); }
+    .stat-card.acc::before { background: linear-gradient(90deg, var(--acc), #34d399); }
+
+    .stat-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(99, 179, 237, 0.35);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+    }
+
+    .stat-icon {
+      font-size: 28px;
+      margin-bottom: 12px;
+    }
+
+    .stat-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 17px;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .stat-sub {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+
+    .stat-count {
+      font-size: 32px;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .stat-count span {
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 400;
+      margin-left: 4px;
+    }
+
+    .open-btn {
+      margin-top: 14px;
+      padding: 7px 16px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      border: 1px solid;
+      transition: all 0.2s;
+      font-weight: 500;
+    }
+
+    .gst .open-btn { border-color: var(--gst); color: var(--gst); background: transparent; }
+    .gst .open-btn:hover { background: var(--gst); color: white; }
+    .tax .open-btn { border-color: var(--tax); color: var(--tax); background: transparent; }
+    .tax .open-btn:hover { background: var(--tax); color: white; }
+    .acc .open-btn { border-color: var(--acc); color: var(--acc); background: transparent; }
+    .acc .open-btn:hover { background: var(--acc); color: white; }
+
+    /* SECTION PANELS */
+    .panel {
+      display: none;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 28px;
+      margin-bottom: 28px;
+      animation: slideIn 0.25s ease;
+    }
+    .panel.active { display: block; }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .panel-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+    }
+
+    .close-panel {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 13px;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .close-panel:hover { border-color: var(--danger); color: var(--danger); }
+
+    .panel-clients {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 14px;
+    }
+
+    .mini-client {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+    }
+
+    .mini-client h4 { font-size: 15px; margin-bottom: 4px; }
+    .mini-client p { font-size: 12px; color: var(--muted); }
+
+    /* ADD CLIENT FORM */
+    .form-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 28px;
+      margin-bottom: 28px;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      margin-bottom: 20px;
+      color: var(--text);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr auto;
+      gap: 12px;
+      align-items: end;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 11px 14px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 14px;
+      font-family: 'DM Sans', sans-serif;
+      transition: border-color 0.2s;
+    }
+
+    .form-group input:focus, .form-group select:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .form-group select option { background: var(--surface2); }
+
+    .add-btn {
+      padding: 11px 24px;
+      background: var(--accent);
+      color: var(--bg);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 14px;
+      font-family: 'DM Sans', sans-serif;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .add-btn:hover { background: var(--accent2); transform: translateY(-1px); }
+
+    /* CLIENT LIST */
+    .clients-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 28px;
+    }
+
+    .clients-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .search-box {
+      padding: 9px 14px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 13px;
+      font-family: 'DM Sans', sans-serif;
+      width: 220px;
+    }
+    .search-box:focus { outline: none; border-color: var(--accent); }
+
+    .client-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .client-table th {
+      text-align: left;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--muted);
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .client-table td {
+      padding: 14px;
+      font-size: 14px;
+      border-bottom: 1px solid rgba(99, 179, 237, 0.07);
+    }
+
+    .client-table tr:hover td { background: var(--surface2); }
+
+    .work-badge {
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 500;
+    }
+
+    .badge-gst { background: rgba(124,58,237,0.2); color: #a78bfa; }
+    .badge-tax { background: rgba(8,145,178,0.2); color: var(--accent2); }
+    .badge-acc { background: rgba(4,120,87,0.2); color: #34d399; }
+    .badge-other { background: rgba(246,201,14,0.2); color: var(--gold); }
+
+    .action-btn {
+      padding: 5px 11px;
+      border-radius: 5px;
+      border: none;
+      cursor: pointer;
+      font-size: 12px;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 500;
+      transition: opacity 0.2s;
+    }
+    .action-btn:hover { opacity: 0.8; }
+    .btn-del { background: rgba(252,129,129,0.15); color: var(--danger); }
+    .btn-del:hover { background: var(--danger); color: white; }
+
+    /* EMPTY STATE */
+    .empty-state {
+      text-align: center;
+      padding: 50px 20px;
+      color: var(--muted);
+    }
+    .empty-state div { font-size: 36px; margin-bottom: 10px; }
+
+    /* LOADING */
+    .loading {
+      text-align: center;
+      padding: 30px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    /* TOAST */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      padding: 14px 22px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 500;
+      z-index: 9999;
+      animation: fadeUp 0.3s ease;
+      display: none;
+    }
+    .toast.success { background: var(--success); color: white; }
+    .toast.error { background: var(--danger); color: white; }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .stats-row { grid-template-columns: 1fr; }
+      .form-grid { grid-template-columns: 1fr; }
+      nav { padding: 14px 20px; }
+      .container { padding: 20px 16px; }
+    }
+  </style>
 </head>
-
 <body>
 
-<div class="page">
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">AKR <span>Firm</span></div>
+  <div class="nav-right">
+    <div class="nav-badge" id="totalBadge">Loading...</div>
+    <button class="logout-btn" onclick="logout()">Logout</button>
+  </div>
+</nav>
 
-<h1>Free PDF Tools</h1>
+<div class="container">
 
-<div class="tools">
+  <!-- STATS CARDS -->
+  <div class="stats-row">
+    <div class="stat-card gst" onclick="togglePanel('gst')">
+      <div class="stat-icon">🧾</div>
+      <div class="stat-title">GST Work</div>
+      <div class="stat-sub">GSTR-1, GSTR-3B Filing</div>
+      <div class="stat-count" id="gst-count">0 <span>clients</span></div>
+      <button class="open-btn">View Clients →</button>
+    </div>
+    <div class="stat-card tax" onclick="togglePanel('tax')">
+      <div class="stat-icon">📋</div>
+      <div class="stat-title">Income Tax</div>
+      <div class="stat-sub">ITR Filing & Notices</div>
+      <div class="stat-count" id="tax-count">0 <span>clients</span></div>
+      <button class="open-btn">View Clients →</button>
+    </div>
+    <div class="stat-card acc" onclick="togglePanel('acc')">
+      <div class="stat-icon">📒</div>
+      <div class="stat-title">Accounting</div>
+      <div class="stat-sub">Tally & Bookkeeping</div>
+      <div class="stat-count" id="acc-count">0 <span>clients</span></div>
+      <button class="open-btn">View Clients →</button>
+    </div>
+  </div>
 
-<div class="card">
-<h3>Merge PDF</h3>
-<a href="merge.html"><button>Open Tool</button></a>
+  <!-- GST PANEL -->
+  <div class="panel" id="panel-gst">
+    <div class="panel-header">
+      <div class="panel-title">🧾 GST Clients</div>
+      <button class="close-panel" onclick="togglePanel('gst')">✕ Close</button>
+    </div>
+    <div class="panel-clients" id="gst-clients"></div>
+  </div>
+
+  <!-- TAX PANEL -->
+  <div class="panel" id="panel-tax">
+    <div class="panel-header">
+      <div class="panel-title">📋 Income Tax Clients</div>
+      <button class="close-panel" onclick="togglePanel('tax')">✕ Close</button>
+    </div>
+    <div class="panel-clients" id="tax-clients"></div>
+  </div>
+
+  <!-- ACCOUNTING PANEL -->
+  <div class="panel" id="panel-acc">
+    <div class="panel-header">
+      <div class="panel-title">📒 Accounting Clients</div>
+      <button class="close-panel" onclick="togglePanel('acc')">✕ Close</button>
+    </div>
+    <div class="panel-clients" id="acc-clients"></div>
+  </div>
+
+  <!-- ADD CLIENT FORM -->
+  <div class="form-section">
+    <div class="section-title">Add New Client</div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Client Name</label>
+        <input id="name" placeholder="e.g. Nikhil Kumar">
+      </div>
+      <div class="form-group">
+        <label>GST Number</label>
+        <input id="gst" placeholder="e.g. 22AAAAA0000A1Z5">
+      </div>
+      <div class="form-group">
+        <label>Work Type</label>
+        <select id="work">
+          <option value="">Select Work</option>
+          <option value="GST">GST</option>
+          <option value="Income Tax">Income Tax</option>
+          <option value="Accounting">Accounting</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      <button class="add-btn" onclick="addClient()">+ Add Client</button>
+    </div>
+  </div>
+
+  <!-- ALL CLIENTS TABLE -->
+  <div class="clients-section">
+    <div class="clients-header">
+      <div class="section-title" style="margin:0">All Clients</div>
+      <input class="search-box" id="searchBox" placeholder="🔍 Search clients..." oninput="filterClients()">
+    </div>
+    <div id="clientList">
+      <div class="loading">Loading clients...</div>
+    </div>
+  </div>
+
 </div>
 
-<div class="card">
-<h3>Split PDF</h3>
-<button>Open Tool</button>
-</div>
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
 
-<div class="card">
-<h3>Compress PDF</h3>
-<button>Open Tool</button>
-</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL = "https://nmcbfoaxrvjbftmvhvoy.supabase.co";
+  const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5tY2Jmb2F4cnZqYmZ0bXZodm95Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0NTQzOTEsImV4cCI6MjA5MDAzMDM5MX0.OVCATohsv-lKyOoyaa5tiy_PdoJfNIiEhJyrY93zAko";
+  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-</div>
+  let allClients = [];
 
-</div>
+  // TOAST
+  function showToast(msg, type = 'success') {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.className = `toast ${type}`;
+    t.style.display = 'block';
+    setTimeout(() => t.style.display = 'none', 3000);
+  }
 
+  // TOGGLE PANELS
+  function togglePanel(type) {
+    const panel = document.getElementById(`panel-${type}`);
+    const isOpen = panel.classList.contains('active');
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    if (!isOpen) {
+      panel.classList.add('active');
+      renderPanel(type);
+    }
+  }
+
+  // RENDER PANEL CLIENTS
+  function renderPanel(type) {
+    const map = { gst: 'GST', tax: 'Income Tax', acc: 'Accounting' };
+    const filtered = allClients.filter(c => c.work === map[type]);
+    const container = document.getElementById(`${type}-clients`);
+    if (filtered.length === 0) {
+      container.innerHTML = `<div style="color:var(--muted);font-size:14px;padding:10px;">No clients for this category.</div>`;
+      return;
+    }
+    container.innerHTML = filtered.map(c => `
+      <div class="mini-client">
+        <h4>${c.name}</h4>
+        <p>${c.gst || 'No GST'}</p>
+      </div>
+    `).join('');
+  }
+
+  // ADD CLIENT
+  async function addClient() {
+    const name = document.getElementById("name").value.trim();
+    const gst = document.getElementById("gst").value.trim();
+    const work = document.getElementById("work").value;
+
+    if (!name || !work) { showToast("Name aur Work Type required hai!", "error"); return; }
+
+    const { error } = await supabase.from("clients").insert([{ name, gst, work }]);
+    if (error) { showToast("Error: " + error.message, "error"); return; }
+
+    document.getElementById("name").value = "";
+    document.getElementById("gst").value = "";
+    document.getElementById("work").value = "";
+    showToast("✅ Client added successfully!");
+    getClients();
+  }
+
+  // GET CLIENTS
+  async function getClients() {
+    const { data, error } = await supabase.from("clients").select("*").order("id", { ascending: false });
+    if (error) { showToast("Data load error!", "error"); return; }
+
+    allClients = data || [];
+    updateStats();
+    renderTable(allClients);
+  }
+
+  // UPDATE STATS
+  function updateStats() {
+    const gstCount = allClients.filter(c => c.work === 'GST').length;
+    const taxCount = allClients.filter(c => c.work === 'Income Tax').length;
+    const accCount = allClients.filter(c => c.work === 'Accounting').length;
+    document.getElementById('gst-count').innerHTML = `${gstCount} <span>clients</span>`;
+    document.getElementById('tax-count').innerHTML = `${taxCount} <span>clients</span>`;
+    document.getElementById('acc-count').innerHTML = `${accCount} <span>clients</span>`;
+    document.getElementById('totalBadge').textContent = `Total: ${allClients.length} clients`;
+  }
+
+  // RENDER TABLE
+  function renderTable(data) {
+    const container = document.getElementById("clientList");
+    if (data.length === 0) {
+      container.innerHTML = `<div class="empty-state"><div>📂</div>No clients found</div>`;
+      return;
+    }
+
+    const badgeClass = (work) => {
+      if (work === 'GST') return 'badge-gst';
+      if (work === 'Income Tax') return 'badge-tax';
+      if (work === 'Accounting') return 'badge-acc';
+      return 'badge-other';
+    };
+
+    container.innerHTML = `
+      <table class="client-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>GST Number</th>
+            <th>Work Type</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${data.map((c, i) => `
+            <tr>
+              <td style="color:var(--muted)">${i + 1}</td>
+              <td><strong>${c.name}</strong></td>
+              <td style="color:var(--muted);font-size:13px">${c.gst || '—'}</td>
+              <td><span class="work-badge ${badgeClass(c.work)}">${c.work}</span></td>
+              <td><button class="action-btn btn-del" onclick="deleteClient(${c.id})">🗑 Delete</button></td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    `;
+  }
+
+  // DELETE CLIENT
+  async function deleteClient(id) {
+    if (!confirm("Delete this client?")) return;
+    const { error } = await supabase.from("clients").delete().eq("id", id);
+    if (error) { showToast("Delete failed!", "error"); return; }
+    showToast("🗑 Client deleted");
+    getClients();
+  }
+
+  // SEARCH
+  function filterClients() {
+    const q = document.getElementById("searchBox").value.toLowerCase();
+    const filtered = allClients.filter(c =>
+      c.name.toLowerCase().includes(q) ||
+      (c.gst && c.gst.toLowerCase().includes(q)) ||
+      (c.work && c.work.toLowerCase().includes(q))
+    );
+    renderTable(filtered);
+  }
+
+  // LOGOUT
+  function logout() {
+    if (confirm("Logout karna chahte hain?")) {
+      window.location.href = "login.html";
+    }
+  }
+
+  // LOAD
+  getClients();
+</script>
 </body>
 </html>
