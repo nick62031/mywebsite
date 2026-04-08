@@ -1,688 +1,385 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AKR Firm Dashboard</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg: #0a0f1e;
-      --surface: #111827;
-      --surface2: #1a2236;
-      --border: rgba(99, 179, 237, 0.15);
-      --accent: #63b3ed;
-      --accent2: #76e4f7;
-      --gold: #f6c90e;
-      --text: #e2e8f0;
-      --muted: #94a3b8;
-      --success: #48bb78;
-      --danger: #fc8181;
-      --warning: #f6ad55;
-      --gst: #7c3aed;
-      --tax: #0891b2;
-      --acc: #047857;
-    }
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AKR Consultancy Services – Chartered Accountants</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',sans-serif;background:#f9f9f9;color:#1a1a1a;}
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:999;
+  background:#1a3a6b;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:0.9rem 5%;
+  box-shadow:0 2px 8px rgba(0,0,0,0.15);
+}
+.logo-area{display:flex;align-items:center;gap:0.7rem;}
+.logo-box{
+  width:38px;height:38px;background:#e8a020;border-radius:6px;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:1rem;color:#1a3a6b;
+}
+.logo-name{color:#fff;font-weight:700;font-size:1.05rem;line-height:1.2;}
+.logo-name small{display:block;font-size:0.65rem;font-weight:400;color:#c8a84b;letter-spacing:0.08em;}
+.nav-cta{
+  background:#e8a020;color:#1a3a6b;
+  padding:0.5rem 1.2rem;border-radius:5px;
+  font-weight:600;font-size:0.85rem;text-decoration:none;
+}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;}
+.hamburger span{width:22px;height:2px;background:#fff;border-radius:2px;display:block;}
+.nav-links{display:flex;gap:1.5rem;list-style:none;}
+.nav-links a{color:rgba(255,255,255,0.8);text-decoration:none;font-size:0.88rem;font-weight:500;}
+.nav-links a:hover{color:#e8a020;}
 
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-    }
+/* HERO */
+.hero{
+  background:#1a3a6b;
+  padding:6rem 5% 4rem;
+  text-align:center;
+  color:#fff;
+}
+.hero h1{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;line-height:1.2;margin-bottom:1rem;}
+.hero h1 span{color:#e8a020;}
+.hero p{color:rgba(255,255,255,0.7);font-size:1rem;max-width:520px;margin:0 auto 2rem;line-height:1.7;}
+.hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
+.btn-primary{background:#e8a020;color:#1a3a6b;padding:0.8rem 1.8rem;border-radius:5px;font-weight:600;font-size:0.95rem;text-decoration:none;}
+.btn-outline{border:1.5px solid rgba(255,255,255,0.4);color:#fff;padding:0.8rem 1.8rem;border-radius:5px;font-weight:500;font-size:0.95rem;text-decoration:none;}
+.hero-stats{
+  display:flex;justify-content:center;gap:2.5rem;flex-wrap:wrap;
+  margin-top:3rem;padding-top:2rem;border-top:1px solid rgba(255,255,255,0.1);
+}
+.stat h3{font-size:1.6rem;font-weight:700;color:#e8a020;}
+.stat p{font-size:0.8rem;color:rgba(255,255,255,0.6);margin-top:2px;}
 
-    /* TOP NAV */
-    nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 18px 40px;
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
+/* SECTION COMMON */
+section{padding:4rem 5%;}
+.section-label{font-size:0.75rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#e8a020;margin-bottom:0.5rem;}
+.section-title{font-size:clamp(1.5rem,3vw,2rem);font-weight:700;color:#1a3a6b;margin-bottom:0.5rem;}
+.section-sub{color:#555;font-size:0.95rem;line-height:1.7;max-width:540px;margin-bottom:2.5rem;}
 
-    .nav-brand {
-      font-family: 'Playfair Display', serif;
-      font-size: 22px;
-      color: var(--accent2);
-      letter-spacing: 0.5px;
-    }
+/* SERVICES */
+.services{background:#fff;}
+.services-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:1.2rem;
+  margin-top:2rem;
+}
+.service-card{
+  background:#f4f6fa;
+  border:1.5px solid #e0e6f0;
+  border-radius:10px;
+  padding:1.5rem 1.2rem;
+  text-align:center;
+}
+.service-icon{font-size:2rem;margin-bottom:0.8rem;}
+.service-card h3{font-size:1rem;font-weight:600;color:#1a3a6b;margin-bottom:0.4rem;}
+.service-card p{font-size:0.83rem;color:#666;line-height:1.6;}
 
-    .nav-brand span {
-      color: var(--gold);
-    }
+/* WHY US */
+.why{background:#f4f6fa;}
+.why-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.2rem;}
+.why-item{background:#fff;border-radius:10px;padding:1.4rem;border:1px solid #e0e6f0;}
+.why-num{font-size:1.8rem;font-weight:700;color:#e8a020;margin-bottom:0.4rem;}
+.why-item h4{font-size:0.95rem;font-weight:600;color:#1a3a6b;margin-bottom:0.3rem;}
+.why-item p{font-size:0.82rem;color:#666;line-height:1.6;}
 
-    .nav-right {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
+/* REGISTER */
+.register{background:#fff;}
+.register-wrapper{
+  max-width:560px;margin:0 auto;
+  background:#f4f6fa;border-radius:12px;
+  padding:2.5rem 2rem;border:1.5px solid #e0e6f0;
+}
+.register-wrapper h3{font-size:1.2rem;font-weight:700;color:#1a3a6b;margin-bottom:0.3rem;text-align:center;}
+.register-wrapper p{font-size:0.85rem;color:#666;text-align:center;margin-bottom:1.8rem;}
+.form-row{margin-bottom:1rem;}
+.form-row label{display:block;font-size:0.82rem;font-weight:600;color:#333;margin-bottom:0.35rem;}
+.form-row input,.form-row select{
+  width:100%;padding:0.7rem 1rem;
+  border:1.5px solid #d0d9e8;border-radius:6px;
+  font-size:0.9rem;font-family:inherit;background:#fff;color:#1a1a1a;
+  outline:none;
+}
+.form-row input:focus,.form-row select:focus{border-color:#1a3a6b;}
+.btn-register-submit{
+  width:100%;background:#1a3a6b;color:#fff;
+  padding:0.9rem;border:none;border-radius:6px;
+  font-size:0.95rem;font-weight:600;cursor:pointer;margin-top:0.5rem;
+  font-family:inherit;
+}
+.btn-register-submit:hover{background:#14306e;}
+.form-note{font-size:0.75rem;color:#888;text-align:center;margin-top:0.8rem;}
 
-    .nav-badge {
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 13px;
-      color: var(--muted);
-    }
+/* CONTACT */
+.contact{background:#f4f6fa;}
+.contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.2rem;margin-top:2rem;}
+.contact-card{background:#fff;border-radius:10px;padding:1.5rem;border:1px solid #e0e6f0;text-align:center;}
+.contact-icon{font-size:1.6rem;margin-bottom:0.7rem;}
+.contact-card h4{font-size:0.88rem;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.4rem;}
+.contact-card p{font-size:0.95rem;color:#1a3a6b;font-weight:600;line-height:1.6;}
+.contact-card a{color:#1a3a6b;text-decoration:none;}
+.hours{background:#fff;border-radius:10px;padding:1.5rem;border:1px solid #e0e6f0;margin-top:1.2rem;}
+.hours h4{font-size:0.88rem;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:1rem;text-align:center;}
+.hours-row{display:flex;justify-content:space-between;padding:0.45rem 0;border-bottom:1px solid #f0f0f0;font-size:0.9rem;}
+.hours-row:last-child{border-bottom:none;}
+.hours-row span{color:#555;}
+.hours-row strong{color:#1a3a6b;}
 
-    .logout-btn {
-      padding: 8px 20px;
-      background: transparent;
-      border: 1px solid var(--danger);
-      color: var(--danger);
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 13px;
-      font-family: 'DM Sans', sans-serif;
-      transition: all 0.2s;
-    }
-    .logout-btn:hover { background: var(--danger); color: white; }
+/* WHATSAPP */
+.wa-btn{
+  position:fixed;bottom:1.5rem;right:1.5rem;z-index:999;
+  background:#25D366;color:#fff;
+  width:54px;height:54px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 15px rgba(37,211,102,0.4);
+  text-decoration:none;font-size:1.6rem;
+}
 
-    /* MAIN LAYOUT */
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 36px 24px;
-    }
+/* FOOTER */
+footer{
+  background:#1a3a6b;color:rgba(255,255,255,0.7);
+  text-align:center;padding:1.5rem 5%;font-size:0.83rem;
+}
+footer strong{color:#e8a020;}
 
-    /* STATS ROW */
-    .stats-row {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      margin-bottom: 36px;
-    }
+/* TOAST */
+.toast{
+  position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(100px);
+  background:#1a3a6b;color:#fff;
+  padding:0.9rem 1.8rem;border-radius:8px;
+  font-size:0.9rem;font-weight:500;
+  transition:transform 0.3s;z-index:9999;
+  box-shadow:0 4px 20px rgba(0,0,0,0.2);
+}
+.toast.show{transform:translateX(-50%) translateY(0);}
 
-    .stat-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 24px;
-      cursor: pointer;
-      transition: all 0.25s;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .stat-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 3px;
-    }
-
-    .stat-card.gst::before { background: linear-gradient(90deg, var(--gst), #a78bfa); }
-    .stat-card.tax::before { background: linear-gradient(90deg, var(--tax), var(--accent2)); }
-    .stat-card.acc::before { background: linear-gradient(90deg, var(--acc), #34d399); }
-
-    .stat-card:hover {
-      transform: translateY(-3px);
-      border-color: rgba(99, 179, 237, 0.35);
-      box-shadow: 0 12px 40px rgba(0,0,0,0.3);
-    }
-
-    .stat-icon {
-      font-size: 28px;
-      margin-bottom: 12px;
-    }
-
-    .stat-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 17px;
-      color: var(--text);
-      margin-bottom: 4px;
-    }
-
-    .stat-sub {
-      font-size: 13px;
-      color: var(--muted);
-      margin-bottom: 16px;
-    }
-
-    .stat-count {
-      font-size: 32px;
-      font-weight: 600;
-      color: var(--accent);
-    }
-
-    .stat-count span {
-      font-size: 13px;
-      color: var(--muted);
-      font-weight: 400;
-      margin-left: 4px;
-    }
-
-    .open-btn {
-      margin-top: 14px;
-      padding: 7px 16px;
-      border-radius: 6px;
-      font-size: 12px;
-      font-family: 'DM Sans', sans-serif;
-      cursor: pointer;
-      border: 1px solid;
-      transition: all 0.2s;
-      font-weight: 500;
-    }
-
-    .gst .open-btn { border-color: var(--gst); color: var(--gst); background: transparent; }
-    .gst .open-btn:hover { background: var(--gst); color: white; }
-    .tax .open-btn { border-color: var(--tax); color: var(--tax); background: transparent; }
-    .tax .open-btn:hover { background: var(--tax); color: white; }
-    .acc .open-btn { border-color: var(--acc); color: var(--acc); background: transparent; }
-    .acc .open-btn:hover { background: var(--acc); color: white; }
-
-    /* SECTION PANELS */
-    .panel {
-      display: none;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 28px;
-      margin-bottom: 28px;
-      animation: slideIn 0.25s ease;
-    }
-    .panel.active { display: block; }
-
-    @keyframes slideIn {
-      from { opacity: 0; transform: translateY(-10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .panel-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 20px;
-    }
-
-    .panel-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 20px;
-    }
-
-    .close-panel {
-      background: transparent;
-      border: 1px solid var(--border);
-      color: var(--muted);
-      padding: 6px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 13px;
-      font-family: 'DM Sans', sans-serif;
-    }
-    .close-panel:hover { border-color: var(--danger); color: var(--danger); }
-
-    .panel-clients {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 14px;
-    }
-
-    .mini-client {
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 14px 16px;
-    }
-
-    .mini-client h4 { font-size: 15px; margin-bottom: 4px; }
-    .mini-client p { font-size: 12px; color: var(--muted); }
-
-    /* ADD CLIENT FORM */
-    .form-section {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 28px;
-      margin-bottom: 28px;
-    }
-
-    .section-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 20px;
-      margin-bottom: 20px;
-      color: var(--text);
-    }
-
-    .form-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr auto;
-      gap: 12px;
-      align-items: end;
-    }
-
-    .form-group label {
-      display: block;
-      font-size: 12px;
-      color: var(--muted);
-      margin-bottom: 6px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .form-group input, .form-group select {
-      width: 100%;
-      padding: 11px 14px;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      color: var(--text);
-      font-size: 14px;
-      font-family: 'DM Sans', sans-serif;
-      transition: border-color 0.2s;
-    }
-
-    .form-group input:focus, .form-group select:focus {
-      outline: none;
-      border-color: var(--accent);
-    }
-
-    .form-group select option { background: var(--surface2); }
-
-    .add-btn {
-      padding: 11px 24px;
-      background: var(--accent);
-      color: var(--bg);
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: 600;
-      font-size: 14px;
-      font-family: 'DM Sans', sans-serif;
-      transition: all 0.2s;
-      white-space: nowrap;
-    }
-    .add-btn:hover { background: var(--accent2); transform: translateY(-1px); }
-
-    /* CLIENT LIST */
-    .clients-section {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 28px;
-    }
-
-    .clients-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 20px;
-    }
-
-    .search-box {
-      padding: 9px 14px;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      color: var(--text);
-      font-size: 13px;
-      font-family: 'DM Sans', sans-serif;
-      width: 220px;
-    }
-    .search-box:focus { outline: none; border-color: var(--accent); }
-
-    .client-table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    .client-table th {
-      text-align: left;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      color: var(--muted);
-      padding: 10px 14px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .client-table td {
-      padding: 14px;
-      font-size: 14px;
-      border-bottom: 1px solid rgba(99, 179, 237, 0.07);
-    }
-
-    .client-table tr:hover td { background: var(--surface2); }
-
-    .work-badge {
-      padding: 3px 10px;
-      border-radius: 20px;
-      font-size: 11px;
-      font-weight: 500;
-    }
-
-    .badge-gst { background: rgba(124,58,237,0.2); color: #a78bfa; }
-    .badge-tax { background: rgba(8,145,178,0.2); color: var(--accent2); }
-    .badge-acc { background: rgba(4,120,87,0.2); color: #34d399; }
-    .badge-other { background: rgba(246,201,14,0.2); color: var(--gold); }
-
-    .action-btn {
-      padding: 5px 11px;
-      border-radius: 5px;
-      border: none;
-      cursor: pointer;
-      font-size: 12px;
-      font-family: 'DM Sans', sans-serif;
-      font-weight: 500;
-      transition: opacity 0.2s;
-    }
-    .action-btn:hover { opacity: 0.8; }
-    .btn-del { background: rgba(252,129,129,0.15); color: var(--danger); }
-    .btn-del:hover { background: var(--danger); color: white; }
-
-    /* EMPTY STATE */
-    .empty-state {
-      text-align: center;
-      padding: 50px 20px;
-      color: var(--muted);
-    }
-    .empty-state div { font-size: 36px; margin-bottom: 10px; }
-
-    /* LOADING */
-    .loading {
-      text-align: center;
-      padding: 30px;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    /* TOAST */
-    .toast {
-      position: fixed;
-      bottom: 30px;
-      right: 30px;
-      padding: 14px 22px;
-      border-radius: 10px;
-      font-size: 14px;
-      font-weight: 500;
-      z-index: 9999;
-      animation: fadeUp 0.3s ease;
-      display: none;
-    }
-    .toast.success { background: var(--success); color: white; }
-    .toast.error { background: var(--danger); color: white; }
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* RESPONSIVE */
-    @media (max-width: 768px) {
-      .stats-row { grid-template-columns: 1fr; }
-      .form-grid { grid-template-columns: 1fr; }
-      nav { padding: 14px 20px; }
-      .container { padding: 20px 16px; }
-    }
-  </style>
+/* MOBILE */
+@media(max-width:700px){
+  .nav-links,.nav-cta-desktop{display:none;}
+  .hamburger{display:flex;}
+  .nav-links.open{
+    display:flex;flex-direction:column;
+    position:fixed;top:60px;left:0;right:0;
+    background:#1a3a6b;padding:1.5rem 5%;gap:1rem;
+    border-top:1px solid rgba(255,255,255,0.1);
+  }
+  .register-wrapper{padding:1.8rem 1.2rem;}
+}
+</style>
 </head>
 <body>
 
 <!-- NAV -->
 <nav>
-  <div class="nav-brand">AKR <span>Firm</span></div>
-  <div class="nav-right">
-    <div class="nav-badge" id="totalBadge">Loading...</div>
-    <button class="logout-btn" onclick="logout()">Logout</button>
+  <div class="logo-area">
+    <div class="logo-box">AKR</div>
+    <div class="logo-name">AKR Consultancy Services<small>Chartered Accountants</small></div>
   </div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#register">Register</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#register" class="nav-cta nav-cta-desktop">Get Started</a>
+  <button class="hamburger" onclick="toggleNav()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
-<div class="container">
+<!-- HERO -->
+<section class="hero">
+  <h1>Expert CA Services<br>for Your <span>Business Growth</span></h1>
+  <p>GST Filing, ITR, Company Registration, Audit & Bookkeeping — trusted by businesses in Patna since years.</p>
+  <div class="hero-btns">
+    <a href="#register" class="btn-primary">Register as Client</a>
+    <a href="#services" class="btn-outline">Our Services</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><h3>500+</h3><p>Happy Clients</p></div>
+    <div class="stat"><h3>100%</h3><p>On-Time Filing</p></div>
+    <div class="stat"><h3>10+</h3><p>Years Experience</p></div>
+    <div class="stat"><h3>5★</h3><p>Client Rating</p></div>
+  </div>
+</section>
 
-  <!-- STATS CARDS -->
-  <div class="stats-row">
-    <div class="stat-card gst" onclick="togglePanel('gst')">
-      <div class="stat-icon">🧾</div>
-      <div class="stat-title">GST Work</div>
-      <div class="stat-sub">GSTR-1, GSTR-3B Filing</div>
-      <div class="stat-count" id="gst-count">0 <span>clients</span></div>
-      <button class="open-btn">View Clients →</button>
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="section-label">What We Do</div>
+  <h2 class="section-title">Our Services</h2>
+  <p class="section-sub">Complete financial & compliance solutions for businesses and individuals.</p>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">📊</div>
+      <h3>GST Filing</h3>
+      <p>Monthly/quarterly GSTR-1, GSTR-3B filing and GST compliance management.</p>
     </div>
-    <div class="stat-card tax" onclick="togglePanel('tax')">
-      <div class="stat-icon">📋</div>
-      <div class="stat-title">Income Tax</div>
-      <div class="stat-sub">ITR Filing & Notices</div>
-      <div class="stat-count" id="tax-count">0 <span>clients</span></div>
-      <button class="open-btn">View Clients →</button>
+    <div class="service-card">
+      <div class="service-icon">📋</div>
+      <h3>ITR Filing</h3>
+      <p>Income Tax Return filing for individuals, businesses and companies.</p>
     </div>
-    <div class="stat-card acc" onclick="togglePanel('acc')">
-      <div class="stat-icon">📒</div>
-      <div class="stat-title">Accounting</div>
-      <div class="stat-sub">Tally & Bookkeeping</div>
-      <div class="stat-count" id="acc-count">0 <span>clients</span></div>
-      <button class="open-btn">View Clients →</button>
+    <div class="service-card">
+      <div class="service-icon">🏢</div>
+      <h3>Company Registration</h3>
+      <p>Pvt Ltd, LLP, Partnership, Sole Proprietorship — complete registration.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🔍</div>
+      <h3>Audit Services</h3>
+      <p>Statutory audit, tax audit, internal audit for all types of businesses.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">📒</div>
+      <h3>Bookkeeping</h3>
+      <p>Regular accounting, ledger maintenance and financial record keeping.</p>
     </div>
   </div>
+</section>
 
-  <!-- GST PANEL -->
-  <div class="panel" id="panel-gst">
-    <div class="panel-header">
-      <div class="panel-title">🧾 GST Clients</div>
-      <button class="close-panel" onclick="togglePanel('gst')">✕ Close</button>
+<!-- WHY US -->
+<section class="why">
+  <div class="section-label">Why Choose Us</div>
+  <h2 class="section-title">Why Clients Trust AKR</h2>
+  <div class="why-grid">
+    <div class="why-item">
+      <div class="why-num">01</div>
+      <h4>Never Miss a Deadline</h4>
+      <p>We track all your GST, ITR and ROC deadlines so you never pay a late fee.</p>
     </div>
-    <div class="panel-clients" id="gst-clients"></div>
-  </div>
-
-  <!-- TAX PANEL -->
-  <div class="panel" id="panel-tax">
-    <div class="panel-header">
-      <div class="panel-title">📋 Income Tax Clients</div>
-      <button class="close-panel" onclick="togglePanel('tax')">✕ Close</button>
+    <div class="why-item">
+      <div class="why-num">02</div>
+      <h4>Transparent Pricing</h4>
+      <p>Clear fees discussed upfront. No hidden charges, no surprises.</p>
     </div>
-    <div class="panel-clients" id="tax-clients"></div>
-  </div>
-
-  <!-- ACCOUNTING PANEL -->
-  <div class="panel" id="panel-acc">
-    <div class="panel-header">
-      <div class="panel-title">📒 Accounting Clients</div>
-      <button class="close-panel" onclick="togglePanel('acc')">✕ Close</button>
+    <div class="why-item">
+      <div class="why-num">03</div>
+      <h4>Always Reachable</h4>
+      <p>Call, WhatsApp or email — we respond quickly to all your queries.</p>
     </div>
-    <div class="panel-clients" id="acc-clients"></div>
-  </div>
-
-  <!-- ADD CLIENT FORM -->
-  <div class="form-section">
-    <div class="section-title">Add New Client</div>
-    <div class="form-grid">
-      <div class="form-group">
-        <label>Client Name</label>
-        <input id="name" placeholder="e.g. Nikhil Kumar">
-      </div>
-      <div class="form-group">
-        <label>GST Number</label>
-        <input id="gst" placeholder="e.g. 22AAAAA0000A1Z5">
-      </div>
-      <div class="form-group">
-        <label>Work Type</label>
-        <select id="work">
-          <option value="">Select Work</option>
-          <option value="GST">GST</option>
-          <option value="Income Tax">Income Tax</option>
-          <option value="Accounting">Accounting</option>
-          <option value="Other">Other</option>
-        </select>
-      </div>
-      <button class="add-btn" onclick="addClient()">+ Add Client</button>
+    <div class="why-item">
+      <div class="why-num">04</div>
+      <h4>ICAI Registered</h4>
+      <p>Qualified Chartered Accountants registered with ICAI. Your finances are safe.</p>
     </div>
   </div>
+</section>
 
-  <!-- ALL CLIENTS TABLE -->
-  <div class="clients-section">
-    <div class="clients-header">
-      <div class="section-title" style="margin:0">All Clients</div>
-      <input class="search-box" id="searchBox" placeholder="🔍 Search clients..." oninput="filterClients()">
+<!-- REGISTER -->
+<section class="register" id="register">
+  <div style="text-align:center;">
+    <div class="section-label">New Client</div>
+    <h2 class="section-title">Register with Us</h2>
+    <p class="section-sub" style="margin:0 auto 2rem;">Fill this simple form — our team will contact you within 2 hours.</p>
+  </div>
+  <div class="register-wrapper">
+    <h3>New Client Registration</h3>
+    <p>Quick & free — takes less than 1 minute</p>
+    <div class="form-row">
+      <label>Your Full Name *</label>
+      <input type="text" id="reg-name" placeholder="e.g. Ramesh Kumar"/>
     </div>
-    <div id="clientList">
-      <div class="loading">Loading clients...</div>
+    <div class="form-row">
+      <label>Mobile Number *</label>
+      <input type="tel" id="reg-phone" placeholder="e.g. 9876543210"/>
+    </div>
+    <div class="form-row">
+      <label>Service Required *</label>
+      <select id="reg-service">
+        <option value="">-- Select a Service --</option>
+        <option>GST Filing</option>
+        <option>ITR Filing</option>
+        <option>Company Registration</option>
+        <option>Audit Services</option>
+        <option>Bookkeeping</option>
+        <option>Other / Not Sure</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <label>City *</label>
+      <input type="text" id="reg-city" placeholder="e.g. Patna"/>
+    </div>
+    <button class="btn-register-submit" onclick="submitReg()">Submit Registration →</button>
+    <p class="form-note">We will call you within 2 hours · Your data is 100% private</p>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="section-label">Get In Touch</div>
+  <h2 class="section-title">Contact Us</h2>
+  <div class="contact-grid">
+    <div class="contact-card">
+      <div class="contact-icon">📞</div>
+      <h4>Phone</h4>
+      <p><a href="tel:6203130648">6203130648</a></p>
+    </div>
+    <div class="contact-card">
+      <div class="contact-icon">📧</div>
+      <h4>Email</h4>
+      <p><a href="mailto:consultakr@gmail.com">consultakr@gmail.com</a></p>
+    </div>
+    <div class="contact-card">
+      <div class="contact-icon">📍</div>
+      <h4>Address</h4>
+      <p>Front Side of Gate No. 9,<br>Gandhi Maidan, Patna, Bihar</p>
     </div>
   </div>
+  <div class="hours">
+    <h4>Office Hours</h4>
+    <div class="hours-row"><strong>Monday – Friday</strong><span>9:00 AM – 7:00 PM</span></div>
+    <div class="hours-row"><strong>Saturday</strong><span>9:00 AM – 2:00 PM</span></div>
+    <div class="hours-row"><strong>Sunday</strong><span>Closed</span></div>
+  </div>
+</section>
 
-</div>
+<!-- WHATSAPP -->
+<a href="https://wa.me/916203130648" class="wa-btn" target="_blank" title="WhatsApp Us">💬</a>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 <strong>AKR Consultancy Services</strong> · Chartered Accountants · Gandhi Maidan, Patna, Bihar</p>
+  <p style="margin-top:0.4rem;">ICAI Registered Firm · All rights reserved.</p>
+</footer>
 
 <!-- TOAST -->
-<div class="toast" id="toast"></div>
+<div class="toast" id="toast">✅ Registration submitted! We'll call you within 2 hours.</div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-  const SUPABASE_URL = "https://nmcbfoaxrvjbftmvhvoy.supabase.co";
-  const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5tY2Jmb2F4cnZqYmZ0bXZodm95Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0NTQzOTEsImV4cCI6MjA5MDAzMDM5MX0.OVCATohsv-lKyOoyaa5tiy_PdoJfNIiEhJyrY93zAko";
-  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-  let allClients = [];
-
-  // TOAST
-  function showToast(msg, type = 'success') {
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.className = `toast ${type}`;
-    t.style.display = 'block';
-    setTimeout(() => t.style.display = 'none', 3000);
+function toggleNav(){
+  document.getElementById('navLinks').classList.toggle('open');
+}
+function submitReg(){
+  const name=document.getElementById('reg-name').value.trim();
+  const phone=document.getElementById('reg-phone').value.trim();
+  const service=document.getElementById('reg-service').value;
+  const city=document.getElementById('reg-city').value.trim();
+  if(!name||!phone||!service||!city){
+    showToast('⚠️ Please fill all fields before submitting.');
+    return;
   }
-
-  // TOGGLE PANELS
-  function togglePanel(type) {
-    const panel = document.getElementById(`panel-${type}`);
-    const isOpen = panel.classList.contains('active');
-    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-    if (!isOpen) {
-      panel.classList.add('active');
-      renderPanel(type);
-    }
+  if(phone.length<10){
+    showToast('⚠️ Please enter a valid 10-digit mobile number.');
+    return;
   }
-
-  // RENDER PANEL CLIENTS
-  function renderPanel(type) {
-    const map = { gst: 'GST', tax: 'Income Tax', acc: 'Accounting' };
-    const filtered = allClients.filter(c => c.work === map[type]);
-    const container = document.getElementById(`${type}-clients`);
-    if (filtered.length === 0) {
-      container.innerHTML = `<div style="color:var(--muted);font-size:14px;padding:10px;">No clients for this category.</div>`;
-      return;
-    }
-    container.innerHTML = filtered.map(c => `
-      <div class="mini-client">
-        <h4>${c.name}</h4>
-        <p>${c.gst || 'No GST'}</p>
-      </div>
-    `).join('');
-  }
-
-  // ADD CLIENT
-  async function addClient() {
-    const name = document.getElementById("name").value.trim();
-    const gst = document.getElementById("gst").value.trim();
-    const work = document.getElementById("work").value;
-
-    if (!name || !work) { showToast("Name aur Work Type required hai!", "error"); return; }
-
-    const { error } = await supabase.from("clients").insert([{ name, gst, work }]);
-    if (error) { showToast("Error: " + error.message, "error"); return; }
-
-    document.getElementById("name").value = "";
-    document.getElementById("gst").value = "";
-    document.getElementById("work").value = "";
-    showToast("✅ Client added successfully!");
-    getClients();
-  }
-
-  // GET CLIENTS
-  async function getClients() {
-    const { data, error } = await supabase.from("clients").select("*").order("id", { ascending: false });
-    if (error) { showToast("Data load error!", "error"); return; }
-
-    allClients = data || [];
-    updateStats();
-    renderTable(allClients);
-  }
-
-  // UPDATE STATS
-  function updateStats() {
-    const gstCount = allClients.filter(c => c.work === 'GST').length;
-    const taxCount = allClients.filter(c => c.work === 'Income Tax').length;
-    const accCount = allClients.filter(c => c.work === 'Accounting').length;
-    document.getElementById('gst-count').innerHTML = `${gstCount} <span>clients</span>`;
-    document.getElementById('tax-count').innerHTML = `${taxCount} <span>clients</span>`;
-    document.getElementById('acc-count').innerHTML = `${accCount} <span>clients</span>`;
-    document.getElementById('totalBadge').textContent = `Total: ${allClients.length} clients`;
-  }
-
-  // RENDER TABLE
-  function renderTable(data) {
-    const container = document.getElementById("clientList");
-    if (data.length === 0) {
-      container.innerHTML = `<div class="empty-state"><div>📂</div>No clients found</div>`;
-      return;
-    }
-
-    const badgeClass = (work) => {
-      if (work === 'GST') return 'badge-gst';
-      if (work === 'Income Tax') return 'badge-tax';
-      if (work === 'Accounting') return 'badge-acc';
-      return 'badge-other';
-    };
-
-    container.innerHTML = `
-      <table class="client-table">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Name</th>
-            <th>GST Number</th>
-            <th>Work Type</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${data.map((c, i) => `
-            <tr>
-              <td style="color:var(--muted)">${i + 1}</td>
-              <td><strong>${c.name}</strong></td>
-              <td style="color:var(--muted);font-size:13px">${c.gst || '—'}</td>
-              <td><span class="work-badge ${badgeClass(c.work)}">${c.work}</span></td>
-              <td><button class="action-btn btn-del" onclick="deleteClient(${c.id})">🗑 Delete</button></td>
-            </tr>
-          `).join('')}
-        </tbody>
-      </table>
-    `;
-  }
-
-  // DELETE CLIENT
-  async function deleteClient(id) {
-    if (!confirm("Delete this client?")) return;
-    const { error } = await supabase.from("clients").delete().eq("id", id);
-    if (error) { showToast("Delete failed!", "error"); return; }
-    showToast("🗑 Client deleted");
-    getClients();
-  }
-
-  // SEARCH
-  function filterClients() {
-    const q = document.getElementById("searchBox").value.toLowerCase();
-    const filtered = allClients.filter(c =>
-      c.name.toLowerCase().includes(q) ||
-      (c.gst && c.gst.toLowerCase().includes(q)) ||
-      (c.work && c.work.toLowerCase().includes(q))
-    );
-    renderTable(filtered);
-  }
-
-  // LOGOUT
-  function logout() {
-    if (confirm("Logout karna chahte hain?")) {
-      window.location.href = "login.html";
-    }
-  }
-
-  // LOAD
-  getClients();
+  document.getElementById('reg-name').value='';
+  document.getElementById('reg-phone').value='';
+  document.getElementById('reg-service').value='';
+  document.getElementById('reg-city').value='';
+  showToast('✅ Registration done! We will call you within 2 hours.');
+}
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),4000);
+}
 </script>
 </body>
 </html>
