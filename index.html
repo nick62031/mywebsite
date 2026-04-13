@@ -3,203 +3,172 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>AKR Consultancy Services – Chartered Accountants</title>
+<title>AKR Consultancy Services – Chartered Accountants, Patna</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
 body{font-family:'Inter',sans-serif;background:#f9f9f9;color:#1a1a1a;}
-
-/* NAV */
-nav{
-  position:fixed;top:0;left:0;right:0;z-index:999;
-  background:#1a3a6b;
-  display:flex;justify-content:space-between;align-items:center;
-  padding:0.9rem 5%;
-  box-shadow:0 2px 8px rgba(0,0,0,0.15);
-}
+nav{position:fixed;top:0;left:0;right:0;z-index:999;background:#1a3a6b;display:flex;justify-content:space-between;align-items:center;padding:0.9rem 5%;box-shadow:0 2px 8px rgba(0,0,0,0.15);}
 .logo-area{display:flex;align-items:center;gap:0.7rem;}
-.logo-box{
-  width:38px;height:38px;background:#e8a020;border-radius:6px;
-  display:flex;align-items:center;justify-content:center;
-  font-weight:700;font-size:1rem;color:#1a3a6b;
-}
-.logo-name{color:#fff;font-weight:700;font-size:1.05rem;line-height:1.2;}
-.logo-name small{display:block;font-size:0.65rem;font-weight:400;color:#c8a84b;letter-spacing:0.08em;}
-.nav-cta{
-  background:#e8a020;color:#1a3a6b;
-  padding:0.5rem 1.2rem;border-radius:5px;
-  font-weight:600;font-size:0.85rem;text-decoration:none;
-}
+.logo-box{width:38px;height:38px;background:#e8a020;border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.85rem;color:#1a3a6b;}
+.logo-name{color:#fff;font-weight:700;font-size:1rem;line-height:1.2;}
+.logo-name small{display:block;font-size:0.62rem;font-weight:400;color:#c8a84b;letter-spacing:0.08em;}
+.nav-links{display:flex;gap:1.3rem;list-style:none;}
+.nav-links a{color:rgba(255,255,255,0.8);text-decoration:none;font-size:0.82rem;font-weight:500;}
+.nav-links a:hover{color:#e8a020;}
+.nav-cta{background:#e8a020;color:#1a3a6b;padding:0.45rem 1.1rem;border-radius:5px;font-weight:600;font-size:0.82rem;text-decoration:none;}
 .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;}
 .hamburger span{width:22px;height:2px;background:#fff;border-radius:2px;display:block;}
-.nav-links{display:flex;gap:1.5rem;list-style:none;}
-.nav-links a{color:rgba(255,255,255,0.8);text-decoration:none;font-size:0.88rem;font-weight:500;}
-.nav-links a:hover{color:#e8a020;}
-
-/* HERO */
-.hero{
-  background:#1a3a6b;
-  padding:6rem 5% 4rem;
-  text-align:center;
-  color:#fff;
-}
+.hero{background:#1a3a6b;padding:6rem 5% 4rem;text-align:center;color:#fff;}
 .hero h1{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;line-height:1.2;margin-bottom:1rem;}
 .hero h1 span{color:#e8a020;}
 .hero p{color:rgba(255,255,255,0.7);font-size:1rem;max-width:520px;margin:0 auto 2rem;line-height:1.7;}
 .hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
-.btn-primary{background:#e8a020;color:#1a3a6b;padding:0.8rem 1.8rem;border-radius:5px;font-weight:600;font-size:0.95rem;text-decoration:none;}
-.btn-outline{border:1.5px solid rgba(255,255,255,0.4);color:#fff;padding:0.8rem 1.8rem;border-radius:5px;font-weight:500;font-size:0.95rem;text-decoration:none;}
-.hero-stats{
-  display:flex;justify-content:center;gap:2.5rem;flex-wrap:wrap;
-  margin-top:3rem;padding-top:2rem;border-top:1px solid rgba(255,255,255,0.1);
-}
+.btn-primary{background:#e8a020;color:#1a3a6b;padding:0.8rem 1.8rem;border-radius:5px;font-weight:600;font-size:0.93rem;text-decoration:none;display:inline-block;}
+.btn-outline{border:1.5px solid rgba(255,255,255,0.4);color:#fff;padding:0.8rem 1.8rem;border-radius:5px;font-weight:500;font-size:0.93rem;text-decoration:none;display:inline-block;}
+.hero-stats{display:flex;justify-content:center;gap:2.5rem;flex-wrap:wrap;margin-top:3rem;padding-top:2rem;border-top:1px solid rgba(255,255,255,0.1);}
 .stat h3{font-size:1.6rem;font-weight:700;color:#e8a020;}
 .stat p{font-size:0.8rem;color:rgba(255,255,255,0.6);margin-top:2px;}
-
-/* SECTION COMMON */
 section{padding:4rem 5%;}
-.section-label{font-size:0.75rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#e8a020;margin-bottom:0.5rem;}
-.section-title{font-size:clamp(1.5rem,3vw,2rem);font-weight:700;color:#1a3a6b;margin-bottom:0.5rem;}
-.section-sub{color:#555;font-size:0.95rem;line-height:1.7;max-width:540px;margin-bottom:2.5rem;}
-
-/* SERVICES */
+.section-label{font-size:0.72rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#e8a020;margin-bottom:0.5rem;}
+.section-title{font-size:clamp(1.4rem,3vw,1.9rem);font-weight:700;color:#1a3a6b;margin-bottom:0.5rem;}
+.section-sub{color:#555;font-size:0.92rem;line-height:1.7;max-width:540px;margin-bottom:2rem;}
 .services{background:#fff;}
-.services-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  gap:1.2rem;
-  margin-top:2rem;
-}
-.service-card{
-  background:#f4f6fa;
-  border:1.5px solid #e0e6f0;
-  border-radius:10px;
-  padding:1.5rem 1.2rem;
-  text-align:center;
-}
-.service-icon{font-size:2rem;margin-bottom:0.8rem;}
-.service-card h3{font-size:1rem;font-weight:600;color:#1a3a6b;margin-bottom:0.4rem;}
-.service-card p{font-size:0.83rem;color:#666;line-height:1.6;}
-
-/* WHY US */
+.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1.1rem;margin-top:1.5rem;}
+.service-card{background:#f4f6fa;border:1.5px solid #e0e6f0;border-radius:10px;padding:1.3rem 1rem;text-align:center;}
+.service-icon{font-size:1.7rem;margin-bottom:0.6rem;}
+.service-card h3{font-size:0.92rem;font-weight:600;color:#1a3a6b;margin-bottom:0.3rem;}
+.service-card p{font-size:0.79rem;color:#666;line-height:1.6;}
 .why{background:#f4f6fa;}
-.why-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.2rem;}
-.why-item{background:#fff;border-radius:10px;padding:1.4rem;border:1px solid #e0e6f0;}
-.why-num{font-size:1.8rem;font-weight:700;color:#e8a020;margin-bottom:0.4rem;}
-.why-item h4{font-size:0.95rem;font-weight:600;color:#1a3a6b;margin-bottom:0.3rem;}
-.why-item p{font-size:0.82rem;color:#666;line-height:1.6;}
-
-/* REGISTER */
-.register{background:#fff;}
-.register-wrapper{
-  max-width:560px;margin:0 auto;
-  background:#f4f6fa;border-radius:12px;
-  padding:2.5rem 2rem;border:1.5px solid #e0e6f0;
-}
-.register-wrapper h3{font-size:1.2rem;font-weight:700;color:#1a3a6b;margin-bottom:0.3rem;text-align:center;}
-.register-wrapper p{font-size:0.85rem;color:#666;text-align:center;margin-bottom:1.8rem;}
-.form-row{margin-bottom:1rem;}
-.form-row label{display:block;font-size:0.82rem;font-weight:600;color:#333;margin-bottom:0.35rem;}
-.form-row input,.form-row select{
-  width:100%;padding:0.7rem 1rem;
-  border:1.5px solid #d0d9e8;border-radius:6px;
-  font-size:0.9rem;font-family:inherit;background:#fff;color:#1a1a1a;
-  outline:none;
-}
+.why-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.1rem;}
+.why-item{background:#fff;border-radius:10px;padding:1.3rem;border:1px solid #e0e6f0;}
+.why-num{font-size:1.5rem;font-weight:700;color:#e8a020;margin-bottom:0.3rem;}
+.why-item h4{font-size:0.9rem;font-weight:600;color:#1a3a6b;margin-bottom:0.3rem;}
+.why-item p{font-size:0.79rem;color:#666;line-height:1.6;}
+.deadlines{background:#fff;}
+.dl-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:1rem;margin-top:1.5rem;}
+.dl-card{border-radius:10px;padding:1.1rem;border-left:4px solid #e8a020;background:#fffbf3;border-top:1px solid #f0e4c0;border-right:1px solid #f0e4c0;border-bottom:1px solid #f0e4c0;}
+.dl-card.urgent{border-left-color:#c0392b;background:#fff5f5;border-top-color:#f5c6c6;border-right-color:#f5c6c6;border-bottom-color:#f5c6c6;}
+.dl-badge{font-size:0.68rem;font-weight:700;padding:0.18rem 0.55rem;border-radius:20px;display:inline-block;margin-bottom:0.5rem;}
+.dl-badge.urgent{background:#fde8e8;color:#c0392b;}
+.dl-badge.upcoming{background:#fff3cd;color:#856404;}
+.dl-card h4{font-size:0.86rem;font-weight:600;color:#1a3a6b;margin-bottom:0.2rem;}
+.dl-card p{font-size:0.77rem;color:#666;}
+.dl-card .dl-date{font-size:0.8rem;font-weight:600;color:#555;margin-top:0.4rem;}
+.calculator{background:#f4f6fa;}
+.calc-wrapper{max-width:580px;margin:0 auto;background:#fff;border-radius:12px;padding:2rem;border:1.5px solid #e0e6f0;}
+.calc-tabs{display:flex;margin-bottom:1.8rem;border:1.5px solid #e0e6f0;border-radius:8px;overflow:hidden;}
+.calc-tab{flex:1;padding:0.62rem;text-align:center;font-size:0.84rem;font-weight:600;cursor:pointer;background:#f4f6fa;color:#555;border:none;font-family:inherit;}
+.calc-tab.active{background:#1a3a6b;color:#fff;}
+.calc-panel{display:none;}
+.calc-panel.active{display:block;}
+.calc-row{margin-bottom:0.9rem;}
+.calc-row label{display:block;font-size:0.8rem;font-weight:600;color:#333;margin-bottom:0.3rem;}
+.calc-row input,.calc-row select{width:100%;padding:0.62rem 1rem;border:1.5px solid #d0d9e8;border-radius:6px;font-size:0.88rem;font-family:inherit;background:#fff;color:#1a1a1a;outline:none;}
+.calc-row input:focus,.calc-row select:focus{border-color:#1a3a6b;}
+.calc-result{background:#1a3a6b;color:#fff;border-radius:8px;padding:1.2rem;margin-top:1rem;display:none;}
+.calc-result h4{font-size:0.78rem;color:rgba(255,255,255,0.7);margin-bottom:0.3rem;}
+.calc-result .big-num{font-size:1.5rem;font-weight:700;color:#e8a020;}
+.calc-result .breakdown{font-size:0.76rem;color:rgba(255,255,255,0.65);margin-top:0.5rem;line-height:1.9;white-space:pre-line;}
+.btn-calc{background:#e8a020;color:#1a3a6b;padding:0.75rem 2rem;border:none;border-radius:6px;font-size:0.9rem;font-weight:600;cursor:pointer;width:100%;font-family:inherit;margin-top:0.4rem;}
+.appointment{background:#fff;}
+.appt-wrapper{max-width:550px;margin:0 auto;background:#f4f6fa;border-radius:12px;padding:2rem;border:1.5px solid #e0e6f0;}
+.appt-wrapper h3{font-size:1.1rem;font-weight:700;color:#1a3a6b;margin-bottom:0.3rem;text-align:center;}
+.appt-wrapper>p{font-size:0.83rem;color:#666;text-align:center;margin-bottom:1.5rem;}
+.form-row{margin-bottom:0.9rem;}
+.form-row label{display:block;font-size:0.8rem;font-weight:600;color:#333;margin-bottom:0.3rem;}
+.form-row input,.form-row select,.form-row textarea{width:100%;padding:0.62rem 1rem;border:1.5px solid #d0d9e8;border-radius:6px;font-size:0.87rem;font-family:inherit;background:#fff;color:#1a1a1a;outline:none;}
 .form-row input:focus,.form-row select:focus{border-color:#1a3a6b;}
-.btn-register-submit{
-  width:100%;background:#1a3a6b;color:#fff;
-  padding:0.9rem;border:none;border-radius:6px;
-  font-size:0.95rem;font-weight:600;cursor:pointer;margin-top:0.5rem;
-  font-family:inherit;
-}
-.btn-register-submit:hover{background:#14306e;}
-.form-note{font-size:0.75rem;color:#888;text-align:center;margin-top:0.8rem;}
-
-/* CONTACT */
+.form-row textarea{height:75px;resize:vertical;}
+.form-2col{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.btn-appt-submit{width:100%;background:#1a3a6b;color:#fff;padding:0.82rem;border:none;border-radius:6px;font-size:0.92rem;font-weight:600;cursor:pointer;margin-top:0.3rem;font-family:inherit;}
+.btn-appt-submit:hover{background:#14306e;}
+.register{background:#f4f6fa;}
+.register-wrapper{max-width:500px;margin:0 auto;background:#fff;border-radius:12px;padding:2rem;border:1.5px solid #e0e6f0;}
+.register-wrapper h3{font-size:1.1rem;font-weight:700;color:#1a3a6b;margin-bottom:0.3rem;text-align:center;}
+.register-wrapper>p{font-size:0.83rem;color:#666;text-align:center;margin-bottom:1.5rem;}
+.btn-register-submit{width:100%;background:#e8a020;color:#1a3a6b;padding:0.82rem;border:none;border-radius:6px;font-size:0.93rem;font-weight:700;cursor:pointer;margin-top:0.3rem;font-family:inherit;}
+.btn-register-submit:hover{background:#d4921a;}
+.form-note{font-size:0.72rem;color:#888;text-align:center;margin-top:0.7rem;}
+.testimonials{background:#fff;}
+.testi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.2rem;margin-top:1.5rem;}
+.testi-card{background:#f4f6fa;border:1.5px solid #e0e6f0;border-radius:10px;padding:1.4rem;}
+.testi-stars{color:#e8a020;font-size:0.93rem;margin-bottom:0.6rem;}
+.testi-text{font-size:0.83rem;color:#444;line-height:1.7;margin-bottom:1rem;font-style:italic;}
+.testi-author{display:flex;align-items:center;gap:0.8rem;}
+.testi-av{width:36px;height:36px;border-radius:50%;background:#1a3a6b;color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.78rem;font-weight:700;flex-shrink:0;}
+.testi-name{font-size:0.86rem;font-weight:600;color:#1a3a6b;}
+.testi-role{font-size:0.73rem;color:#888;}
+.blog{background:#f4f6fa;}
+.blog-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1.2rem;margin-top:1.5rem;}
+.blog-card{background:#fff;border:1.5px solid #e0e6f0;border-radius:10px;overflow:hidden;}
+.blog-top{padding:1.2rem;background:#1a3a6b;text-align:center;font-size:1.8rem;}
+.blog-body{padding:1.1rem;}
+.blog-cat{font-size:0.68rem;font-weight:700;color:#e8a020;text-transform:uppercase;letter-spacing:0.08em;}
+.blog-card h3{font-size:0.87rem;font-weight:600;color:#1a3a6b;margin:0.3rem 0 0.4rem;line-height:1.4;}
+.blog-card p{font-size:0.78rem;color:#666;line-height:1.6;}
+.blog-date{font-size:0.72rem;color:#aaa;margin-top:0.5rem;}
+.faq{background:#fff;}
+.faq-list{max-width:680px;margin-top:1.5rem;}
+.faq-item{background:#f4f6fa;border-radius:8px;border:1px solid #e0e6f0;margin-bottom:0.8rem;overflow:hidden;}
+.faq-q{padding:0.95rem 1.1rem;font-size:0.9rem;font-weight:600;color:#1a3a6b;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:1rem;}
+.faq-q .arrow{font-size:0.72rem;color:#e8a020;transition:transform 0.2s;flex-shrink:0;}
+.faq-q.open .arrow{transform:rotate(180deg);}
+.faq-a{padding:0 1.1rem;max-height:0;overflow:hidden;transition:max-height 0.3s ease,padding 0.3s;}
+.faq-a.open{max-height:200px;padding:0 1.1rem 1rem;}
+.faq-a p{font-size:0.83rem;color:#555;line-height:1.7;}
 .contact{background:#f4f6fa;}
-.contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.2rem;margin-top:2rem;}
-.contact-card{background:#fff;border-radius:10px;padding:1.5rem;border:1px solid #e0e6f0;text-align:center;}
-.contact-icon{font-size:1.6rem;margin-bottom:0.7rem;}
-.contact-card h4{font-size:0.88rem;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.4rem;}
-.contact-card p{font-size:0.95rem;color:#1a3a6b;font-weight:600;line-height:1.6;}
+.contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:1.1rem;margin-top:1.5rem;}
+.contact-card{background:#fff;border-radius:10px;padding:1.3rem;border:1px solid #e0e6f0;text-align:center;}
+.contact-icon{font-size:1.4rem;margin-bottom:0.5rem;}
+.contact-card h4{font-size:0.8rem;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.3rem;}
+.contact-card p{font-size:0.9rem;color:#1a3a6b;font-weight:600;line-height:1.6;}
 .contact-card a{color:#1a3a6b;text-decoration:none;}
-.hours{background:#fff;border-radius:10px;padding:1.5rem;border:1px solid #e0e6f0;margin-top:1.2rem;}
-.hours h4{font-size:0.88rem;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:1rem;text-align:center;}
-.hours-row{display:flex;justify-content:space-between;padding:0.45rem 0;border-bottom:1px solid #f0f0f0;font-size:0.9rem;}
+.hours{background:#fff;border-radius:10px;padding:1.3rem;border:1px solid #e0e6f0;margin-top:1.1rem;}
+.hours h4{font-size:0.8rem;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.8rem;text-align:center;}
+.hours-row{display:flex;justify-content:space-between;padding:0.4rem 0;border-bottom:1px solid #f0f0f0;font-size:0.87rem;}
 .hours-row:last-child{border-bottom:none;}
 .hours-row span{color:#555;}
 .hours-row strong{color:#1a3a6b;}
-
-/* WHATSAPP */
-.wa-btn{
-  position:fixed;bottom:1.5rem;right:1.5rem;z-index:999;
-  background:#25D366;color:#fff;
-  width:54px;height:54px;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  box-shadow:0 4px 15px rgba(37,211,102,0.4);
-  text-decoration:none;font-size:1.6rem;
-}
-
-/* FOOTER */
-footer{
-  background:#1a3a6b;color:rgba(255,255,255,0.7);
-  text-align:center;padding:1.5rem 5%;font-size:0.83rem;
-}
+.wa-btn{position:fixed;bottom:1.5rem;right:1.5rem;z-index:999;background:#25D366;color:#fff;width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 15px rgba(37,211,102,0.4);text-decoration:none;font-size:1.4rem;}
+footer{background:#1a3a6b;color:rgba(255,255,255,0.7);text-align:center;padding:1.4rem 5%;font-size:0.8rem;}
 footer strong{color:#e8a020;}
-
-/* TOAST */
-.toast{
-  position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(100px);
-  background:#1a3a6b;color:#fff;
-  padding:0.9rem 1.8rem;border-radius:8px;
-  font-size:0.9rem;font-weight:500;
-  transition:transform 0.3s;z-index:9999;
-  box-shadow:0 4px 20px rgba(0,0,0,0.2);
-}
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(100px);background:#1a3a6b;color:#fff;padding:0.85rem 1.6rem;border-radius:8px;font-size:0.88rem;font-weight:500;transition:transform 0.3s;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,0.2);}
 .toast.show{transform:translateX(-50%) translateY(0);}
-
-/* MOBILE */
 @media(max-width:700px){
-  .nav-links,.nav-cta-desktop{display:none;}
+  .nav-links,.nav-cta{display:none;}
   .hamburger{display:flex;}
-  .nav-links.open{
-    display:flex;flex-direction:column;
-    position:fixed;top:60px;left:0;right:0;
-    background:#1a3a6b;padding:1.5rem 5%;gap:1rem;
-    border-top:1px solid rgba(255,255,255,0.1);
-  }
-  .register-wrapper{padding:1.8rem 1.2rem;}
+  .nav-links.open{display:flex;flex-direction:column;position:fixed;top:60px;left:0;right:0;background:#1a3a6b;padding:1.5rem 5%;gap:1rem;border-top:1px solid rgba(255,255,255,0.1);}
+  .form-2col{grid-template-columns:1fr;}
 }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
   <div class="logo-area">
     <div class="logo-box">AKR</div>
-    <div class="logo-name">AKR Consultancy Services<small>Chartered Accountants</small></div>
+    <div class="logo-name">AKR Consultancy Services<small>Chartered Accountants · Patna</small></div>
   </div>
   <ul class="nav-links" id="navLinks">
     <li><a href="#services">Services</a></li>
-    <li><a href="#register">Register</a></li>
+    <li><a href="#deadlines">Deadlines</a></li>
+    <li><a href="#calculator">Tax Calc</a></li>
+    <li><a href="#appointment">Appointment</a></li>
+    <li><a href="#faq">FAQ</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
-  <a href="#register" class="nav-cta nav-cta-desktop">Get Started</a>
-  <button class="hamburger" onclick="toggleNav()" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
+  <a href="#register" class="nav-cta">Register Free</a>
+  <button class="hamburger" onclick="toggleNav()"><span></span><span></span><span></span></button>
 </nav>
 
-<!-- HERO -->
 <section class="hero">
   <h1>Expert CA Services<br>for Your <span>Business Growth</span></h1>
-  <p>GST Filing, ITR, Company Registration, Audit & Bookkeeping — trusted by businesses in Patna since years.</p>
+  <p>GST Filing, ITR, Company Registration, Audit & Bookkeeping — trusted by businesses in Patna.</p>
   <div class="hero-btns">
-    <a href="#register" class="btn-primary">Register as Client</a>
-    <a href="#services" class="btn-outline">Our Services</a>
+    <a href="#register" class="btn-primary">Register as Client →</a>
+    <a href="#appointment" class="btn-outline">Book Appointment</a>
   </div>
   <div class="hero-stats">
     <div class="stat"><h3>500+</h3><p>Happy Clients</p></div>
@@ -209,177 +178,254 @@ footer strong{color:#e8a020;}
   </div>
 </section>
 
-<!-- SERVICES -->
 <section class="services" id="services">
   <div class="section-label">What We Do</div>
   <h2 class="section-title">Our Services</h2>
   <p class="section-sub">Complete financial & compliance solutions for businesses and individuals.</p>
   <div class="services-grid">
-    <div class="service-card">
-      <div class="service-icon">📊</div>
-      <h3>GST Filing</h3>
-      <p>Monthly/quarterly GSTR-1, GSTR-3B filing and GST compliance management.</p>
-    </div>
-    <div class="service-card">
-      <div class="service-icon">📋</div>
-      <h3>ITR Filing</h3>
-      <p>Income Tax Return filing for individuals, businesses and companies.</p>
-    </div>
-    <div class="service-card">
-      <div class="service-icon">🏢</div>
-      <h3>Company Registration</h3>
-      <p>Pvt Ltd, LLP, Partnership, Sole Proprietorship — complete registration.</p>
-    </div>
-    <div class="service-card">
-      <div class="service-icon">🔍</div>
-      <h3>Audit Services</h3>
-      <p>Statutory audit, tax audit, internal audit for all types of businesses.</p>
-    </div>
-    <div class="service-card">
-      <div class="service-icon">📒</div>
-      <h3>Bookkeeping</h3>
-      <p>Regular accounting, ledger maintenance and financial record keeping.</p>
-    </div>
+    <div class="service-card"><div class="service-icon">📊</div><h3>GST Filing</h3><p>Monthly/quarterly GSTR-1, GSTR-3B and GST compliance.</p></div>
+    <div class="service-card"><div class="service-icon">📋</div><h3>ITR Filing</h3><p>Income Tax Return for individuals, businesses & companies.</p></div>
+    <div class="service-card"><div class="service-icon">🏢</div><h3>Company Registration</h3><p>Pvt Ltd, LLP, Partnership — complete registration support.</p></div>
+    <div class="service-card"><div class="service-icon">🔍</div><h3>Audit Services</h3><p>Statutory, tax & internal audit for all businesses.</p></div>
+    <div class="service-card"><div class="service-icon">📒</div><h3>Bookkeeping</h3><p>Regular accounting and financial record keeping.</p></div>
   </div>
 </section>
 
-<!-- WHY US -->
 <section class="why">
   <div class="section-label">Why Choose Us</div>
   <h2 class="section-title">Why Clients Trust AKR</h2>
   <div class="why-grid">
-    <div class="why-item">
-      <div class="why-num">01</div>
-      <h4>Never Miss a Deadline</h4>
-      <p>We track all your GST, ITR and ROC deadlines so you never pay a late fee.</p>
+    <div class="why-item"><div class="why-num">01</div><h4>Never Miss a Deadline</h4><p>We track all GST, ITR & ROC deadlines so you never pay a late fee.</p></div>
+    <div class="why-item"><div class="why-num">02</div><h4>Transparent Pricing</h4><p>Clear fees discussed upfront. No hidden charges, no surprises.</p></div>
+    <div class="why-item"><div class="why-num">03</div><h4>Always Reachable</h4><p>Call, WhatsApp or email — we respond quickly to all queries.</p></div>
+    <div class="why-item"><div class="why-num">04</div><h4>ICAI Registered</h4><p>Qualified CAs registered with ICAI. Your finances are safe.</p></div>
+  </div>
+</section>
+
+<section class="deadlines" id="deadlines">
+  <div class="section-label">Important Dates</div>
+  <h2 class="section-title">Upcoming Tax Deadlines</h2>
+  <p class="section-sub">Stay compliant — never miss a filing date.</p>
+  <div class="dl-grid">
+    <div class="dl-card urgent"><span class="dl-badge urgent">Urgent</span><h4>GSTR-3B Filing</h4><p>Monthly GST return for March 2025</p><div class="dl-date">📅 20 April 2025</div></div>
+    <div class="dl-card"><span class="dl-badge upcoming">Upcoming</span><h4>GSTR-1 Filing</h4><p>Monthly outward supply return</p><div class="dl-date">📅 11 April 2025</div></div>
+    <div class="dl-card"><span class="dl-badge upcoming">Upcoming</span><h4>TDS Payment</h4><p>TDS deducted in March 2025</p><div class="dl-date">📅 30 April 2025</div></div>
+    <div class="dl-card"><span class="dl-badge upcoming">Upcoming</span><h4>ITR Filing (Individuals)</h4><p>Income Tax Return FY 2024-25</p><div class="dl-date">📅 31 July 2025</div></div>
+    <div class="dl-card"><span class="dl-badge upcoming">Upcoming</span><h4>ITR Filing (Audit Cases)</h4><p>Tax audit cases & companies</p><div class="dl-date">📅 31 October 2025</div></div>
+    <div class="dl-card"><span class="dl-badge upcoming">Upcoming</span><h4>Advance Tax Q1</h4><p>1st instalment FY 2025-26</p><div class="dl-date">📅 15 June 2025</div></div>
+  </div>
+  <p style="margin-top:1rem;font-size:0.77rem;color:#999;">* Dates subject to CBDT/GSTN changes. Contact us for latest updates.</p>
+</section>
+
+<section class="calculator" id="calculator">
+  <div class="section-label">Free Tool</div>
+  <h2 class="section-title">Tax Calculator</h2>
+  <p class="section-sub">Quick estimate of Income Tax or GST — for guidance only.</p>
+  <div class="calc-wrapper">
+    <div class="calc-tabs">
+      <button class="calc-tab active" onclick="switchCalc('itr',this)">Income Tax (ITR)</button>
+      <button class="calc-tab" onclick="switchCalc('gst',this)">GST Calculator</button>
     </div>
-    <div class="why-item">
-      <div class="why-num">02</div>
-      <h4>Transparent Pricing</h4>
-      <p>Clear fees discussed upfront. No hidden charges, no surprises.</p>
+    <div class="calc-panel active" id="panel-itr">
+      <div class="calc-row"><label>Annual Income (₹)</label><input type="number" id="itr-income" placeholder="e.g. 800000"/></div>
+      <div class="calc-row"><label>Tax Regime</label><select id="itr-regime" onchange="toggleDeduction()"><option value="new">New Regime (FY 2024-25)</option><option value="old">Old Regime</option></select></div>
+      <div class="calc-row" id="deduction-row" style="display:none;"><label>Total Deductions 80C/80D etc. (₹)</label><input type="number" id="itr-deduction" placeholder="e.g. 150000"/></div>
+      <button class="btn-calc" onclick="calcITR()">Calculate Tax →</button>
+      <div class="calc-result" id="itr-result"><h4>Estimated Tax Liability</h4><div class="big-num" id="itr-tax">₹0</div><div class="breakdown" id="itr-breakdown"></div></div>
     </div>
-    <div class="why-item">
-      <div class="why-num">03</div>
-      <h4>Always Reachable</h4>
-      <p>Call, WhatsApp or email — we respond quickly to all your queries.</p>
-    </div>
-    <div class="why-item">
-      <div class="why-num">04</div>
-      <h4>ICAI Registered</h4>
-      <p>Qualified Chartered Accountants registered with ICAI. Your finances are safe.</p>
+    <div class="calc-panel" id="panel-gst">
+      <div class="calc-row"><label>Amount (₹)</label><input type="number" id="gst-amount" placeholder="e.g. 50000"/></div>
+      <div class="calc-row"><label>GST Rate</label><select id="gst-rate"><option value="5">5% — Essential goods, transport</option><option value="12">12% — Processed food, medicines</option><option value="18" selected>18% — Most services, electronics</option><option value="28">28% — Luxury goods, cars</option></select></div>
+      <div class="calc-row"><label>Amount Type</label><select id="gst-type"><option value="excl">Exclusive (add GST to amount)</option><option value="incl">Inclusive (GST already included)</option></select></div>
+      <button class="btn-calc" onclick="calcGST()">Calculate GST →</button>
+      <div class="calc-result" id="gst-result"><h4>GST Breakdown</h4><div class="big-num" id="gst-total">₹0</div><div class="breakdown" id="gst-breakdown"></div></div>
     </div>
   </div>
 </section>
 
-<!-- REGISTER -->
+<section class="appointment" id="appointment">
+  <div style="text-align:center;">
+    <div class="section-label">Book a Meeting</div>
+    <h2 class="section-title">Book an Appointment</h2>
+    <p class="section-sub" style="margin:0 auto 2rem;">Choose your preferred date & time — we'll confirm within 1 hour.</p>
+  </div>
+  <div class="appt-wrapper">
+    <h3>Schedule a Consultation</h3>
+    <p>Free first meeting · In-office or phone call</p>
+    <div class="form-2col">
+      <div class="form-row"><label>Your Name *</label><input type="text" id="appt-name" placeholder="Ramesh Kumar"/></div>
+      <div class="form-row"><label>Mobile Number *</label><input type="tel" id="appt-phone" placeholder="9876543210"/></div>
+    </div>
+    <div class="form-2col">
+      <div class="form-row"><label>Preferred Date *</label><input type="date" id="appt-date"/></div>
+      <div class="form-row"><label>Preferred Time *</label><select id="appt-time"><option value="">-- Select --</option><option>9:00 AM – 10:00 AM</option><option>10:00 AM – 11:00 AM</option><option>11:00 AM – 12:00 PM</option><option>2:00 PM – 3:00 PM</option><option>3:00 PM – 4:00 PM</option><option>4:00 PM – 5:00 PM</option><option>5:00 PM – 6:00 PM</option></select></div>
+    </div>
+    <div class="form-row"><label>Service / Topic *</label><select id="appt-service"><option value="">-- Select Service --</option><option>GST Filing / Registration</option><option>ITR Filing</option><option>Company Registration</option><option>Audit Services</option><option>Bookkeeping</option><option>GST Notice / Query</option><option>General Consultation</option></select></div>
+    <div class="form-row"><label>Message (optional)</label><textarea id="appt-msg" placeholder="Brief description of your query..."></textarea></div>
+    <button class="btn-appt-submit" onclick="submitAppt()">Book Appointment →</button>
+    <p class="form-note">We'll confirm via call within 1 hour · No charges for first meeting</p>
+  </div>
+</section>
+
 <section class="register" id="register">
   <div style="text-align:center;">
     <div class="section-label">New Client</div>
     <h2 class="section-title">Register with Us</h2>
-    <p class="section-sub" style="margin:0 auto 2rem;">Fill this simple form — our team will contact you within 2 hours.</p>
+    <p class="section-sub" style="margin:0 auto 2rem;">Fill this quick form — our team will contact you within 2 hours.</p>
   </div>
   <div class="register-wrapper">
     <h3>New Client Registration</h3>
     <p>Quick & free — takes less than 1 minute</p>
-    <div class="form-row">
-      <label>Your Full Name *</label>
-      <input type="text" id="reg-name" placeholder="e.g. Ramesh Kumar"/>
-    </div>
-    <div class="form-row">
-      <label>Mobile Number *</label>
-      <input type="tel" id="reg-phone" placeholder="e.g. 9876543210"/>
-    </div>
-    <div class="form-row">
-      <label>Service Required *</label>
-      <select id="reg-service">
-        <option value="">-- Select a Service --</option>
-        <option>GST Filing</option>
-        <option>ITR Filing</option>
-        <option>Company Registration</option>
-        <option>Audit Services</option>
-        <option>Bookkeeping</option>
-        <option>Other / Not Sure</option>
-      </select>
-    </div>
-    <div class="form-row">
-      <label>City *</label>
-      <input type="text" id="reg-city" placeholder="e.g. Patna"/>
-    </div>
+    <div class="form-row"><label>Your Full Name *</label><input type="text" id="reg-name" placeholder="e.g. Ramesh Kumar"/></div>
+    <div class="form-row"><label>Mobile Number *</label><input type="tel" id="reg-phone" placeholder="e.g. 9876543210"/></div>
+    <div class="form-row"><label>Service Required *</label><select id="reg-service"><option value="">-- Select a Service --</option><option>GST Filing</option><option>ITR Filing</option><option>Company Registration</option><option>Audit Services</option><option>Bookkeeping</option><option>Other / Not Sure</option></select></div>
+    <div class="form-row"><label>City *</label><input type="text" id="reg-city" placeholder="e.g. Patna"/></div>
     <button class="btn-register-submit" onclick="submitReg()">Submit Registration →</button>
     <p class="form-note">We will call you within 2 hours · Your data is 100% private</p>
   </div>
 </section>
 
-<!-- CONTACT -->
+<section class="testimonials" id="testimonials">
+  <div class="section-label">Client Reviews</div>
+  <h2 class="section-title">What Our Clients Say</h2>
+  <p class="section-sub">Real words from real business owners who trust us.</p>
+  <div class="testi-grid">
+    <div class="testi-card"><div class="testi-stars">★★★★★</div><p class="testi-text">"AKR has been handling our GST and audit for over 4 years. They never miss a deadline and are always available. Best CA firm in Patna!"</p><div class="testi-author"><div class="testi-av">RK</div><div><div class="testi-name">Ramesh Kapoor</div><div class="testi-role">Owner, Kapoor Traders</div></div></div></div>
+    <div class="testi-card"><div class="testi-stars">★★★★★</div><p class="testi-text">"They saved us nearly ₹3 lakhs in taxes through proper planning. Very honest and transparent team. Highly recommended!"</p><div class="testi-author"><div class="testi-av">PS</div><div><div class="testi-name">Priya Sinha</div><div class="testi-role">Founder, TechStart Pvt Ltd</div></div></div></div>
+    <div class="testi-card"><div class="testi-stars">★★★★★</div><p class="testi-text">"Got a GST notice and was worried. AKR handled it completely within 2 weeks with zero penalty. Professional and reliable."</p><div class="testi-author"><div class="testi-av">AM</div><div><div class="testi-name">Anil Mehta</div><div class="testi-role">Director, AM Constructions</div></div></div></div>
+  </div>
+</section>
+
+<section class="blog" id="blog">
+  <div class="section-label">Tax Tips & Updates</div>
+  <h2 class="section-title">Useful Tax Tips</h2>
+  <p class="section-sub">Simple tips to save tax and stay compliant — in plain language.</p>
+  <div class="blog-grid">
+    <div class="blog-card"><div class="blog-top">📊</div><div class="blog-body"><div class="blog-cat">GST</div><h3>New GST Changes for FY 2025-26</h3><p>GSTN has updated GSTR-3B and GSTR-1 — what every business owner must know.</p><div class="blog-date">April 2025</div></div></div>
+    <div class="blog-card"><div class="blog-top">📋</div><div class="blog-body"><div class="blog-cat">ITR</div><h3>ITR Deadlines 2025 — Complete Calendar</h3><p>All income tax deadlines for individuals, businesses & companies for FY 2024-25.</p><div class="blog-date">March 2025</div></div></div>
+    <div class="blog-card"><div class="blog-top">💡</div><div class="blog-body"><div class="blog-cat">Tax Saving</div><h3>10 Legal Ways to Save Tax in India</h3><p>From 80C deductions to NPS — smart legal strategies every taxpayer should use.</p><div class="blog-date">Feb 2025</div></div></div>
+  </div>
+</section>
+
+<section class="faq" id="faq">
+  <div class="section-label">Common Questions</div>
+  <h2 class="section-title">Frequently Asked Questions</h2>
+  <div class="faq-list">
+    <div class="faq-item"><div class="faq-q" onclick="toggleFAQ(this)">What documents are needed for ITR filing? <span class="arrow">▼</span></div><div class="faq-a"><p>You need: PAN card, Aadhaar card, Form 16 (from employer), bank statements, investment proofs (80C, 80D), and details of any other income. We guide you through the exact list based on your situation.</p></div></div>
+    <div class="faq-item"><div class="faq-q" onclick="toggleFAQ(this)">When should a business register for GST? <span class="arrow">▼</span></div><div class="faq-a"><p>GST registration is mandatory if annual turnover exceeds ₹40 lakhs (goods) or ₹20 lakhs (services). Also needed for inter-state supply, e-commerce sellers, and reverse charge cases.</p></div></div>
+    <div class="faq-item"><div class="faq-q" onclick="toggleFAQ(this)">How much does ITR filing cost? <span class="arrow">▼</span></div><div class="faq-a"><p>Our ITR filing charges depend on complexity — salary income starts from ₹499. Please contact us for an exact quote based on your income sources and filing type.</p></div></div>
+    <div class="faq-item"><div class="faq-q" onclick="toggleFAQ(this)">Can you handle GST notices and scrutiny? <span class="arrow">▼</span></div><div class="faq-a"><p>Yes, we have extensive experience handling GST notices, demand orders, and departmental scrutiny. We prepare proper replies and represent you before GST authorities.</p></div></div>
+    <div class="faq-item"><div class="faq-q" onclick="toggleFAQ(this)">How long does company registration take? <span class="arrow">▼</span></div><div class="faq-a"><p>We handle the complete process from name approval (MCA) to Certificate of Incorporation. You need basic KYC of directors and a registered office address. Process takes 7–10 working days.</p></div></div>
+    <div class="faq-item"><div class="faq-q" onclick="toggleFAQ(this)">Do you serve clients outside Patna? <span class="arrow">▼</span></div><div class="faq-a"><p>Yes! Most services like ITR, GST filing, and company registration can be done fully online. We serve clients across Bihar and all over India via email, WhatsApp and phone.</p></div></div>
+  </div>
+</section>
+
 <section class="contact" id="contact">
   <div class="section-label">Get In Touch</div>
   <h2 class="section-title">Contact Us</h2>
   <div class="contact-grid">
-    <div class="contact-card">
-      <div class="contact-icon">📞</div>
-      <h4>Phone</h4>
-      <p><a href="tel:6203130648">6203130648</a></p>
-    </div>
-    <div class="contact-card">
-      <div class="contact-icon">📧</div>
-      <h4>Email</h4>
-      <p><a href="mailto:consultakr@gmail.com">consultakr@gmail.com</a></p>
-    </div>
-    <div class="contact-card">
-      <div class="contact-icon">📍</div>
-      <h4>Address</h4>
-      <p>Front Side of Gate No. 9,<br>Gandhi Maidan, Patna, Bihar</p>
-    </div>
+    <div class="contact-card"><div class="contact-icon">📞</div><h4>Phone</h4><p><a href="tel:6203130648">6203130648</a></p></div>
+    <div class="contact-card"><div class="contact-icon">📧</div><h4>Email</h4><p><a href="mailto:consultakr@gmail.com">consultakr@gmail.com</a></p></div>
+    <div class="contact-card"><div class="contact-icon">📍</div><h4>Address</h4><p>Front Side of Gate No. 9,<br>Gandhi Maidan, Patna, Bihar</p></div>
   </div>
   <div class="hours">
     <h4>Office Hours</h4>
-    <div class="hours-row"><strong>Monday – Friday</strong><span>11:00 AM – 7:00 PM</span></div>
-    <div class="hours-row"><strong>Saturday</strong><span>12:00 PM – 6:00 PM</span></div>
+    <div class="hours-row"><strong>Monday – Friday</strong><span>9:00 AM – 7:00 PM</span></div>
+    <div class="hours-row"><strong>Saturday</strong><span>9:00 AM – 2:00 PM</span></div>
     <div class="hours-row"><strong>Sunday</strong><span>Closed</span></div>
   </div>
 </section>
 
-<!-- WHATSAPP -->
 <a href="https://wa.me/916203130648" class="wa-btn" target="_blank" title="WhatsApp Us">💬</a>
 
-<!-- FOOTER -->
 <footer>
   <p>© 2025 <strong>AKR Consultancy Services</strong> · Chartered Accountants · Gandhi Maidan, Patna, Bihar</p>
   <p style="margin-top:0.4rem;">ICAI Registered Firm · All rights reserved.</p>
 </footer>
 
-<!-- TOAST -->
-<div class="toast" id="toast">✅ Registration submitted! We'll call you within 2 hours.</div>
+<div class="toast" id="toast">✅ Done!</div>
 
 <script>
-function toggleNav(){
-  document.getElementById('navLinks').classList.toggle('open');
+function toggleNav(){document.getElementById('navLinks').classList.toggle('open');}
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),4000);}
+function toggleDeduction(){document.getElementById('deduction-row').style.display=document.getElementById('itr-regime').value==='old'?'block':'none';}
+function switchCalc(tab,btn){
+  document.querySelectorAll('.calc-tab').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.calc-panel').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');document.getElementById('panel-'+tab).classList.add('active');
+}
+function calcITR(){
+  const income=parseFloat(document.getElementById('itr-income').value)||0;
+  const regime=document.getElementById('itr-regime').value;
+  const deduction=parseFloat(document.getElementById('itr-deduction').value)||0;
+  if(income<=0){showToast('Please enter your annual income.');return;}
+  let tax=0,breakdown='';
+  if(regime==='new'){
+    if(income<=300000)tax=0;
+    else if(income<=700000)tax=(income-300000)*0.05;
+    else if(income<=1000000)tax=20000+(income-700000)*0.10;
+    else if(income<=1200000)tax=50000+(income-1000000)*0.15;
+    else if(income<=1500000)tax=80000+(income-1200000)*0.20;
+    else tax=140000+(income-1500000)*0.30;
+    if(income<=700000)tax=0;
+    breakdown='Regime: New (FY 2024-25)\nTaxable Income: ₹'+income.toLocaleString('en-IN')+'\nRebate u/s 87A: '+(income<=700000?'Applied (nil tax)':'Not applicable');
+  } else {
+    const taxable=Math.max(0,income-deduction-50000);
+    if(taxable<=250000)tax=0;
+    else if(taxable<=500000)tax=(taxable-250000)*0.05;
+    else if(taxable<=1000000)tax=12500+(taxable-500000)*0.20;
+    else tax=112500+(taxable-1000000)*0.30;
+    if(taxable<=500000)tax=0;
+    breakdown='Regime: Old\nTaxable Income: ₹'+taxable.toLocaleString('en-IN')+'\nDeductions: ₹'+(deduction+50000).toLocaleString('en-IN')+'\nRebate u/s 87A: '+(taxable<=500000?'Applied (nil tax)':'Not applicable');
+  }
+  const cess=tax*0.04;const total=tax+cess;
+  document.getElementById('itr-tax').textContent='₹'+Math.round(total).toLocaleString('en-IN');
+  document.getElementById('itr-breakdown').textContent=breakdown+'\nCess (4%): ₹'+Math.round(cess).toLocaleString('en-IN');
+  document.getElementById('itr-result').style.display='block';
+}
+function calcGST(){
+  const amt=parseFloat(document.getElementById('gst-amount').value)||0;
+  const rate=parseFloat(document.getElementById('gst-rate').value);
+  const type=document.getElementById('gst-type').value;
+  if(amt<=0){showToast('Please enter an amount.');return;}
+  let base,gst,total;
+  if(type==='excl'){base=amt;gst=base*rate/100;total=base+gst;}
+  else{total=amt;base=amt*100/(100+rate);gst=total-base;}
+  document.getElementById('gst-total').textContent='GST Amount: ₹'+Math.round(gst).toLocaleString('en-IN');
+  document.getElementById('gst-breakdown').textContent='Base Amount: ₹'+Math.round(base).toLocaleString('en-IN')+'\nCGST ('+rate/2+'%): ₹'+Math.round(gst/2).toLocaleString('en-IN')+'\nSGST ('+rate/2+'%): ₹'+Math.round(gst/2).toLocaleString('en-IN')+'\nTotal Amount: ₹'+Math.round(total).toLocaleString('en-IN');
+  document.getElementById('gst-result').style.display='block';
+}
+function submitAppt(){
+  const n=document.getElementById('appt-name').value.trim();
+  const p=document.getElementById('appt-phone').value.trim();
+  const d=document.getElementById('appt-date').value;
+  const t=document.getElementById('appt-time').value;
+  const s=document.getElementById('appt-service').value;
+  if(!n||!p||!d||!t||!s){showToast('Please fill all required fields.');return;}
+  if(p.length<10){showToast('Enter valid 10-digit mobile number.');return;}
+  document.getElementById('appt-name').value='';document.getElementById('appt-phone').value='';
+  document.getElementById('appt-date').value='';document.getElementById('appt-time').value='';
+  document.getElementById('appt-service').value='';document.getElementById('appt-msg').value='';
+  showToast('Appointment booked! We will confirm within 1 hour.');
 }
 function submitReg(){
-  const name=document.getElementById('reg-name').value.trim();
-  const phone=document.getElementById('reg-phone').value.trim();
-  const service=document.getElementById('reg-service').value;
-  const city=document.getElementById('reg-city').value.trim();
-  if(!name||!phone||!service||!city){
-    showToast('⚠️ Please fill all fields before submitting.');
-    return;
-  }
-  if(phone.length<10){
-    showToast('⚠️ Please enter a valid 10-digit mobile number.');
-    return;
-  }
-  document.getElementById('reg-name').value='';
-  document.getElementById('reg-phone').value='';
-  document.getElementById('reg-service').value='';
-  document.getElementById('reg-city').value='';
-  showToast('✅ Registration done! We will call you within 2 hours.');
+  const n=document.getElementById('reg-name').value.trim();
+  const p=document.getElementById('reg-phone').value.trim();
+  const s=document.getElementById('reg-service').value;
+  const c=document.getElementById('reg-city').value.trim();
+  if(!n||!p||!s||!c){showToast('Please fill all fields.');return;}
+  if(p.length<10){showToast('Enter valid 10-digit mobile number.');return;}
+  document.getElementById('reg-name').value='';document.getElementById('reg-phone').value='';
+  document.getElementById('reg-service').value='';document.getElementById('reg-city').value='';
+  showToast('Registered! We will call you within 2 hours.');
 }
-function showToast(msg){
-  const t=document.getElementById('toast');
-  t.textContent=msg;
-  t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),4000);
+function toggleFAQ(el){
+  const ans=el.nextElementSibling;const isOpen=ans.classList.contains('open');
+  document.querySelectorAll('.faq-a').forEach(a=>a.classList.remove('open'));
+  document.querySelectorAll('.faq-q').forEach(q=>q.classList.remove('open'));
+  if(!isOpen){ans.classList.add('open');el.classList.add('open');}
 }
+document.getElementById('appt-date').min=new Date().toISOString().split('T')[0];
 </script>
 </body>
 </html>
