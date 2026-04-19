@@ -131,7 +131,34 @@ section{padding:4rem 5%;}
 .hours-row:last-child{border-bottom:none;}
 .hours-row span{color:#555;}
 .hours-row strong{color:#1a3a6b;}
-.wa-btn{position:fixed;bottom:1.5rem;right:1.5rem;z-index:999;background:#25D366;color:#fff;width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 15px rgba(37,211,102,0.4);text-decoration:none;font-size:1.4rem;}
+.gstr2a{background:#fff;}
+.gstr2a-wrapper{max-width:780px;margin:0 auto;}
+.gstr2a-upload{border:2px dashed #c0cfe8;border-radius:12px;padding:2.5rem;text-align:center;background:#f4f8ff;cursor:pointer;transition:border-color 0.2s;}
+.gstr2a-upload:hover,.gstr2a-upload.drag{border-color:#1a3a6b;background:#edf2fb;}
+.gstr2a-upload input{display:none;}
+.upload-icon{font-size:2.5rem;margin-bottom:0.8rem;}
+.gstr2a-upload h4{font-size:1rem;font-weight:600;color:#1a3a6b;margin-bottom:0.3rem;}
+.gstr2a-upload p{font-size:0.82rem;color:#888;margin-bottom:1rem;}
+.btn-upload{background:#1a3a6b;color:#fff;padding:0.6rem 1.4rem;border-radius:6px;font-size:0.85rem;font-weight:600;cursor:pointer;border:none;font-family:inherit;}
+.gstr2a-info{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:0.8rem;margin-top:1.5rem;}
+.gstr2a-info-card{background:#f4f6fa;border:1px solid #e0e6f0;border-radius:8px;padding:1rem;text-align:center;}
+.gstr2a-info-card .num{font-size:1.4rem;font-weight:700;color:#e8a020;}
+.gstr2a-info-card p{font-size:0.78rem;color:#666;margin-top:0.2rem;}
+.gstr2a-table-wrap{margin-top:1.5rem;overflow-x:auto;border-radius:10px;border:1.5px solid #e0e6f0;}
+.gstr2a-table{width:100%;border-collapse:collapse;font-size:0.8rem;}
+.gstr2a-table th{background:#1a3a6b;color:#fff;padding:0.7rem 0.9rem;text-align:left;font-weight:600;white-space:nowrap;}
+.gstr2a-table td{padding:0.6rem 0.9rem;border-bottom:1px solid #f0f0f0;color:#333;white-space:nowrap;}
+.gstr2a-table tr:nth-child(even) td{background:#f8fafc;}
+.gstr2a-table tr:hover td{background:#edf2fb;}
+.gstr2a-actions{display:flex;gap:1rem;flex-wrap:wrap;margin-top:1.2rem;}
+.btn-xml{background:#e8a020;color:#1a3a6b;padding:0.75rem 1.6rem;border:none;border-radius:6px;font-size:0.9rem;font-weight:700;cursor:pointer;font-family:inherit;}
+.btn-xml:hover{background:#d4921a;}
+.btn-clear{background:#f4f6fa;color:#666;padding:0.75rem 1.4rem;border:1.5px solid #e0e6f0;border-radius:6px;font-size:0.88rem;font-weight:600;cursor:pointer;font-family:inherit;}
+.gstr2a-status{padding:0.8rem 1rem;border-radius:8px;font-size:0.85rem;font-weight:500;margin-top:1rem;display:none;}
+.gstr2a-status.success{background:#d4edda;color:#155724;display:block;}
+.gstr2a-status.error{background:#f8d7da;color:#721c24;display:block;}
+.gstr2a-status.info{background:#d1ecf1;color:#0c5460;display:block;}
+bottom:1.5rem;right:1.5rem;z-index:999;background:#25D366;color:#fff;width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 15px rgba(37,211,102,0.4);text-decoration:none;font-size:1.4rem;}
 footer{background:#1a3a6b;color:rgba(255,255,255,0.7);text-align:center;padding:1.4rem 5%;font-size:0.8rem;}
 footer strong{color:#e8a020;}
 .toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(100px);background:#1a3a6b;color:#fff;padding:0.85rem 1.6rem;border-radius:8px;font-size:0.88rem;font-weight:500;transition:transform 0.3s;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,0.2);}
@@ -156,6 +183,7 @@ footer strong{color:#e8a020;}
     <li><a href="#deadlines">Deadlines</a></li>
     <li><a href="#calculator">Tax Calc</a></li>
     <li><a href="#appointment">Appointment</a></li>
+    <li><a href="#gstr2a">GSTR-2A Tool</a></li>
     <li><a href="#faq">FAQ</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
@@ -307,6 +335,52 @@ footer strong{color:#e8a020;}
   </div>
 </section>
 
+<section class="gstr2a" id="gstr2a">
+  <div class="section-label">Free Tool</div>
+  <h2 class="section-title">Purchase Register to Tally XML Converter</h2>
+  <p class="section-sub">AKR format ki Purchase Register Excel (.xlsx) upload karo — Tally-ready XML seedha download ho jaayegi. B2B + CDNR dono sheets automatically read hoti hain.</p>
+  <div class="gstr2a-wrapper">
+    <div class="gstr2a-upload" id="dropZone" ondragover="dragOver(event)" ondragleave="dragLeave(event)" ondrop="dropFile(event)" onclick="triggerFileInput()">
+      <input type="file" id="gstr2aFile" accept=".xlsx,.xls" onchange="handleFile(event)" style="display:none"/>
+      <div class="upload-icon">📂</div>
+      <h4>Purchase Register Excel Yahan Drop Karo</h4>
+      <p>AKR format — Sheets: "B2B - Purchase Register" & "CDNR - Credit Debit Notes"</p>
+      <button class="btn-upload" onclick="event.stopPropagation();triggerFileInput()">File Select Karo</button>
+    </div>
+
+    <div class="gstr2a-status" id="gstr2aStatus"></div>
+
+    <div id="gstr2aSummary" style="display:none;">
+      <div class="gstr2a-info" id="gstr2aInfoCards"></div>
+      <div class="gstr2a-table-wrap">
+        <table class="gstr2a-table" id="gstr2aTable">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>GSTIN</th>
+              <th>Supplier Name</th>
+              <th>Invoice / Note No.</th>
+              <th>Date</th>
+              <th>Taxable (₹)</th>
+              <th>IGST (₹)</th>
+              <th>CGST (₹)</th>
+              <th>SGST (₹)</th>
+              <th>Total (₹)</th>
+              <th>Type</th>
+            </tr>
+          </thead>
+          <tbody id="gstr2aBody"></tbody>
+        </table>
+      </div>
+      <div class="gstr2a-actions">
+        <button class="btn-xml" onclick="downloadXML()">⬇ Download Tally XML</button>
+        <button class="btn-clear" onclick="clearTool()">✕ Clear / New File</button>
+      </div>
+      <p style="font-size:0.75rem;color:#999;margin-top:0.8rem;">* Tally ERP 9 aur Tally Prime dono mein import hoga. Gateway of Tally → Import Data → Vouchers → XML file select karo.</p>
+    </div>
+  </div>
+</section>
+
 <section class="faq" id="faq">
   <div class="section-label">Common Questions</div>
   <h2 class="section-title">Frequently Asked Questions</h2>
@@ -345,6 +419,7 @@ footer strong{color:#e8a020;}
 
 <div class="toast" id="toast">✅ Done!</div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script>
 function toggleNav(){document.getElementById('navLinks').classList.toggle('open');}
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),4000);}
@@ -425,7 +500,180 @@ function toggleFAQ(el){
   document.querySelectorAll('.faq-q').forEach(q=>q.classList.remove('open'));
   if(!isOpen){ans.classList.add('open');el.classList.add('open');}
 }
-document.getElementById('appt-date').min=new Date().toISOString().split('T')[0];
+
+// ========== PURCHASE REGISTER TO TALLY XML ==========
+let gstr2aRecords = [];
+
+function triggerFileInput(){document.getElementById('gstr2aFile').click();}
+function dragOver(e){e.preventDefault();e.stopPropagation();document.getElementById('dropZone').classList.add('drag');}
+function dragLeave(e){e.stopPropagation();document.getElementById('dropZone').classList.remove('drag');}
+function dropFile(e){
+  e.preventDefault();e.stopPropagation();
+  document.getElementById('dropZone').classList.remove('drag');
+  const file=e.dataTransfer.files[0];
+  if(file) processFile(file);
+}
+function handleFile(e){
+  const file=e.target.files[0];
+  if(file) processFile(file);
+}
+
+function setStatus(msg,type){
+  const s=document.getElementById('gstr2aStatus');
+  s.textContent=msg;s.className='gstr2a-status '+type;
+}
+function toNum(v){if(v===null||v===undefined||v==='')return 0;const n=parseFloat(String(v).replace(/,/g,''));return isNaN(n)?0:Math.round(n*100)/100;}
+function fmtDate(v){
+  if(!v&&v!==0)return '';
+  const s=String(v).trim();
+  if(/^\d{2}[\/\-]\d{2}[\/\-]\d{4}$/.test(s))return s;
+  if(/^\d{4,5}$/.test(s)){const d=new Date(Math.round((parseInt(s)-25569)*86400*1000));return ('0'+d.getDate()).slice(-2)+'/'+('0'+(d.getMonth()+1)).slice(-2)+'/'+d.getFullYear();}
+  return s;
+}
+function tallyDate(v){
+  const m=String(v||'').match(/^(\d{2})[\/\-](\d{2})[\/\-](\d{4})$/);
+  if(m)return m[3]+m[2]+m[1];
+  const m2=String(v||'').match(/^(\d{4})[\/\-](\d{2})[\/\-](\d{2})$/);
+  if(m2)return m2[1]+m2[2]+m2[3];
+  return '20250401';
+}
+function fmt(n){return(Math.round(n*100)/100).toFixed(2);}
+function escX(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+function processFile(file){
+  const ext=file.name.split('.').pop().toLowerCase();
+  if(ext!=='xlsx'&&ext!=='xls'){setStatus('❌ Sirf .xlsx ya .xls file allowed hai.','error');return;}
+  setStatus('⏳ File padhee ja rahi hai: '+file.name,'info');
+  document.getElementById('gstr2aSummary').style.display='none';
+  gstr2aRecords=[];
+  const reader=new FileReader();
+  reader.onload=function(e){
+    try{
+      const wb=XLSX.read(new Uint8Array(e.target.result),{type:'array',cellDates:false,raw:true});
+      parseExcel(wb);
+    }catch(err){setStatus('❌ File parse nahi hui: '+err.message,'error');}
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+function parseExcel(wb){
+  let b2bCount=0,cdnrCount=0;
+  for(const sn of wb.SheetNames){
+    const isB2B=sn.includes('B2B');
+    const isCDNR=sn.includes('CDNR');
+    if(!isB2B&&!isCDNR)continue;
+    const ws=wb.Sheets[sn];
+    if(!ws)continue;
+    const rows=XLSX.utils.sheet_to_json(ws,{header:1,defval:'',raw:true,blankrows:false});
+    if(!rows||rows.length<4)continue;
+    let dataStart=-1;
+    for(let i=0;i<rows.length;i++){
+      const v=String(rows[i][0]||'').trim().toUpperCase();
+      if(v.length===15&&/^[0-9A-Z]{15}$/.test(v)){dataStart=i;break;}
+    }
+    if(dataStart<0)continue;
+    for(let i=dataStart;i<rows.length;i++){
+      const r=rows[i];
+      const gstin=String(r[0]||'').trim().toUpperCase();
+      if(gstin.length!==15||!/^[0-9A-Z]{15}$/.test(gstin))continue;
+      let name,invNo,invDt,taxable,igst,cgst,sgst,recType;
+      if(isB2B){
+        // Cols: 0=GSTIN,1=Name,2=InvNo,3=Type,4=Date,5=InvVal,6=Place,7=RC,8=Rate,9=Taxable,10=IGST,11=CGST,12=SGST
+        name=String(r[1]||'').trim();invNo=String(r[2]||'').trim();
+        invDt=fmtDate(r[4]);taxable=toNum(r[9]);igst=toNum(r[10]);cgst=toNum(r[11]);sgst=toNum(r[12]);
+        recType='Purchase';b2bCount++;
+      }else{
+        // Cols: 0=GSTIN,1=Name,2=NoteType(C/D),3=NoteNo,4=Date,5=NoteVal,6=Rate,7=Taxable,8=IGST,9=CGST,10=SGST
+        name=String(r[1]||'').trim();
+        const nt=String(r[2]||'').trim().toUpperCase();
+        invNo=String(r[3]||'').trim();invDt=fmtDate(r[4]);
+        taxable=toNum(r[7]);igst=toNum(r[8]);cgst=toNum(r[9]);sgst=toNum(r[10]);
+        recType=nt.startsWith('C')?'Credit Note':'Debit Note';cdnrCount++;
+      }
+      if(!taxable&&!igst&&!cgst&&!sgst)continue;
+      gstr2aRecords.push({gstin,name:name||'Unknown',invNo,invDt,taxable,igst,cgst,sgst,total:Math.round((taxable+igst+cgst+sgst)*100)/100,type:recType});
+    }
+  }
+  if(!gstr2aRecords.length){setStatus('❌ Data nahi mila. Sheet names check karo: "B2B - Purchase Register" aur "CDNR - Credit Debit Notes"','error');return;}
+  renderTable(b2bCount,cdnrCount);
+}
+
+function renderTable(b2bCount,cdnrCount){
+  const tbody=document.getElementById('gstr2aBody');
+  tbody.innerHTML='';
+  let totTax=0,totIGST=0,totCGST=0,totSGST=0,totTotal=0;
+  gstr2aRecords.forEach((r,i)=>{
+    totTax+=r.taxable;totIGST+=r.igst;totCGST+=r.cgst;totSGST+=r.sgst;totTotal+=r.total;
+    const tr=document.createElement('tr');
+    const tc=r.type==='Purchase'?'#1a3a6b':r.type==='Credit Note'?'#c0392b':'#27ae60';
+    tr.innerHTML=`<td>${i+1}</td><td style="font-size:.75rem">${r.gstin}</td><td>${r.name}</td><td>${r.invNo}</td><td>${r.invDt}</td><td>₹${fmt(r.taxable)}</td><td>₹${fmt(r.igst)}</td><td>₹${fmt(r.cgst)}</td><td>₹${fmt(r.sgst)}</td><td><strong>₹${fmt(r.total)}</strong></td><td><small style="color:${tc};font-weight:600">${r.type}</small></td>`;
+    tbody.appendChild(tr);
+  });
+  const tr=document.createElement('tr');
+  tr.style.cssText='background:#1a3a6b;color:#fff;font-weight:700;';
+  tr.innerHTML=`<td colspan="5" style="color:#e8a020">TOTAL — ${gstr2aRecords.length} records (B2B: ${b2bCount}, CDNR: ${cdnrCount})</td><td>₹${fmt(totTax)}</td><td>₹${fmt(totIGST)}</td><td>₹${fmt(totCGST)}</td><td>₹${fmt(totSGST)}</td><td>₹${fmt(totTotal)}</td><td></td>`;
+  tbody.appendChild(tr);
+  document.getElementById('gstr2aInfoCards').innerHTML=`
+    <div class="gstr2a-info-card"><div class="num">${gstr2aRecords.length}</div><p>Total Records</p></div>
+    <div class="gstr2a-info-card"><div class="num">${b2bCount}</div><p>Purchase (B2B)</p></div>
+    <div class="gstr2a-info-card"><div class="num">${cdnrCount}</div><p>Credit/Debit Notes</p></div>
+    <div class="gstr2a-info-card"><div class="num">₹${fmt(totIGST+totCGST+totSGST)}</div><p>Total GST</p></div>`;
+  document.getElementById('gstr2aSummary').style.display='block';
+  setStatus(`✅ ${gstr2aRecords.length} records successfully read! Table check karo, phir Tally XML download karo.`,'success');
+}
+
+function downloadXML(){
+  if(!gstr2aRecords.length){showToast('Pehle file upload karo.');return;}
+  const lines=['<?xml version="1.0" encoding="UTF-8"?>','<ENVELOPE>',
+    '  <HEADER><TALLYREQUEST>Import Data</TALLYREQUEST></HEADER>',
+    '  <BODY><IMPORTDATA>','    <REQUESTDESC>',
+    '      <REPORTNAME>Vouchers</REPORTNAME>',
+    '      <STATICVARIABLES><SVCURRENTCOMPANY></SVCURRENTCOMPANY></STATICVARIABLES>',
+    '    </REQUESTDESC>','    <REQUESTDATA>'];
+  for(const r of gstr2aRecords){
+    const dt=tallyDate(r.invDt);
+    const vt=r.type==='Credit Note'?'Credit Note':r.type==='Debit Note'?'Debit Note':'Purchase';
+    const isCredit=r.type==='Credit Note';
+    lines.push('      <TALLYMESSAGE xmlns:UDF="TallyUDF">');
+    lines.push(`        <VOUCHER VCHTYPE="${escX(vt)}" ACTION="Create">`);
+    lines.push(`          <DATE>${dt}</DATE>`);
+    lines.push(`          <NARRATION>${escX('GSTR-2A '+r.type+' | GSTIN: '+r.gstin+' | '+r.invNo)}</NARRATION>`);
+    lines.push(`          <VOUCHERTYPENAME>${escX(vt)}</VOUCHERTYPENAME>`);
+    lines.push(`          <PARTYLEDGERNAME>${escX(r.name)}</PARTYLEDGERNAME>`);
+    lines.push(`          <VOUCHERNUMBER>${escX(r.invNo)}</VOUCHERNUMBER>`);
+    // Party
+    lines.push('          <ALLLEDGERENTRIES.LIST>');
+    lines.push(`            <LEDGERNAME>${escX(r.name)}</LEDGERNAME>`);
+    lines.push(`            <ISDEEMEDPOSITIVE>${isCredit?'Yes':'No'}</ISDEEMEDPOSITIVE>`);
+    lines.push(`            <AMOUNT>${isCredit?'-':''}${fmt(r.total)}</AMOUNT>`);
+    lines.push('          </ALLLEDGERENTRIES.LIST>');
+    // Purchase
+    lines.push('          <ALLLEDGERENTRIES.LIST>');
+    lines.push('            <LEDGERNAME>Purchase Account</LEDGERNAME>');
+    lines.push(`            <ISDEEMEDPOSITIVE>${isCredit?'No':'Yes'}</ISDEEMEDPOSITIVE>`);
+    lines.push(`            <AMOUNT>${isCredit?'':'-'}${fmt(r.taxable)}</AMOUNT>`);
+    lines.push('          </ALLLEDGERENTRIES.LIST>');
+    if(r.igst>0){lines.push('          <ALLLEDGERENTRIES.LIST>');lines.push('            <LEDGERNAME>IGST Input</LEDGERNAME>');lines.push(`            <ISDEEMEDPOSITIVE>${isCredit?'No':'Yes'}</ISDEEMEDPOSITIVE>`);lines.push(`            <AMOUNT>${isCredit?'':'-'}${fmt(r.igst)}</AMOUNT>`);lines.push('          </ALLLEDGERENTRIES.LIST>');}
+    if(r.cgst>0){lines.push('          <ALLLEDGERENTRIES.LIST>');lines.push('            <LEDGERNAME>CGST Input</LEDGERNAME>');lines.push(`            <ISDEEMEDPOSITIVE>${isCredit?'No':'Yes'}</ISDEEMEDPOSITIVE>`);lines.push(`            <AMOUNT>${isCredit?'':'-'}${fmt(r.cgst)}</AMOUNT>`);lines.push('          </ALLLEDGERENTRIES.LIST>');}
+    if(r.sgst>0){lines.push('          <ALLLEDGERENTRIES.LIST>');lines.push('            <LEDGERNAME>SGST Input</LEDGERNAME>');lines.push(`            <ISDEEMEDPOSITIVE>${isCredit?'No':'Yes'}</ISDEEMEDPOSITIVE>`);lines.push(`            <AMOUNT>${isCredit?'':'-'}${fmt(r.sgst)}</AMOUNT>`);lines.push('          </ALLLEDGERENTRIES.LIST>');}
+    lines.push('        </VOUCHER>');
+    lines.push('      </TALLYMESSAGE>');
+  }
+  lines.push('    </REQUESTDATA>','  </IMPORTDATA></BODY>','</ENVELOPE>');
+  const blob=new Blob([lines.join('\n')],{type:'application/xml'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download='Purchase_Register_Tally.xml';a.click();
+  URL.revokeObjectURL(url);
+  showToast('✅ Tally XML download ho gayi!');
+}
+
+function clearTool(){
+  gstr2aRecords=[];
+  document.getElementById('gstr2aFile').value='';
+  document.getElementById('gstr2aSummary').style.display='none';
+  const s=document.getElementById('gstr2aStatus');s.className='gstr2a-status';s.textContent='';
+}
 </script>
 </body>
 </html>
