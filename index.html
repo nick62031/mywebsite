@@ -386,16 +386,67 @@ footer strong{color:#e8a020;}
   <h2 class="section-title">Purchase Register to Tally XML Converter</h2>
   <p class="section-sub">AKR format ki Purchase Register Excel (.xlsx) upload karo — Tally-ready XML seedha download ho jaayegi. B2B + CDNR dono sheets automatically read hoti hain.</p>
   <div class="gstr2a-wrapper">
-    <div class="gstr2a-upload" id="dropZone" ondragover="dragOver(event)" ondragleave="dragLeave(event)" ondrop="dropFile(event)" onclick="triggerFileInput()">
-      <input type="file" id="gstr2aFile" accept=".xlsx,.xls" onchange="handleFile(event)" style="display:none"/>
+    <div class="gstr2a-upload" id="dropZone" ondragover="dragOver(event)" ondragleave="dragLeave(event)" ondrop="dropFile(event)">
+      <input type="file" id="gstr2aFile" accept=".xlsx,.xls" style="display:none"/>
       <div class="upload-icon">📂</div>
       <h4>Purchase Register Excel Yahan Drop Karo</h4>
       <p>AKR format — Sheets: "B2B - Purchase Register" & "CDNR - Credit Debit Notes"</p>
-      <button class="btn-upload" onclick="event.stopPropagation();triggerFileInput()">File Select Karo</button>
+      <button class="btn-upload" onclick="document.getElementById('gstr2aFile').click()">File Select Karo</button>
     </div>
 
     <div class="gstr2a-status" id="gstr2aStatus"></div>
 
+    <!-- STEP 2: LEDGER MAPPING -->
+    <div id="ledgerMappingBox" style="display:none;">
+      <div style="background:#fff;border-radius:12px;padding:1.8rem;border:1.5px solid #e0e6f0;margin-top:1.2rem;">
+        <h3 style="font-size:1rem;font-weight:700;color:#1a3a6b;margin-bottom:0.3rem;">Step 2 — Apne Tally Ledger Names Set Karo</h3>
+        <p style="font-size:0.82rem;color:#666;margin-bottom:1.4rem;">File mein jo GST rates hain unke liye apne Tally ke exact ledger names type karo. Yahi naam XML mein jayenge.</p>
+
+        <!-- Purchase ledgers by rate -->
+        <div style="margin-bottom:1.2rem;">
+          <div style="font-size:0.78rem;font-weight:700;color:#e8a020;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.8rem;">📦 Purchase Ledgers (Rate-wise)</div>
+          <div id="purchaseMappingRows"></div>
+        </div>
+
+        <!-- Tax ledgers -->
+        <div style="margin-bottom:1.2rem;">
+          <div style="font-size:0.78rem;font-weight:700;color:#e8a020;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.8rem;">🧾 Tax Input Ledgers</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.8rem;">
+            <div>
+              <label style="font-size:0.78rem;font-weight:600;color:#333;display:block;margin-bottom:0.3rem;">CGST Input Ledger</label>
+              <input type="text" id="map-cgst" value="CGST Input" style="width:100%;padding:0.6rem 0.8rem;border:1.5px solid #d0d9e8;border-radius:6px;font-size:0.87rem;font-family:inherit;"/>
+            </div>
+            <div>
+              <label style="font-size:0.78rem;font-weight:600;color:#333;display:block;margin-bottom:0.3rem;">SGST Input Ledger</label>
+              <input type="text" id="map-sgst" value="SGST Input" style="width:100%;padding:0.6rem 0.8rem;border:1.5px solid #d0d9e8;border-radius:6px;font-size:0.87rem;font-family:inherit;"/>
+            </div>
+            <div>
+              <label style="font-size:0.78rem;font-weight:600;color:#333;display:block;margin-bottom:0.3rem;">IGST Input Ledger</label>
+              <input type="text" id="map-igst" value="IGST Input" style="width:100%;padding:0.6rem 0.8rem;border:1.5px solid #d0d9e8;border-radius:6px;font-size:0.87rem;font-family:inherit;"/>
+            </div>
+          </div>
+        </div>
+
+        <!-- Supplier ledger mapping -->
+        <div style="margin-bottom:1.4rem;">
+          <div style="font-size:0.78rem;font-weight:700;color:#e8a020;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.5rem;">🏢 Supplier (Party) Ledger</div>
+          <p style="font-size:0.78rem;color:#888;margin-bottom:0.8rem;">Supplier ka naam Tally mein exactly kaise register hai? Agar same name use karna hai toh "As per file" select karo.</p>
+          <div style="display:grid;grid-template-columns:auto 1fr;gap:0.8rem;align-items:center;">
+            <select id="map-supplier-mode" onchange="toggleSupplierMode()" style="padding:0.6rem 0.8rem;border:1.5px solid #d0d9e8;border-radius:6px;font-size:0.87rem;font-family:inherit;">
+              <option value="file">As per file (supplier name as-is)</option>
+              <option value="gstin">GSTIN as ledger name</option>
+              <option value="custom">Custom — same ledger for all</option>
+            </select>
+            <input type="text" id="map-supplier-custom" placeholder="Tally mein common ledger name..." style="width:100%;padding:0.6rem 0.8rem;border:1.5px solid #d0d9e8;border-radius:6px;font-size:0.87rem;font-family:inherit;display:none;"/>
+          </div>
+        </div>
+
+        <button class="btn-xml" onclick="confirmMapping()">✓ Confirm Mapping & Show Preview →</button>
+        <p style="font-size:0.73rem;color:#999;margin-top:0.7rem;">* Mapping save hoti hai — agli baar same ledger names automatically fill honge.</p>
+      </div>
+    </div>
+
+    <!-- STEP 3: PREVIEW + DOWNLOAD -->
     <div id="gstr2aSummary" style="display:none;">
       <div class="gstr2a-info" id="gstr2aInfoCards"></div>
       <div class="gstr2a-table-wrap">
@@ -412,6 +463,7 @@ footer strong{color:#e8a020;}
               <th>CGST (₹)</th>
               <th>SGST (₹)</th>
               <th>Total (₹)</th>
+              <th>Rate%</th>
               <th>Type</th>
             </tr>
           </thead>
@@ -420,6 +472,7 @@ footer strong{color:#e8a020;}
       </div>
       <div class="gstr2a-actions">
         <button class="btn-xml" onclick="downloadXML()">⬇ Download Tally XML</button>
+        <button class="btn-clear" onclick="editMapping()" style="background:#f4f6fa;color:#1a3a6b;border:1.5px solid #1a3a6b;">✎ Edit Mapping</button>
         <button class="btn-clear" onclick="clearTool()">✕ Clear / New File</button>
       </div>
       <p style="font-size:0.75rem;color:#999;margin-top:0.8rem;">* Tally ERP 9 aur Tally Prime dono mein import hoga. Gateway of Tally → Import Data → Vouchers → XML file select karo.</p>
@@ -651,7 +704,25 @@ footer strong{color:#e8a020;}
 
 <div class="toast" id="toast">✅ Done!</div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script>
+// SheetJS loader with multiple fallbacks
+(function(){
+  var srcs=[
+    'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js',
+    'https://unpkg.com/xlsx@0.18.5/dist/xlsx.full.min.js',
+    'https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js'
+  ];
+  function tryLoad(i){
+    if(i>=srcs.length){console.error('SheetJS load failed from all CDNs');return;}
+    var s=document.createElement('script');
+    s.src=srcs[i];
+    s.onload=function(){console.log('SheetJS loaded from: '+srcs[i]);};
+    s.onerror=function(){tryLoad(i+1);};
+    document.head.appendChild(s);
+  }
+  tryLoad(0);
+})();
+</script>
 <script>
 function toggleNav(){document.getElementById('navLinks').classList.toggle('open');}
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),4000);}
@@ -736,6 +807,16 @@ function toggleFAQ(el){
 // ========== PURCHASE REGISTER TO TALLY XML ==========
 let gstr2aRecords = [];
 
+document.addEventListener('DOMContentLoaded', function(){
+  var fi = document.getElementById('gstr2aFile');
+  if(fi) fi.addEventListener('change', function(e){ handleFile(e); });
+  // init appt date min
+  var ad = document.getElementById('appt-date');
+  if(ad) ad.min = new Date().toISOString().split('T')[0];
+  // init TDS rows
+  setTimeout(function(){ addTDSRow();addTDSRow();addTDSRow(); }, 200);
+});
+
 function triggerFileInput(){document.getElementById('gstr2aFile').click();}
 function dragOver(e){e.preventDefault();e.stopPropagation();document.getElementById('dropZone').classList.add('drag');}
 function dragLeave(e){e.stopPropagation();document.getElementById('dropZone').classList.remove('drag');}
@@ -777,6 +858,7 @@ function processFile(file){
   if(ext!=='xlsx'&&ext!=='xls'){setStatus('❌ Sirf .xlsx ya .xls file allowed hai.','error');return;}
   setStatus('⏳ File padhee ja rahi hai: '+file.name,'info');
   document.getElementById('gstr2aSummary').style.display='none';
+  document.getElementById('ledgerMappingBox').style.display='none';
   gstr2aRecords=[];
   const reader=new FileReader();
   reader.onload=function(e){
@@ -808,22 +890,25 @@ function parseExcel(wb){
       const r=rows[i];
       const gstin=String(r[0]||'').trim().toUpperCase();
       if(gstin.length!==15||!/^[0-9A-Z]{15}$/.test(gstin))continue;
-      let name,invNo,invDt,taxable,igst,cgst,sgst,recType;
+      let name,invNo,invDt,taxable,igst,cgst,sgst,recType,gstRate=0;
       if(isB2B){
         // Cols: 0=GSTIN,1=Name,2=InvNo,3=Type,4=Date,5=InvVal,6=Place,7=RC,8=Rate,9=Taxable,10=IGST,11=CGST,12=SGST
         name=String(r[1]||'').trim();invNo=String(r[2]||'').trim();
-        invDt=fmtDate(r[4]);taxable=toNum(r[9]);igst=toNum(r[10]);cgst=toNum(r[11]);sgst=toNum(r[12]);
+        invDt=fmtDate(r[4]);
+        gstRate=toNum(r[8]);
+        taxable=toNum(r[9]);igst=toNum(r[10]);cgst=toNum(r[11]);sgst=toNum(r[12]);
         recType='Purchase';b2bCount++;
       }else{
         // Cols: 0=GSTIN,1=Name,2=NoteType(C/D),3=NoteNo,4=Date,5=NoteVal,6=Rate,7=Taxable,8=IGST,9=CGST,10=SGST
         name=String(r[1]||'').trim();
         const nt=String(r[2]||'').trim().toUpperCase();
         invNo=String(r[3]||'').trim();invDt=fmtDate(r[4]);
+        gstRate=toNum(r[6]);
         taxable=toNum(r[7]);igst=toNum(r[8]);cgst=toNum(r[9]);sgst=toNum(r[10]);
         recType=nt.startsWith('C')?'Credit Note':'Debit Note';cdnrCount++;
       }
       if(!taxable&&!igst&&!cgst&&!sgst)continue;
-      gstr2aRecords.push({gstin,name:name||'Unknown',invNo,invDt,taxable,igst,cgst,sgst,total:Math.round((taxable+igst+cgst+sgst)*100)/100,type:recType});
+      gstr2aRecords.push({gstin,name:name||'Unknown',invNo,invDt,taxable,igst,cgst,sgst,total:Math.round((taxable+igst+cgst+sgst)*100)/100,type:recType,gstRate});
     }
   }
   if(!gstr2aRecords.length){setStatus('❌ Data nahi mila. Sheet names check karo: "B2B - Purchase Register" aur "CDNR - Credit Debit Notes"','error');return;}
@@ -831,6 +916,105 @@ function parseExcel(wb){
 }
 
 function renderTable(b2bCount,cdnrCount){
+  // First show mapping screen
+  showMappingScreen(b2bCount,cdnrCount);
+}
+
+// Safe localStorage wrapper
+const store={
+  get:function(k){try{return JSON.parse(localStorage.getItem(k)||'null');}catch(e){return null;}},
+  set:function(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+};
+let _savedLedgerMap={};
+
+function showMappingScreen(b2bCount,cdnrCount){
+  const uniqueRates=[...new Set(gstr2aRecords.map(r=>r.gstRate).filter(r=>r>0))].sort((a,b)=>a-b);
+
+  // Load saved mapping
+  let savedMap=store.get('akr_ledger_map')||_savedLedgerMap||{};
+
+  const container=document.getElementById('purchaseMappingRows');
+  container.innerHTML='';
+  uniqueRates.forEach(rate=>{
+    const savedVal=savedMap['purchase_'+rate]||'Purchase@'+rate+'%';
+    const div=document.createElement('div');
+    div.style.cssText='display:grid;grid-template-columns:180px 1fr;align-items:center;gap:1rem;margin-bottom:0.7rem;';
+    div.innerHTML=`
+      <div style="background:#f4f6fa;border-radius:6px;padding:0.55rem 0.8rem;font-size:0.85rem;font-weight:600;color:#1a3a6b;text-align:center;">
+        Purchase @ ${rate}%
+      </div>
+      <input type="text" id="map-purchase-${rate}" value="${savedVal}" placeholder="Tally ledger name..." 
+        style="width:100%;padding:0.6rem 0.8rem;border:1.5px solid #d0d9e8;border-radius:6px;font-size:0.87rem;font-family:inherit;"/>`;
+    container.appendChild(div);
+  });
+
+  // Also load saved tax ledger names
+  if(savedMap['cgst']) document.getElementById('map-cgst').value=savedMap['cgst'];
+  if(savedMap['sgst']) document.getElementById('map-sgst').value=savedMap['sgst'];
+  if(savedMap['igst']) document.getElementById('map-igst').value=savedMap['igst'];
+  if(savedMap['supplierMode']){
+    document.getElementById('map-supplier-mode').value=savedMap['supplierMode'];
+    toggleSupplierMode();
+  }
+  if(savedMap['supplierCustom']) document.getElementById('map-supplier-custom').value=savedMap['supplierCustom'];
+
+  document.getElementById('ledgerMappingBox').style.display='block';
+  document.getElementById('gstr2aSummary').style.display='none';
+
+  // Store counts for later
+  window._b2bCount=b2bCount;
+  window._cdnrCount=cdnrCount;
+}
+
+function confirmMapping(){
+  // Save mapping to localStorage
+  const uniqueRates=[...new Set(gstr2aRecords.map(r=>r.gstRate).filter(r=>r>0))].sort((a,b)=>a-b);
+  const map={};
+  uniqueRates.forEach(rate=>{
+    const val=document.getElementById('map-purchase-'+rate)?.value.trim();
+    if(val) map['purchase_'+rate]=val;
+  });
+  map['cgst']=document.getElementById('map-cgst').value.trim()||'CGST Input';
+  map['sgst']=document.getElementById('map-sgst').value.trim()||'SGST Input';
+  map['igst']=document.getElementById('map-igst').value.trim()||'IGST Input';
+  map['supplierMode']=document.getElementById('map-supplier-mode').value;
+  map['supplierCustom']=document.getElementById('map-supplier-custom').value.trim();
+  try{localStorage.setItem('akr_ledger_map',JSON.stringify(map));}catch(e){}
+  _savedLedgerMap=map;
+  window._ledgerMap=map;
+
+  // Now show preview table
+  showPreviewTable(window._b2bCount||0,window._cdnrCount||0);
+  document.getElementById('ledgerMappingBox').style.display='none';
+}
+
+function editMapping(){
+  document.getElementById('gstr2aSummary').style.display='none';
+  document.getElementById('ledgerMappingBox').style.display='block';
+}
+
+function toggleSupplierMode(){
+  const mode=document.getElementById('map-supplier-mode').value;
+  document.getElementById('map-supplier-custom').style.display=mode==='custom'?'block':'none';
+}
+
+function getSupplierLedger(r){
+  const map=window._ledgerMap||{};
+  const mode=map.supplierMode||'file';
+  if(mode==='gstin') return r.gstin;
+  if(mode==='custom') return map.supplierCustom||r.name;
+  return r.name;
+}
+function getPurchaseLedger(rate){
+  const map=window._ledgerMap||{};
+  return map['purchase_'+rate]||('Purchase@'+rate+'%');
+}
+function getTaxLedger(type){
+  const map=window._ledgerMap||{};
+  return map[type]||(type==='cgst'?'CGST Input':type==='sgst'?'SGST Input':'IGST Input');
+}
+
+function showPreviewTable(b2bCount,cdnrCount){
   const tbody=document.getElementById('gstr2aBody');
   tbody.innerHTML='';
   let totTax=0,totIGST=0,totCGST=0,totSGST=0,totTotal=0;
@@ -838,12 +1022,12 @@ function renderTable(b2bCount,cdnrCount){
     totTax+=r.taxable;totIGST+=r.igst;totCGST+=r.cgst;totSGST+=r.sgst;totTotal+=r.total;
     const tr=document.createElement('tr');
     const tc=r.type==='Purchase'?'#1a3a6b':r.type==='Credit Note'?'#c0392b':'#27ae60';
-    tr.innerHTML=`<td>${i+1}</td><td style="font-size:.75rem">${r.gstin}</td><td>${r.name}</td><td>${r.invNo}</td><td>${r.invDt}</td><td>₹${fmt(r.taxable)}</td><td>₹${fmt(r.igst)}</td><td>₹${fmt(r.cgst)}</td><td>₹${fmt(r.sgst)}</td><td><strong>₹${fmt(r.total)}</strong></td><td><small style="color:${tc};font-weight:600">${r.type}</small></td>`;
+    tr.innerHTML=`<td>${i+1}</td><td style="font-size:.75rem">${r.gstin}</td><td>${r.name}</td><td>${r.invNo}</td><td>${r.invDt}</td><td>₹${fmt(r.taxable)}</td><td>₹${fmt(r.igst)}</td><td>₹${fmt(r.cgst)}</td><td>₹${fmt(r.sgst)}</td><td><strong>₹${fmt(r.total)}</strong></td><td><small>${r.gstRate>0?r.gstRate+'%':'—'}</small></td><td><small style="color:${tc};font-weight:600">${r.type}</small></td>`;
     tbody.appendChild(tr);
   });
   const tr=document.createElement('tr');
   tr.style.cssText='background:#1a3a6b;color:#fff;font-weight:700;';
-  tr.innerHTML=`<td colspan="5" style="color:#e8a020">TOTAL — ${gstr2aRecords.length} records (B2B: ${b2bCount}, CDNR: ${cdnrCount})</td><td>₹${fmt(totTax)}</td><td>₹${fmt(totIGST)}</td><td>₹${fmt(totCGST)}</td><td>₹${fmt(totSGST)}</td><td>₹${fmt(totTotal)}</td><td></td>`;
+  tr.innerHTML=`<td colspan="5" style="color:#e8a020">TOTAL — ${gstr2aRecords.length} records (B2B: ${b2bCount}, CDNR: ${cdnrCount})</td><td>₹${fmt(totTax)}</td><td>₹${fmt(totIGST)}</td><td>₹${fmt(totCGST)}</td><td>₹${fmt(totSGST)}</td><td>₹${fmt(totTotal)}</td><td colspan="2"></td>`;
   tbody.appendChild(tr);
   document.getElementById('gstr2aInfoCards').innerHTML=`
     <div class="gstr2a-info-card"><div class="num">${gstr2aRecords.length}</div><p>Total Records</p></div>
@@ -851,48 +1035,117 @@ function renderTable(b2bCount,cdnrCount){
     <div class="gstr2a-info-card"><div class="num">${cdnrCount}</div><p>Credit/Debit Notes</p></div>
     <div class="gstr2a-info-card"><div class="num">₹${fmt(totIGST+totCGST+totSGST)}</div><p>Total GST</p></div>`;
   document.getElementById('gstr2aSummary').style.display='block';
-  setStatus(`✅ ${gstr2aRecords.length} records successfully read! Table check karo, phir Tally XML download karo.`,'success');
+  setStatus(`✅ ${gstr2aRecords.length} records ready! Mapping confirmed. Ab XML download karo.`,'success');
 }
 
 function downloadXML(){
   if(!gstr2aRecords.length){showToast('Pehle file upload karo.');return;}
-  const lines=['<?xml version="1.0" encoding="UTF-8"?>','<ENVELOPE>',
-    '  <HEADER><TALLYREQUEST>Import Data</TALLYREQUEST></HEADER>',
-    '  <BODY><IMPORTDATA>','    <REQUESTDESC>',
-    '      <REPORTNAME>Vouchers</REPORTNAME>',
-    '      <STATICVARIABLES><SVCURRENTCOMPANY></SVCURRENTCOMPANY></STATICVARIABLES>',
-    '    </REQUESTDESC>','    <REQUESTDATA>'];
+
+  let xml='<?xml version="1.0" encoding="UTF-8"?>\n';
+  xml+='<ENVELOPE>\n';
+  xml+='<HEADER><TALLYREQUEST>Import Data</TALLYREQUEST></HEADER>\n';
+  xml+='<BODY>\n<IMPORTDATA>\n';
+  xml+='<REQUESTDESC>\n<REPORTNAME>Vouchers</REPORTNAME>\n';
+  xml+='<STATICVARIABLES><SVCURRENTCOMPANY></SVCURRENTCOMPANY></STATICVARIABLES>\n';
+  xml+='</REQUESTDESC>\n<REQUESTDATA>\n';
+
   for(const r of gstr2aRecords){
     const dt=tallyDate(r.invDt);
     const vt=r.type==='Credit Note'?'Credit Note':r.type==='Debit Note'?'Debit Note':'Purchase';
     const isCredit=r.type==='Credit Note';
-    lines.push('      <TALLYMESSAGE xmlns:UDF="TallyUDF">');
-    lines.push(`        <VOUCHER VCHTYPE="${escX(vt)}" ACTION="Create">`);
-    lines.push(`          <DATE>${dt}</DATE>`);
-    lines.push(`          <NARRATION>${escX('GSTR-2A '+r.type+' | GSTIN: '+r.gstin+' | '+r.invNo)}</NARRATION>`);
-    lines.push(`          <VOUCHERTYPENAME>${escX(vt)}</VOUCHERTYPENAME>`);
-    lines.push(`          <PARTYLEDGERNAME>${escX(r.name)}</PARTYLEDGERNAME>`);
-    lines.push(`          <VOUCHERNUMBER>${escX(r.invNo)}</VOUCHERNUMBER>`);
-    // Party
-    lines.push('          <ALLLEDGERENTRIES.LIST>');
-    lines.push(`            <LEDGERNAME>${escX(r.name)}</LEDGERNAME>`);
-    lines.push(`            <ISDEEMEDPOSITIVE>${isCredit?'Yes':'No'}</ISDEEMEDPOSITIVE>`);
-    lines.push(`            <AMOUNT>${isCredit?'-':''}${fmt(r.total)}</AMOUNT>`);
-    lines.push('          </ALLLEDGERENTRIES.LIST>');
-    // Purchase
-    lines.push('          <ALLLEDGERENTRIES.LIST>');
-    lines.push('            <LEDGERNAME>Purchase Account</LEDGERNAME>');
-    lines.push(`            <ISDEEMEDPOSITIVE>${isCredit?'No':'Yes'}</ISDEEMEDPOSITIVE>`);
-    lines.push(`            <AMOUNT>${isCredit?'':'-'}${fmt(r.taxable)}</AMOUNT>`);
-    lines.push('          </ALLLEDGERENTRIES.LIST>');
-    if(r.igst>0){lines.push('          <ALLLEDGERENTRIES.LIST>');lines.push('            <LEDGERNAME>IGST Input</LEDGERNAME>');lines.push(`            <ISDEEMEDPOSITIVE>${isCredit?'No':'Yes'}</ISDEEMEDPOSITIVE>`);lines.push(`            <AMOUNT>${isCredit?'':'-'}${fmt(r.igst)}</AMOUNT>`);lines.push('          </ALLLEDGERENTRIES.LIST>');}
-    if(r.cgst>0){lines.push('          <ALLLEDGERENTRIES.LIST>');lines.push('            <LEDGERNAME>CGST Input</LEDGERNAME>');lines.push(`            <ISDEEMEDPOSITIVE>${isCredit?'No':'Yes'}</ISDEEMEDPOSITIVE>`);lines.push(`            <AMOUNT>${isCredit?'':'-'}${fmt(r.cgst)}</AMOUNT>`);lines.push('          </ALLLEDGERENTRIES.LIST>');}
-    if(r.sgst>0){lines.push('          <ALLLEDGERENTRIES.LIST>');lines.push('            <LEDGERNAME>SGST Input</LEDGERNAME>');lines.push(`            <ISDEEMEDPOSITIVE>${isCredit?'No':'Yes'}</ISDEEMEDPOSITIVE>`);lines.push(`            <AMOUNT>${isCredit?'':'-'}${fmt(r.sgst)}</AMOUNT>`);lines.push('          </ALLLEDGERENTRIES.LIST>');}
-    lines.push('        </VOUCHER>');
-    lines.push('      </TALLYMESSAGE>');
+    const sign=isCredit?1:-1; // Credit note: party Dr, purchase Cr
+
+    const supplierLedger=escX(getSupplierLedger(r));
+    const purchaseLedger=escX(getPurchaseLedger(r.gstRate));
+    const cgstLedger=escX(getTaxLedger('cgst'));
+    const sgstLedger=escX(getTaxLedger('sgst'));
+    const igstLedger=escX(getTaxLedger('igst'));
+
+    // Party amount: for purchase = positive (credit), for credit note = negative (debit)
+    const partyAmt = isCredit ? -r.total : r.total;
+    const taxableAmt = isCredit ? r.taxable : -r.taxable;
+    const igstAmt = isCredit ? r.igst : -r.igst;
+    const cgstAmt = isCredit ? r.cgst : -r.cgst;
+    const sgstAmt = isCredit ? r.sgst : -r.sgst;
+
+    xml+=`<TALLYMESSAGE xmlns:UDF="TallyUDF">\n`;
+    xml+=`<VOUCHER VCHTYPE="${escX(vt)}" ACTION="Create" OBJVIEW="Accounting Voucher View">\n`;
+    xml+=`<DATE>${dt}</DATE>\n`;
+    xml+=`<GUID>akr-${dt}-${escX(r.invNo)}</GUID>\n`;
+    xml+=`<VOUCHERTYPENAME>${escX(vt)}</VOUCHERTYPENAME>\n`;
+    xml+=`<VOUCHERNUMBER>${escX(r.invNo)}</VOUCHERNUMBER>\n`;
+    xml+=`<REFERENCE>${escX(r.invNo)}</REFERENCE>\n`;
+    xml+=`<PARTYLEDGERNAME>${supplierLedger}</PARTYLEDGERNAME>\n`;
+    xml+=`<NARRATION>GSTR-2A | ${escX(r.type)} | GSTIN: ${escX(r.gstin)} | Inv: ${escX(r.invNo)}</NARRATION>\n`;
+    xml+=`<ISINVOICE>Yes</ISINVOICE>\n`;
+
+    // Party Ledger Entry
+    xml+=`<ALLLEDGERENTRIES.LIST>\n`;
+    xml+=`<LEDGERNAME>${supplierLedger}</LEDGERNAME>\n`;
+    xml+=`<GSTCLASS></GSTCLASS>\n`;
+    xml+=`<ISDEEMEDPOSITIVE>${partyAmt>0?'No':'Yes'}</ISDEEMEDPOSITIVE>\n`;
+    xml+=`<LEDGERFROMITEM>No</LEDGERFROMITEM>\n`;
+    xml+=`<REMOVEZEROENTRIES>No</REMOVEZEROENTRIES>\n`;
+    xml+=`<ISPARTYLEDGER>Yes</ISPARTYLEDGER>\n`;
+    xml+=`<AMOUNT>${fmt(partyAmt)}</AMOUNT>\n`;
+    xml+=`</ALLLEDGERENTRIES.LIST>\n`;
+
+    // Purchase Ledger Entry
+    xml+=`<ALLLEDGERENTRIES.LIST>\n`;
+    xml+=`<LEDGERNAME>${purchaseLedger}</LEDGERNAME>\n`;
+    xml+=`<GSTCLASS></GSTCLASS>\n`;
+    xml+=`<ISDEEMEDPOSITIVE>${taxableAmt>0?'No':'Yes'}</ISDEEMEDPOSITIVE>\n`;
+    xml+=`<LEDGERFROMITEM>No</LEDGERFROMITEM>\n`;
+    xml+=`<REMOVEZEROENTRIES>No</REMOVEZEROENTRIES>\n`;
+    xml+=`<ISPARTYLEDGER>No</ISPARTYLEDGER>\n`;
+    xml+=`<AMOUNT>${fmt(taxableAmt)}</AMOUNT>\n`;
+    xml+=`</ALLLEDGERENTRIES.LIST>\n`;
+
+    // IGST
+    if(r.igst>0){
+      xml+=`<ALLLEDGERENTRIES.LIST>\n`;
+      xml+=`<LEDGERNAME>${igstLedger}</LEDGERNAME>\n`;
+      xml+=`<GSTCLASS>Integrated Tax</GSTCLASS>\n`;
+      xml+=`<ISDEEMEDPOSITIVE>${igstAmt>0?'No':'Yes'}</ISDEEMEDPOSITIVE>\n`;
+      xml+=`<LEDGERFROMITEM>No</LEDGERFROMITEM>\n`;
+      xml+=`<REMOVEZEROENTRIES>No</REMOVEZEROENTRIES>\n`;
+      xml+=`<ISPARTYLEDGER>No</ISPARTYLEDGER>\n`;
+      xml+=`<AMOUNT>${fmt(igstAmt)}</AMOUNT>\n`;
+      xml+=`</ALLLEDGERENTRIES.LIST>\n`;
+    }
+
+    // CGST
+    if(r.cgst>0){
+      xml+=`<ALLLEDGERENTRIES.LIST>\n`;
+      xml+=`<LEDGERNAME>${cgstLedger}</LEDGERNAME>\n`;
+      xml+=`<GSTCLASS>Central Tax</GSTCLASS>\n`;
+      xml+=`<ISDEEMEDPOSITIVE>${cgstAmt>0?'No':'Yes'}</ISDEEMEDPOSITIVE>\n`;
+      xml+=`<LEDGERFROMITEM>No</LEDGERFROMITEM>\n`;
+      xml+=`<REMOVEZEROENTRIES>No</REMOVEZEROENTRIES>\n`;
+      xml+=`<ISPARTYLEDGER>No</ISPARTYLEDGER>\n`;
+      xml+=`<AMOUNT>${fmt(cgstAmt)}</AMOUNT>\n`;
+      xml+=`</ALLLEDGERENTRIES.LIST>\n`;
+    }
+
+    // SGST
+    if(r.sgst>0){
+      xml+=`<ALLLEDGERENTRIES.LIST>\n`;
+      xml+=`<LEDGERNAME>${sgstLedger}</LEDGERNAME>\n`;
+      xml+=`<GSTCLASS>State Tax</GSTCLASS>\n`;
+      xml+=`<ISDEEMEDPOSITIVE>${sgstAmt>0?'No':'Yes'}</ISDEEMEDPOSITIVE>\n`;
+      xml+=`<LEDGERFROMITEM>No</LEDGERFROMITEM>\n`;
+      xml+=`<REMOVEZEROENTRIES>No</REMOVEZEROENTRIES>\n`;
+      xml+=`<ISPARTYLEDGER>No</ISPARTYLEDGER>\n`;
+      xml+=`<AMOUNT>${fmt(sgstAmt)}</AMOUNT>\n`;
+      xml+=`</ALLLEDGERENTRIES.LIST>\n`;
+    }
+
+    xml+=`</VOUCHER>\n</TALLYMESSAGE>\n`;
   }
-  lines.push('    </REQUESTDATA>','  </IMPORTDATA></BODY>','</ENVELOPE>');
-  const blob=new Blob([lines.join('\n')],{type:'application/xml'});
+
+  xml+='</REQUESTDATA>\n</IMPORTDATA>\n</BODY>\n</ENVELOPE>';
+
+  const blob=new Blob([xml],{type:'application/xml'});
   const url=URL.createObjectURL(blob);
   const a=document.createElement('a');
   a.href=url;a.download='Purchase_Register_Tally.xml';a.click();
@@ -904,7 +1157,9 @@ function clearTool(){
   gstr2aRecords=[];
   document.getElementById('gstr2aFile').value='';
   document.getElementById('gstr2aSummary').style.display='none';
+  document.getElementById('ledgerMappingBox').style.display='none';
   const s=document.getElementById('gstr2aStatus');s.className='gstr2a-status';s.textContent='';
+  window._ledgerMap={};window._b2bCount=0;window._cdnrCount=0;
 }
 
 // ===== GST TOOLS =====
@@ -1058,7 +1313,7 @@ function addTDSRow(){
   <input type="number" placeholder="26AS TDS ₹" style="padding:.55rem .8rem;border:1.5px solid #d0d9e8;border-radius:6px;font-size:.85rem;font-family:inherit;width:100%"/>`;
   c.appendChild(d);
 }
-setTimeout(()=>{addTDSRow();addTDSRow();addTDSRow();},100);
+// TDS rows initialized via DOMContentLoaded above
 function calc26AS(){
   const rows=document.querySelectorAll('#tdsRowContainer .tool-3col');
   const data=[];
