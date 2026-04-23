@@ -228,6 +228,9 @@ footer strong{color:#e8a020;}
     <li><a href="#calculator">Tax Calc</a></li>
     <li><a href="#appointment">Appointment</a></li>
     <li><a href="#gstr2a">GSTR-2A Tool</a></li>
+    <li><a href="#gstr1">GSTR-1 Tool</a></li>
+    <li><a href="#gstr3b">GSTR-3B Tool</a></li>
+    <li><a href="#csv2json">CSV→JSON</a></li>
     <li><a href="#gst-tools">GST Tools</a></li>
     <li><a href="#itr-tools">ITR Tools</a></li>
     <li><a href="#faq">FAQ</a></li>
@@ -476,6 +479,222 @@ footer strong{color:#e8a020;}
         <button class="btn-clear" onclick="clearTool()">✕ Clear / New File</button>
       </div>
       <p style="font-size:0.75rem;color:#999;margin-top:0.8rem;">* Tally ERP 9 aur Tally Prime dono mein import hoga. Gateway of Tally → Import Data → Vouchers → XML file select karo.</p>
+    </div>
+  </div>
+</section>
+
+<!-- GSTR-3B TOOL -->
+<section class="gstr2a" id="gstr3b">
+  <div class="section-label">Free Tool</div>
+  <h2 class="section-title">GSTR-3B to Tally XML Converter</h2>
+  <p class="section-sub">GSTR-3B ki details manually enter karo — Tally-ready XML generate hogi aur seedha Journal entry import ho jaayegi.</p>
+  <div class="gstr2a-wrapper" style="max-width:700px;">
+    <div style="background:#fff;border-radius:12px;padding:1.8rem;border:1.5px solid #e0e6f0;">
+
+      <div style="font-size:0.78rem;font-weight:700;color:#e8a020;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:1rem;">📅 Return Period</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem;">
+        <div><label style="font-size:0.8rem;font-weight:600;color:#333;display:block;margin-bottom:0.3rem;">Month</label>
+        <select id="g3b-month" style="width:100%;padding:0.62rem 0.8rem;border:1.5px solid #d0d9e8;border-radius:6px;font-size:0.88rem;font-family:inherit;">
+          <option>January</option><option>February</option><option>March</option><option>April</option>
+          <option>May</option><option>June</option><option>July</option><option>August</option>
+          <option>September</option><option>October</option><option>November</option><option>December</option>
+        </select></div>
+        <div><label style="font-size:0.8rem;font-weight:600;color:#333;display:block;margin-bottom:0.3rem;">Year</label>
+        <input type="number" id="g3b-year" value="2025" style="width:100%;padding:0.62rem 0.8rem;border:1.5px solid #d0d9e8;border-radius:6px;font-size:0.88rem;font-family:inherit;"/></div>
+      </div>
+
+      <div style="font-size:0.78rem;font-weight:700;color:#e8a020;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:1rem;">📤 Outward Supplies (Sales)</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.8rem;margin-bottom:1.5rem;">
+        <div><label style="font-size:0.78rem;font-weight:600;color:#333;display:block;margin-bottom:0.3rem;">Taxable Value (₹)</label>
+        <input type="number" id="g3b-out-taxable" placeholder="0" style="width:100%;padding:0.6rem 0.8rem;border:1.5px solid #d0d9e8;border-radius:6px;font-size:0.87rem;font-family:inherit;"/></div>
+        <div><label style="font-size:0.78rem;font-weight:600;color:#333;display:block;margin-bottom:0.3rem;">IGST (₹)</label>
+        <input type="number" id="g3b-out-igst" placeholder="0" style="width:100%;padding:0.6rem 0.8rem;border:1.5px solid #d0d9e8;border-radius:6px;font-size:0.87rem;font-family:inherit;"/></div>
+        <div><label style="font-size:0.78rem;font-weight:600;color:#333;display:block;margin-bottom:0.3rem;">CGST (₹)</label>
+        <input type="number" id="g3b-out-cgst" placeholder="0" style="width:100%;padding:0.6rem 0.8rem;border:1.5px solid #d0d9e8;border-radius:6px;font-size:0.87rem;font-family:inherit;"/></div>
+        <div><label style="font-size:0.78rem;font-weight:600;color:#333;display:block;margin-bottom:0.3rem;">SGST (₹)</label>
+        <input type="number" id="g3b-out-sgst" placeholder="0" style="width:100%;padding:0.6rem 0.8rem;border:1.5px solid #d0d9e8;border-radius:6px;font-size:0.87rem;font-family:inherit;"/></div>
+      </div>
+
+      <div style="font-size:0.78rem;font-weight:700;color:#e8a020;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:1rem;">📥 Input Tax Credit (ITC)</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.8rem;margin-bottom:1.5rem;">
+        <div><label style="font-size:0.78rem;font-weight:600;color:#333;display:block;margin-bottom:0.3rem;">IGST ITC (₹)</label>
+        <input type="number" id="g3b-itc-igst" placeholder="0" style="width:100%;padding:0.6rem 0.8rem;border:1.5px solid #d0d9e8;border-radius:6px;font-size:0.87rem;font-family:inherit;"/></div>
+        <div><label style="font-size:0.78rem;font-weight:600;color:#333;display:block;margin-bottom:0.3rem;">CGST ITC (₹)</label>
+        <input type="number" id="g3b-itc-cgst" placeholder="0" style="width:100%;padding:0.6rem 0.8rem;border:1.5px solid #d0d9e8;border-radius:6px;font-size:0.87rem;font-family:inherit;"/></div>
+        <div><label style="font-size:0.78rem;font-weight:600;color:#333;display:block;margin-bottom:0.3rem;">SGST ITC (₹)</label>
+        <input type="number" id="g3b-itc-sgst" placeholder="0" style="width:100%;padding:0.6rem 0.8rem;border:1.5px solid #d0d9e8;border-radius:6px;font-size:0.87rem;font-family:inherit;"/></div>
+      </div>
+
+      <div style="font-size:0.78rem;font-weight:700;color:#e8a020;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:1rem;">💳 Tax Paid (Cash Ledger)</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.8rem;margin-bottom:1.5rem;">
+        <div><label style="font-size:0.78rem;font-weight:600;color:#333;display:block;margin-bottom:0.3rem;">IGST Paid (₹)</label>
+        <input type="number" id="g3b-paid-igst" placeholder="0" style="width:100%;padding:0.6rem 0.8rem;border:1.5px solid #d0d9e8;border-radius:6px;font-size:0.87rem;font-family:inherit;"/></div>
+        <div><label style="font-size:0.78rem;font-weight:600;color:#333;display:block;margin-bottom:0.3rem;">CGST Paid (₹)</label>
+        <input type="number" id="g3b-paid-cgst" placeholder="0" style="width:100%;padding:0.6rem 0.8rem;border:1.5px solid #d0d9e8;border-radius:6px;font-size:0.87rem;font-family:inherit;"/></div>
+        <div><label style="font-size:0.78rem;font-weight:600;color:#333;display:block;margin-bottom:0.3rem;">SGST Paid (₹)</label>
+        <input type="number" id="g3b-paid-sgst" placeholder="0" style="width:100%;padding:0.6rem 0.8rem;border:1.5px solid #d0d9e8;border-radius:6px;font-size:0.87rem;font-family:inherit;"/></div>
+      </div>
+
+      <div style="font-size:0.78rem;font-weight:700;color:#e8a020;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:1rem;">🏦 Tally Ledger Names</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;margin-bottom:1.5rem;">
+        <div><label style="font-size:0.78rem;font-weight:600;color:#333;display:block;margin-bottom:0.3rem;">IGST Payable Ledger</label>
+        <input type="text" id="g3b-led-igst-pay" value="IGST Payable" style="width:100%;padding:0.6rem 0.8rem;border:1.5px solid #d0d9e8;border-radius:6px;font-size:0.87rem;font-family:inherit;"/></div>
+        <div><label style="font-size:0.78rem;font-weight:600;color:#333;display:block;margin-bottom:0.3rem;">CGST Payable Ledger</label>
+        <input type="text" id="g3b-led-cgst-pay" value="CGST Payable" style="width:100%;padding:0.6rem 0.8rem;border:1.5px solid #d0d9e8;border-radius:6px;font-size:0.87rem;font-family:inherit;"/></div>
+        <div><label style="font-size:0.78rem;font-weight:600;color:#333;display:block;margin-bottom:0.3rem;">SGST Payable Ledger</label>
+        <input type="text" id="g3b-led-sgst-pay" value="SGST Payable" style="width:100%;padding:0.6rem 0.8rem;border:1.5px solid #d0d9e8;border-radius:6px;font-size:0.87rem;font-family:inherit;"/></div>
+        <div><label style="font-size:0.78rem;font-weight:600;color:#333;display:block;margin-bottom:0.3rem;">Electronic Cash Ledger</label>
+        <input type="text" id="g3b-led-cash" value="GST Cash Ledger" style="width:100%;padding:0.6rem 0.8rem;border:1.5px solid #d0d9e8;border-radius:6px;font-size:0.87rem;font-family:inherit;"/></div>
+        <div><label style="font-size:0.78rem;font-weight:600;color:#333;display:block;margin-bottom:0.3rem;">IGST Input Ledger</label>
+        <input type="text" id="g3b-led-igst-in" value="IGST Input" style="width:100%;padding:0.6rem 0.8rem;border:1.5px solid #d0d9e8;border-radius:6px;font-size:0.87rem;font-family:inherit;"/></div>
+        <div><label style="font-size:0.78rem;font-weight:600;color:#333;display:block;margin-bottom:0.3rem;">CGST Input Ledger</label>
+        <input type="text" id="g3b-led-cgst-in" value="CGST Input" style="width:100%;padding:0.6rem 0.8rem;border:1.5px solid #d0d9e8;border-radius:6px;font-size:0.87rem;font-family:inherit;"/></div>
+        <div><label style="font-size:0.78rem;font-weight:600;color:#333;display:block;margin-bottom:0.3rem;">SGST Input Ledger</label>
+        <input type="text" id="g3b-led-sgst-in" value="SGST Input" style="width:100%;padding:0.6rem 0.8rem;border:1.5px solid #d0d9e8;border-radius:6px;font-size:0.87rem;font-family:inherit;"/></div>
+      </div>
+
+      <button class="btn-xml" onclick="downloadG3BXML()" style="width:100%;">⬇ Generate & Download Tally XML</button>
+      <div class="gstr2a-status" id="g3bStatus" style="margin-top:0.8rem;"></div>
+    </div>
+  </div>
+</section>
+
+<!-- CSV TO JSON TOOL -->
+<section class="gstr2a" id="csv2json" style="background:#f4f6fa;">
+  <div class="section-label">Free Tool</div>
+  <h2 class="section-title">GSTR-1 CSV to JSON Converter</h2>
+  <p class="section-sub">GSTN offline utility ke liye — b2b, cdnr, docs, hsn CSV files upload karo, ek combined JSON file download karo jo seedha GSTN offline tool mein import ho jaaye.</p>
+  <div class="gstr2a-wrapper">
+    <div style="background:#fff;border-radius:12px;padding:1.8rem;border:1.5px solid #e0e6f0;">
+      <div style="font-size:0.78rem;font-weight:700;color:#e8a020;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:1rem;">📁 CSV Files Upload Karo</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.2rem;">
+        <div class="upload2" onclick="document.getElementById('csv-b2b').click()">
+          <input type="file" id="csv-b2b" accept=".csv" onchange="loadCSV('b2b',event)"/>
+          <strong>b2b.csv</strong><p id="lbl-b2b">B2B invoices</p>
+        </div>
+        <div class="upload2" onclick="document.getElementById('csv-cdnr').click()">
+          <input type="file" id="csv-cdnr" accept=".csv" onchange="loadCSV('cdnr',event)"/>
+          <strong>cdnr.csv</strong><p id="lbl-cdnr">Credit/Debit Notes</p>
+        </div>
+        <div class="upload2" onclick="document.getElementById('csv-hsn-b2b').click()">
+          <input type="file" id="csv-hsn-b2b" accept=".csv" onchange="loadCSV('hsn_b2b',event)"/>
+          <strong>hsn_b2b.csv</strong><p id="lbl-hsn_b2b">HSN Summary (B2B)</p>
+        </div>
+        <div class="upload2" onclick="document.getElementById('csv-hsn-b2c').click()">
+          <input type="file" id="csv-hsn-b2c" accept=".csv" onchange="loadCSV('hsn_b2c',event)"/>
+          <strong>hsn_b2c.csv</strong><p id="lbl-hsn_b2c">HSN Summary (B2C)</p>
+        </div>
+        <div class="upload2" onclick="document.getElementById('csv-docs').click()">
+          <input type="file" id="csv-docs" accept=".csv" onchange="loadCSV('docs',event)"/>
+          <strong>docs.csv</strong><p id="lbl-docs">Document Summary</p>
+        </div>
+      </div>
+
+      <div style="font-size:0.78rem;font-weight:700;color:#e8a020;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.8rem;">📋 GSTIN & Period Details</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.8rem;margin-bottom:1.2rem;">
+        <div><label style="font-size:0.78rem;font-weight:600;color:#333;display:block;margin-bottom:0.3rem;">GSTIN</label>
+        <input type="text" id="json-gstin" placeholder="e.g. 10ANNPB6524C1ZO" style="width:100%;padding:0.6rem 0.8rem;border:1.5px solid #d0d9e8;border-radius:6px;font-size:0.87rem;font-family:inherit;"/></div>
+        <div><label style="font-size:0.78rem;font-weight:600;color:#333;display:block;margin-bottom:0.3rem;">Financial Year</label>
+        <select id="json-fy" style="width:100%;padding:0.6rem 0.8rem;border:1.5px solid #d0d9e8;border-radius:6px;font-size:0.87rem;font-family:inherit;">
+          <option>2025-26</option><option>2024-25</option><option>2023-24</option>
+        </select></div>
+        <div><label style="font-size:0.78rem;font-weight:600;color:#333;display:block;margin-bottom:0.3rem;">Tax Period (Month)</label>
+        <select id="json-period" style="width:100%;padding:0.6rem 0.8rem;border:1.5px solid #d0d9e8;border-radius:6px;font-size:0.87rem;font-family:inherit;">
+          <option value="01">January</option><option value="02">February</option><option value="03">March</option>
+          <option value="04">April</option><option value="05">May</option><option value="06">June</option>
+          <option value="07">July</option><option value="08">August</option><option value="09">September</option>
+          <option value="10">October</option><option value="11">November</option><option value="12">December</option>
+        </select></div>
+      </div>
+
+      <div id="csvStatus" class="gstr2a-status" style="display:none;margin-bottom:1rem;"></div>
+      <div id="csvSummaryCards" style="display:none;" class="gstr2a-info"></div>
+      <button class="btn-xml" onclick="downloadJSON()" style="width:100%;margin-top:0.5rem;">⬇ Download GSTN JSON File</button>
+      <p style="font-size:0.73rem;color:#999;margin-top:0.7rem;">* Generated JSON seedha GSTN Offline Tool mein import kar sakte ho → Import → Browse JSON file.</p>
+    </div>
+  </div>
+</section>
+
+
+  <div class="section-label">Free Tool</div>
+  <h2 class="section-title">GSTR-1 to Tally XML Converter</h2>
+  <p class="section-sub">GSTN GSTR-1 Excel template upload karo — B2B, B2BA, CDNR, CDNRA, B2CL sheets automatically read hogi aur Tally-ready XML generate hogi.</p>
+  <div class="gstr2a-wrapper">
+    <div class="gstr2a-upload" id="dropZone1" ondragover="dragOver1(event)" ondragleave="dragLeave1(event)" ondrop="dropFile1(event)">
+      <input type="file" id="gstr1File" accept=".xlsx,.xls" style="display:none"/>
+      <div class="upload-icon">📤</div>
+      <h4>GSTR-1 Excel File Yahan Drop Karo</h4>
+      <p>GSTN offline tool template — Sheets: b2b, b2ba, cdnr, cdnra, b2cl</p>
+      <button class="btn-upload" onclick="document.getElementById('gstr1File').click()">File Select Karo</button>
+    </div>
+
+    <div class="gstr2a-status" id="gstr1Status"></div>
+
+    <!-- STEP 2: LEDGER MAPPING -->
+    <div id="gstr1MappingBox" style="display:none;">
+      <div style="background:#fff;border-radius:12px;padding:1.8rem;border:1.5px solid #e0e6f0;margin-top:1.2rem;">
+        <h3 style="font-size:1rem;font-weight:700;color:#1a3a6b;margin-bottom:0.3rem;">Step 2 — Tally Ledger Names Set Karo</h3>
+        <p style="font-size:0.82rem;color:#666;margin-bottom:1.4rem;">File mein jo GST rates hain unke liye apne Tally ke exact Sales ledger names type karo.</p>
+
+        <!-- Sales ledgers by rate -->
+        <div style="margin-bottom:1.2rem;">
+          <div style="font-size:0.78rem;font-weight:700;color:#e8a020;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.8rem;">🧾 Sales Ledgers (Rate-wise)</div>
+          <div id="gstr1SalesMappingRows"></div>
+        </div>
+
+        <!-- Tax ledgers -->
+        <div style="margin-bottom:1.2rem;">
+          <div style="font-size:0.78rem;font-weight:700;color:#e8a020;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.8rem;">💰 Tax Output Ledgers</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.8rem;">
+            <div><label style="font-size:0.78rem;font-weight:600;color:#333;display:block;margin-bottom:0.3rem;">CGST Output</label>
+            <input type="text" id="g1-map-cgst" value="CGST Output" style="width:100%;padding:0.6rem 0.8rem;border:1.5px solid #d0d9e8;border-radius:6px;font-size:0.87rem;font-family:inherit;"/></div>
+            <div><label style="font-size:0.78rem;font-weight:600;color:#333;display:block;margin-bottom:0.3rem;">SGST Output</label>
+            <input type="text" id="g1-map-sgst" value="SGST Output" style="width:100%;padding:0.6rem 0.8rem;border:1.5px solid #d0d9e8;border-radius:6px;font-size:0.87rem;font-family:inherit;"/></div>
+            <div><label style="font-size:0.78rem;font-weight:600;color:#333;display:block;margin-bottom:0.3rem;">IGST Output</label>
+            <input type="text" id="g1-map-igst" value="IGST Output" style="width:100%;padding:0.6rem 0.8rem;border:1.5px solid #d0d9e8;border-radius:6px;font-size:0.87rem;font-family:inherit;"/></div>
+          </div>
+        </div>
+
+        <!-- Customer ledger -->
+        <div style="margin-bottom:1.4rem;">
+          <div style="font-size:0.78rem;font-weight:700;color:#e8a020;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.5rem;">🏢 Customer (Party) Ledger</div>
+          <div style="display:grid;grid-template-columns:auto 1fr;gap:0.8rem;align-items:center;">
+            <select id="g1-map-customer-mode" onchange="toggleG1CustomerMode()" style="padding:0.6rem 0.8rem;border:1.5px solid #d0d9e8;border-radius:6px;font-size:0.87rem;font-family:inherit;">
+              <option value="file">As per file (receiver name as-is)</option>
+              <option value="gstin">GSTIN as ledger name</option>
+              <option value="sundry">Sundry Debtors (common)</option>
+              <option value="custom">Custom ledger name</option>
+            </select>
+            <input type="text" id="g1-map-customer-custom" placeholder="Custom ledger name..." style="width:100%;padding:0.6rem 0.8rem;border:1.5px solid #d0d9e8;border-radius:6px;font-size:0.87rem;font-family:inherit;display:none;"/>
+          </div>
+        </div>
+
+        <button class="btn-xml" onclick="confirmG1Mapping()">✓ Confirm Mapping & Show Preview →</button>
+        <p style="font-size:0.73rem;color:#999;margin-top:0.7rem;">* Mapping save hoti hai — agli baar same ledger names automatically fill honge.</p>
+      </div>
+    </div>
+
+    <!-- STEP 3: PREVIEW + DOWNLOAD -->
+    <div id="gstr1Summary" style="display:none;">
+      <div class="gstr2a-info" id="gstr1InfoCards"></div>
+      <div class="gstr2a-table-wrap">
+        <table class="gstr2a-table">
+          <thead>
+            <tr>
+              <th>#</th><th>GSTIN</th><th>Receiver Name</th><th>Invoice No.</th>
+              <th>Date</th><th>Taxable (₹)</th><th>IGST (₹)</th><th>CGST (₹)</th>
+              <th>SGST (₹)</th><th>Total (₹)</th><th>Rate%</th><th>Type</th>
+            </tr>
+          </thead>
+          <tbody id="gstr1Body"></tbody>
+        </table>
+      </div>
+      <div class="gstr2a-actions">
+        <button class="btn-xml" onclick="downloadG1XML()">⬇ Download Tally XML</button>
+        <button class="btn-clear" onclick="editG1Mapping()" style="background:#f4f6fa;color:#1a3a6b;border:1.5px solid #1a3a6b;">✎ Edit Mapping</button>
+        <button class="btn-clear" onclick="clearG1Tool()">✕ Clear / New File</button>
+      </div>
+      <p style="font-size:0.75rem;color:#999;margin-top:0.8rem;">* Tally ERP 9 aur Tally Prime dono mein import hoga. Gateway of Tally → Import Data → Vouchers → XML select karo.</p>
     </div>
   </div>
 </section>
@@ -1160,6 +1379,514 @@ function clearTool(){
   document.getElementById('ledgerMappingBox').style.display='none';
   const s=document.getElementById('gstr2aStatus');s.className='gstr2a-status';s.textContent='';
   window._ledgerMap={};window._b2bCount=0;window._cdnrCount=0;
+}
+
+// ===== GSTR-3B TO TALLY XML =====
+function downloadG3BXML(){
+  const month=document.getElementById('g3b-month').value;
+  const year=document.getElementById('g3b-year').value;
+  const n=v=>parseFloat(document.getElementById(v).value)||0;
+
+  const outIGST=n('g3b-out-igst'),outCGST=n('g3b-out-cgst'),outSGST=n('g3b-out-sgst');
+  const itcIGST=n('g3b-itc-igst'),itcCGST=n('g3b-itc-cgst'),itcSGST=n('g3b-itc-sgst');
+  const paidIGST=n('g3b-paid-igst'),paidCGST=n('g3b-paid-cgst'),paidSGST=n('g3b-paid-sgst');
+
+  const ledIGSTpay=document.getElementById('g3b-led-igst-pay').value||'IGST Payable';
+  const ledCGSTpay=document.getElementById('g3b-led-cgst-pay').value||'CGST Payable';
+  const ledSGSTpay=document.getElementById('g3b-led-sgst-pay').value||'SGST Payable';
+  const ledCash=document.getElementById('g3b-led-cash').value||'GST Cash Ledger';
+  const ledIGSTin=document.getElementById('g3b-led-igst-in').value||'IGST Input';
+  const ledCGSTin=document.getElementById('g3b-led-cgst-in').value||'CGST Input';
+  const ledSGSTin=document.getElementById('g3b-led-sgst-in').value||'SGST Input';
+
+  // Date = last day of month
+  const monthIdx={'January':1,'February':2,'March':3,'April':4,'May':5,'June':6,'July':7,'August':8,'September':9,'October':10,'November':11,'December':12};
+  const m=monthIdx[month];
+  const lastDay=new Date(parseInt(year),m,0).getDate();
+  const dt=String(year)+('0'+m).slice(-2)+('0'+lastDay).slice(-2);
+  const narr=`GSTR-3B | ${month} ${year}`;
+
+  let xml='<?xml version="1.0" encoding="UTF-8"?>\n<ENVELOPE>\n';
+  xml+='<HEADER><TALLYREQUEST>Import Data</TALLYREQUEST></HEADER>\n<BODY>\n<IMPORTDATA>\n';
+  xml+='<REQUESTDESC>\n<REPORTNAME>Vouchers</REPORTNAME>\n';
+  xml+='<STATICVARIABLES><SVCURRENTCOMPANY></SVCURRENTCOMPANY></STATICVARIABLES>\n</REQUESTDESC>\n<REQUESTDATA>\n';
+
+  // Voucher 1: Output Tax Liability (Journal)
+  if(outIGST>0||outCGST>0||outSGST>0){
+    xml+=`<TALLYMESSAGE xmlns:UDF="TallyUDF">\n<VOUCHER VCHTYPE="Journal" ACTION="Create" OBJVIEW="Accounting Voucher View">\n`;
+    xml+=`<DATE>${dt}</DATE>\n<VOUCHERTYPENAME>Journal</VOUCHERTYPENAME>\n`;
+    xml+=`<NARRATION>${escX(narr+' | Output Tax Liability')}</NARRATION>\n`;
+    xml+=`<ISINVOICE>No</ISINVOICE>\n`;
+    if(outIGST>0){xml+=`<ALLLEDGERENTRIES.LIST>\n<LEDGERNAME>${escX(ledIGSTpay)}</LEDGERNAME>\n<ISDEEMEDPOSITIVE>Yes</ISDEEMEDPOSITIVE>\n<AMOUNT>-${fmt(outIGST)}</AMOUNT>\n</ALLLEDGERENTRIES.LIST>\n`;}
+    if(outCGST>0){xml+=`<ALLLEDGERENTRIES.LIST>\n<LEDGERNAME>${escX(ledCGSTpay)}</LEDGERNAME>\n<ISDEEMEDPOSITIVE>Yes</ISDEEMEDPOSITIVE>\n<AMOUNT>-${fmt(outCGST)}</AMOUNT>\n</ALLLEDGERENTRIES.LIST>\n`;}
+    if(outSGST>0){xml+=`<ALLLEDGERENTRIES.LIST>\n<LEDGERNAME>${escX(ledSGSTpay)}</LEDGERNAME>\n<ISDEEMEDPOSITIVE>Yes</ISDEEMEDPOSITIVE>\n<AMOUNT>-${fmt(outSGST)}</AMOUNT>\n</ALLLEDGERENTRIES.LIST>\n`;}
+    // ITC set off
+    if(itcIGST>0){xml+=`<ALLLEDGERENTRIES.LIST>\n<LEDGERNAME>${escX(ledIGSTin)}</LEDGERNAME>\n<ISDEEMEDPOSITIVE>No</ISDEEMEDPOSITIVE>\n<AMOUNT>${fmt(itcIGST)}</AMOUNT>\n</ALLLEDGERENTRIES.LIST>\n`;}
+    if(itcCGST>0){xml+=`<ALLLEDGERENTRIES.LIST>\n<LEDGERNAME>${escX(ledCGSTin)}</LEDGERNAME>\n<ISDEEMEDPOSITIVE>No</ISDEEMEDPOSITIVE>\n<AMOUNT>${fmt(itcCGST)}</AMOUNT>\n</ALLLEDGERENTRIES.LIST>\n`;}
+    if(itcSGST>0){xml+=`<ALLLEDGERENTRIES.LIST>\n<LEDGERNAME>${escX(ledSGSTin)}</LEDGERNAME>\n<ISDEEMEDPOSITIVE>No</ISDEEMEDPOSITIVE>\n<AMOUNT>${fmt(itcSGST)}</AMOUNT>\n</ALLLEDGERENTRIES.LIST>\n`;}
+    // Cash payment balance
+    const cashAmt=(outIGST+outCGST+outSGST)-(itcIGST+itcCGST+itcSGST);
+    if(cashAmt>0){xml+=`<ALLLEDGERENTRIES.LIST>\n<LEDGERNAME>${escX(ledCash)}</LEDGERNAME>\n<ISDEEMEDPOSITIVE>No</ISDEEMEDPOSITIVE>\n<AMOUNT>${fmt(cashAmt)}</AMOUNT>\n</ALLLEDGERENTRIES.LIST>\n`;}
+    xml+=`</VOUCHER>\n</TALLYMESSAGE>\n`;
+  }
+
+  // Voucher 2: Tax Payment (if cash paid separately)
+  if(paidIGST>0||paidCGST>0||paidSGST>0){
+    xml+=`<TALLYMESSAGE xmlns:UDF="TallyUDF">\n<VOUCHER VCHTYPE="Payment" ACTION="Create" OBJVIEW="Accounting Voucher View">\n`;
+    xml+=`<DATE>${dt}</DATE>\n<VOUCHERTYPENAME>Payment</VOUCHERTYPENAME>\n`;
+    xml+=`<NARRATION>${escX(narr+' | GST Cash Payment')}</NARRATION>\n`;
+    xml+=`<ISINVOICE>No</ISINVOICE>\n`;
+    if(paidIGST>0){xml+=`<ALLLEDGERENTRIES.LIST>\n<LEDGERNAME>${escX(ledIGSTpay)}</LEDGERNAME>\n<ISDEEMEDPOSITIVE>Yes</ISDEEMEDPOSITIVE>\n<AMOUNT>-${fmt(paidIGST)}</AMOUNT>\n</ALLLEDGERENTRIES.LIST>\n`;}
+    if(paidCGST>0){xml+=`<ALLLEDGERENTRIES.LIST>\n<LEDGERNAME>${escX(ledCGSTpay)}</LEDGERNAME>\n<ISDEEMEDPOSITIVE>Yes</ISDEEMEDPOSITIVE>\n<AMOUNT>-${fmt(paidCGST)}</AMOUNT>\n</ALLLEDGERENTRIES.LIST>\n`;}
+    if(paidSGST>0){xml+=`<ALLLEDGERENTRIES.LIST>\n<LEDGERNAME>${escX(ledSGSTpay)}</LEDGERNAME>\n<ISDEEMEDPOSITIVE>Yes</ISDEEMEDPOSITIVE>\n<AMOUNT>-${fmt(paidSGST)}</AMOUNT>\n</ALLLEDGERENTRIES.LIST>\n`;}
+    xml+=`<ALLLEDGERENTRIES.LIST>\n<LEDGERNAME>${escX(ledCash)}</LEDGERNAME>\n<ISDEEMEDPOSITIVE>No</ISDEEMEDPOSITIVE>\n<AMOUNT>${fmt(paidIGST+paidCGST+paidSGST)}</AMOUNT>\n</ALLLEDGERENTRIES.LIST>\n`;
+    xml+=`</VOUCHER>\n</TALLYMESSAGE>\n`;
+  }
+
+  xml+='</REQUESTDATA>\n</IMPORTDATA>\n</BODY>\n</ENVELOPE>';
+
+  const s=document.getElementById('g3bStatus');
+  if(xml.includes('ALLLEDGERENTRIES')){
+    const blob=new Blob([xml],{type:'application/xml'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');a.href=url;a.download=`GSTR3B_Tally_${month}_${year}.xml`;a.click();
+    URL.revokeObjectURL(url);
+    s.textContent='✅ Tally XML download ho gayi!';s.className='gstr2a-status success';
+  } else {
+    s.textContent='⚠ Koi value enter nahi ki. Pehle GSTR-3B ki values daalo.';s.className='gstr2a-status error';
+  }
+}
+
+// ===== CSV TO JSON CONVERTER =====
+let csvData={b2b:[],cdnr:[],hsn_b2b:[],hsn_b2c:[],docs:[]};
+
+function loadCSV(section,e){
+  const file=e.target.files[0];if(!file)return;
+  const lbl=document.getElementById('lbl-'+section);
+  lbl.textContent='⏳ Loading...';
+  const reader=new FileReader();
+  reader.onload=function(ev){
+    try{
+      const text=ev.target.result;
+      const rows=text.trim().split('\n').map(r=>r.split(',').map(c=>c.trim().replace(/^"|"$/g,'')));
+      if(rows.length<2){lbl.textContent='⚠ Empty file';return;}
+      const headers=rows[0];
+      const data=[];
+      for(let i=1;i<rows.length;i++){
+        const row=rows[i];
+        if(row.every(c=>!c))continue;
+        const obj={};
+        headers.forEach((h,j)=>obj[h]=row[j]||'');
+        data.push(obj);
+      }
+      csvData[section]=data;
+      lbl.textContent=`✅ ${data.length} rows — ${file.name}`;
+      updateCSVSummary();
+    }catch(err){lbl.textContent='❌ Error: '+err.message;}
+  };
+  reader.readAsText(file,'utf-8');
+}
+
+function updateCSVSummary(){
+  const total=Object.values(csvData).reduce((s,a)=>s+a.length,0);
+  if(!total)return;
+  const s=document.getElementById('csvStatus');
+  s.textContent=`✅ Total records loaded: ${total} — B2B:${csvData.b2b.length}, CDNR:${csvData.cdnr.length}, HSN-B2B:${csvData.hsn_b2b.length}, HSN-B2C:${csvData.hsn_b2c.length}, Docs:${csvData.docs.length}`;
+  s.className='gstr2a-status success';s.style.display='block';
+}
+
+function parseInvDate(d){
+  // DD-MM-YYYY or DD/MM/YYYY → DD-MM-YYYY
+  if(!d)return '';
+  return d.replace(/\//g,'-');
+}
+
+function buildB2BJSON(){
+  // Group by GSTIN
+  const map=new Map();
+  for(const row of csvData.b2b){
+    const gstin=row['GSTIN/UIN of Recipient']||'';
+    const name=row['Receiver Name']||'';
+    if(!gstin)continue;
+    if(!map.has(gstin)) map.set(gstin,{ctin:gstin,cfs:'Y',inv:[]});
+    const entry=map.get(gstin);
+    entry.inv.push({
+      inum:row['Invoice Number']||'',
+      idt:parseInvDate(row['Invoice date']||''),
+      val:parseFloat(row['Invoice Value'])||0,
+      pos:row['Place Of Supply']||'',
+      rchrg:row['Reverse Charge']||'N',
+      inv_typ:row['Invoice Type']||'Regular',
+      itms:[{num:1,itm_det:{txval:parseFloat(row['Taxable Value'])||0,rt:parseFloat(row['Rate'])||0,iamt:0,camt:0,samt:0,csamt:parseFloat(row['Cess Amount'])||0}}]
+    });
+  }
+  return [...map.values()];
+}
+
+function buildCDNRJSON(){
+  const map=new Map();
+  for(const row of csvData.cdnr){
+    const gstin=row['GSTIN/UIN of Recipient']||'';
+    if(!gstin)continue;
+    if(!map.has(gstin)) map.set(gstin,{ctin:gstin,nt:[]});
+    map.get(gstin).nt.push({
+      ntty:row['Note Type']||'C',
+      nt_num:row['Note Number']||'',
+      nt_dt:parseInvDate(row['Note Date']||''),
+      val:parseFloat(row['Note Value'])||0,
+      pos:row['Place Of Supply']||'',
+      rchrg:row['Reverse Charge']||'N',
+      itms:[{num:1,itm_det:{txval:parseFloat(row['Taxable Value'])||0,rt:parseFloat(row['Rate'])||0,iamt:0,camt:0,samt:0,csamt:0}}]
+    });
+  }
+  return [...map.values()];
+}
+
+function buildHSNJSON(data){
+  return {data:data.map(row=>({
+    num:1,
+    hsn_sc:row['HSN']||'',
+    desc:row['Description']||'',
+    uqc:row['UQC']||'OTH',
+    qty:parseFloat(row['Total Quantity'])||0,
+    val:parseFloat(row['Total Value'])||0,
+    txval:parseFloat(row['Taxable Value'])||0,
+    iamt:parseFloat(row['Integrated Tax Amount'])||0,
+    camt:parseFloat(row['Central Tax Amount'])||0,
+    samt:parseFloat(row['State/UT Tax Amount'])||0,
+    csamt:0
+  }))};
+}
+
+function buildDocsJSON(){
+  return {docdet:csvData.docs.map((row,i)=>({
+    num:i+1,
+    nature:row['Nature of Document']||'',
+    from:row['Sr. No. From']||'',
+    to:row['Sr. No. To']||'',
+    totnum:parseInt(row['Total Number'])||0,
+    cancel:parseInt(row['Cancelled'])||0,
+    net:parseInt(row['Total Number'])||0
+  }))};
+}
+
+function downloadJSON(){
+  const gstin=document.getElementById('json-gstin').value.trim();
+  const fy=document.getElementById('json-fy').value;
+  const period=document.getElementById('json-period').value;
+  if(!gstin){showToast('GSTIN enter karo.');return;}
+
+  const total=Object.values(csvData).reduce((s,a)=>s+a.length,0);
+  if(!total){
+    const s=document.getElementById('csvStatus');
+    s.textContent='❌ Pehle koi CSV file upload karo.';s.className='gstr2a-status error';s.style.display='block';return;
+  }
+
+  const json={
+    gstin:gstin,
+    fp:period+fy.split('-')[0].slice(-2), // e.g. 042025
+    version:'GST3.0.4',
+    hash:'hash',
+    b2b:buildB2BJSON(),
+    cdnr:buildCDNRJSON(),
+    hsn:buildHSNJSON([...csvData.hsn_b2b,...csvData.hsn_b2c]),
+    doc_issue:buildDocsJSON()
+  };
+
+  const blob=new Blob([JSON.stringify(json,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download=`GSTR1_${gstin}_${period}${fy}.json`;a.click();
+  URL.revokeObjectURL(url);
+  showToast('✅ JSON file download ho gayi! GSTN offline tool mein import karo.');
+}
+let gstr1Records=[];
+let _g1SavedMap={};
+
+document.addEventListener('DOMContentLoaded',function(){
+  var f=document.getElementById('gstr1File');
+  if(f) f.addEventListener('change',function(e){processG1File(e.target.files[0]);});
+});
+
+function dragOver1(e){e.preventDefault();e.stopPropagation();document.getElementById('dropZone1').classList.add('drag');}
+function dragLeave1(e){e.stopPropagation();document.getElementById('dropZone1').classList.remove('drag');}
+function dropFile1(e){
+  e.preventDefault();e.stopPropagation();
+  document.getElementById('dropZone1').classList.remove('drag');
+  const f=e.dataTransfer.files[0];if(f)processG1File(f);
+}
+
+function setG1Status(msg,type){
+  const s=document.getElementById('gstr1Status');
+  s.textContent=msg;s.className='gstr2a-status '+type;
+}
+
+function processG1File(file){
+  if(!file)return;
+  const ext=file.name.split('.').pop().toLowerCase();
+  if(ext!=='xlsx'&&ext!=='xls'){setG1Status('❌ Sirf .xlsx ya .xls file allowed hai.','error');return;}
+  setG1Status('⏳ File padhee ja rahi hai: '+file.name,'info');
+  document.getElementById('gstr1Summary').style.display='none';
+  document.getElementById('gstr1MappingBox').style.display='none';
+  gstr1Records=[];
+  const reader=new FileReader();
+  reader.onload=function(e){
+    try{
+      const wb=XLSX.read(new Uint8Array(e.target.result),{type:'array',cellDates:false,raw:true});
+      parseG1Excel(wb);
+    }catch(err){setG1Status('❌ File parse nahi hui: '+err.message,'error');}
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+function parseG1Excel(wb){
+  // Sheet configs: {name, gstin, receiver, invNo, invDt, rate, taxable, igst, cgst, sgst, dataRow, type}
+  const sheetConfigs=[
+    // b2b: row4=header, row5+=data. Cols: 0=GSTIN,1=Name,2=InvNo,3=InvDt,4=InvVal,5=POS,6=RC,7=ApplTax,8=InvType,9=ECom,10=Rate,11=Taxable,12=Cess
+    {name:'b2b',  gstin:0,recv:1,invNo:2,invDt:3,rate:10,taxable:11,igst:-1,cgst:-1,sgst:-1,dataRow:5,type:'Sales'},
+    // b2ba: row4=header, row5+=data. Cols: 0=GSTIN,1=Name,2=OrgInvNo,3=OrgInvDt,4=RevInvNo,5=RevInvDt,6=InvVal,7=POS,8=RC,9=ApplTax,10=InvType,11=ECom,12=Rate,13=Taxable,14=Cess
+    {name:'b2ba', gstin:0,recv:1,invNo:4,invDt:5,rate:12,taxable:13,igst:-1,cgst:-1,sgst:-1,dataRow:5,type:'Sales (Amended)'},
+    // cdnr: row4=header, row5+=data. Cols: 0=GSTIN,1=Name,2=NoteNo,3=NoteDt,4=NoteType,5=POS,6=RC,7=NoteSupplyType,8=NoteVal,9=ApplTax,10=Rate,11=Taxable,12=Cess
+    {name:'cdnr', gstin:0,recv:1,invNo:2,invDt:3,rate:10,taxable:11,igst:-1,cgst:-1,sgst:-1,dataRow:5,type:'Credit/Debit Note',noteType:4},
+    // cdnra: row4=header. Cols: 0=GSTIN,1=Name,2=OrgNoteNo,3=OrgNoteDt,4=RevNoteNo,5=RevNoteDt,6=NoteType,7=POS,8=RC,9=SupplyType,10=NoteVal,11=ApplTax,12=Rate,13=Taxable,14=Cess
+    {name:'cdnra',gstin:0,recv:1,invNo:4,invDt:5,rate:12,taxable:13,igst:-1,cgst:-1,sgst:-1,dataRow:5,type:'Credit/Debit Note (Amended)',noteType:6},
+    // b2cl: row4=header. Cols: 0=InvNo,1=InvDt,2=InvVal,3=POS,4=ApplTax,5=Rate,6=Taxable,7=Cess,8=ECom (no GSTIN/name)
+    {name:'b2cl', gstin:-1,recv:-1,invNo:0,invDt:1,rate:5,taxable:6,igst:-1,cgst:-1,sgst:-1,dataRow:5,type:'B2C Large'},
+  ];
+
+  let counts={};
+  for(const cfg of sheetConfigs){
+    const ws=wb.Sheets[cfg.name];if(!ws)continue;
+    const rows=XLSX.utils.sheet_to_json(ws,{header:1,defval:'',raw:true,blankrows:false});
+    if(!rows||rows.length<cfg.dataRow)continue;
+    let sheetCount=0;
+    for(let i=cfg.dataRow-1;i<rows.length;i++){
+      const r=rows[i];
+      const invNo=String(r[cfg.invNo]||'').trim();
+      if(!invNo||invNo===cfg.name)continue;
+      const taxable=toNum(r[cfg.taxable]);
+      const rate=toNum(r[cfg.rate]);
+      if(!taxable&&!rate)continue;
+
+      // Calculate tax from rate since GSTR-1 doesn't have tax columns directly
+      // But HSN sheet has it — for now compute from rate
+      let igst=0,cgst=0,sgst=0;
+      const pos=String(r[cfg.name==='b2b'?5:cfg.name==='b2ba'?7:3]||'').trim();
+      // If inter-state (POS != Bihar=10): IGST
+      // If intra-state: CGST+SGST
+      const isInterState=pos&&!pos.includes('10-');
+      if(isInterState){igst=Math.round(taxable*rate/100*100)/100;}
+      else{cgst=Math.round(taxable*rate/2/100*100)/100;sgst=cgst;}
+
+      const gstin=cfg.gstin>=0?String(r[cfg.gstin]||'').trim():'';
+      const recv=cfg.recv>=0?String(r[cfg.recv]||''):'B2C Customer';
+      const noteType=cfg.noteType>=0?String(r[cfg.noteType]||'').trim():'';
+      const recType=cfg.noteType>=0?(noteType==='D'?'Debit Note':'Credit Note'):cfg.type;
+
+      gstr1Records.push({
+        gstin,name:recv.trim()||'Unknown',
+        invNo,invDt:fmtDate(r[cfg.invDt]),
+        taxable,igst,cgst,sgst,
+        total:Math.round((taxable+igst+cgst+sgst)*100)/100,
+        gstRate:rate,type:recType,sheet:cfg.name
+      });
+      sheetCount++;
+    }
+    counts[cfg.name]=sheetCount;
+  }
+
+  if(!gstr1Records.length){
+    setG1Status('❌ Data nahi mila. Valid GSTN GSTR-1 Excel template upload karo.','error');return;
+  }
+  setG1Status(`✅ ${gstr1Records.length} records mili — B2B:${counts.b2b||0}, B2BA:${counts.b2ba||0}, CDNR:${counts.cdnr||0}, B2CL:${counts.b2cl||0}. Mapping set karo.`,'success');
+  showG1MappingScreen(counts);
+}
+
+function showG1MappingScreen(counts){
+  const uniqueRates=[...new Set(gstr1Records.map(r=>r.gstRate).filter(r=>r>0))].sort((a,b)=>a-b);
+  let savedMap=store.get('akr_g1_ledger_map')||_g1SavedMap||{};
+
+  const container=document.getElementById('gstr1SalesMappingRows');
+  container.innerHTML='';
+  uniqueRates.forEach(rate=>{
+    const saved=savedMap['sales_'+rate]||'Sales@'+rate+'%';
+    const div=document.createElement('div');
+    div.style.cssText='display:grid;grid-template-columns:180px 1fr;align-items:center;gap:1rem;margin-bottom:0.7rem;';
+    div.innerHTML=`<div style="background:#f4f6fa;border-radius:6px;padding:0.55rem 0.8rem;font-size:0.85rem;font-weight:600;color:#1a3a6b;text-align:center;">Sales @ ${rate}%</div>
+    <input type="text" id="g1-map-sales-${rate}" value="${saved}" style="width:100%;padding:0.6rem 0.8rem;border:1.5px solid #d0d9e8;border-radius:6px;font-size:0.87rem;font-family:inherit;"/>`;
+    container.appendChild(div);
+  });
+
+  if(savedMap.cgst) document.getElementById('g1-map-cgst').value=savedMap.cgst;
+  if(savedMap.sgst) document.getElementById('g1-map-sgst').value=savedMap.sgst;
+  if(savedMap.igst) document.getElementById('g1-map-igst').value=savedMap.igst;
+  if(savedMap.customerMode){document.getElementById('g1-map-customer-mode').value=savedMap.customerMode;toggleG1CustomerMode();}
+  if(savedMap.customerCustom) document.getElementById('g1-map-customer-custom').value=savedMap.customerCustom;
+
+  document.getElementById('gstr1MappingBox').style.display='block';
+  window._g1counts=counts;
+}
+
+function toggleG1CustomerMode(){
+  const mode=document.getElementById('g1-map-customer-mode').value;
+  document.getElementById('g1-map-customer-custom').style.display=mode==='custom'?'block':'none';
+}
+
+function confirmG1Mapping(){
+  const uniqueRates=[...new Set(gstr1Records.map(r=>r.gstRate).filter(r=>r>0))].sort((a,b)=>a-b);
+  const map={};
+  uniqueRates.forEach(rate=>{
+    const v=document.getElementById('g1-map-sales-'+rate)?.value.trim();
+    if(v) map['sales_'+rate]=v;
+  });
+  map.cgst=document.getElementById('g1-map-cgst').value.trim()||'CGST Output';
+  map.sgst=document.getElementById('g1-map-sgst').value.trim()||'SGST Output';
+  map.igst=document.getElementById('g1-map-igst').value.trim()||'IGST Output';
+  map.customerMode=document.getElementById('g1-map-customer-mode').value;
+  map.customerCustom=document.getElementById('g1-map-customer-custom').value.trim();
+  try{localStorage.setItem('akr_g1_ledger_map',JSON.stringify(map));}catch(e){}
+  _g1SavedMap=map;
+  window._g1LedgerMap=map;
+  showG1PreviewTable();
+  document.getElementById('gstr1MappingBox').style.display='none';
+}
+
+function editG1Mapping(){
+  document.getElementById('gstr1Summary').style.display='none';
+  document.getElementById('gstr1MappingBox').style.display='block';
+}
+
+function getG1SalesLedger(rate){
+  const map=window._g1LedgerMap||{};
+  return map['sales_'+rate]||('Sales@'+rate+'%');
+}
+function getG1TaxLedger(type){
+  const map=window._g1LedgerMap||{};
+  return map[type]||(type==='cgst'?'CGST Output':type==='sgst'?'SGST Output':'IGST Output');
+}
+function getG1CustomerLedger(r){
+  const map=window._g1LedgerMap||{};
+  const mode=map.customerMode||'file';
+  if(mode==='gstin') return r.gstin||r.name;
+  if(mode==='sundry') return 'Sundry Debtors';
+  if(mode==='custom') return map.customerCustom||r.name;
+  return r.name;
+}
+
+function showG1PreviewTable(){
+  const tbody=document.getElementById('gstr1Body');
+  tbody.innerHTML='';
+  let totTax=0,totIGST=0,totCGST=0,totSGST=0,totTotal=0;
+  gstr1Records.forEach((r,i)=>{
+    totTax+=r.taxable;totIGST+=r.igst;totCGST+=r.cgst;totSGST+=r.sgst;totTotal+=r.total;
+    const tr=document.createElement('tr');
+    const tc=r.type.includes('Credit')?'#c0392b':r.type.includes('Debit')?'#e8a020':'#1a3a6b';
+    tr.innerHTML=`<td>${i+1}</td><td style="font-size:.75rem">${r.gstin||'—'}</td><td>${r.name}</td><td>${r.invNo}</td><td>${r.invDt}</td><td>₹${fmt(r.taxable)}</td><td>₹${fmt(r.igst)}</td><td>₹${fmt(r.cgst)}</td><td>₹${fmt(r.sgst)}</td><td><strong>₹${fmt(r.total)}</strong></td><td>${r.gstRate>0?r.gstRate+'%':'—'}</td><td><small style="color:${tc};font-weight:600">${r.type}</small></td>`;
+    tbody.appendChild(tr);
+  });
+  const tr=document.createElement('tr');
+  tr.style.cssText='background:#1a3a6b;color:#fff;font-weight:700;';
+  const c=window._g1counts||{};
+  tr.innerHTML=`<td colspan="5" style="color:#e8a020">TOTAL — ${gstr1Records.length} records (B2B:${c.b2b||0} B2BA:${c.b2ba||0} CDNR:${c.cdnr||0} B2CL:${c.b2cl||0})</td><td>₹${fmt(totTax)}</td><td>₹${fmt(totIGST)}</td><td>₹${fmt(totCGST)}</td><td>₹${fmt(totSGST)}</td><td>₹${fmt(totTotal)}</td><td colspan="2"></td>`;
+  tbody.appendChild(tr);
+  document.getElementById('gstr1InfoCards').innerHTML=`
+    <div class="gstr2a-info-card"><div class="num">${gstr1Records.length}</div><p>Total Records</p></div>
+    <div class="gstr2a-info-card"><div class="num">${c.b2b||0}</div><p>B2B Sales</p></div>
+    <div class="gstr2a-info-card"><div class="num">${(c.cdnr||0)}</div><p>Credit/Debit Notes</p></div>
+    <div class="gstr2a-info-card"><div class="num">₹${fmt(totIGST+totCGST+totSGST)}</div><p>Total GST</p></div>`;
+  document.getElementById('gstr1Summary').style.display='block';
+  setG1Status(`✅ ${gstr1Records.length} records ready! Mapping confirmed. Ab XML download karo.`,'success');
+}
+
+function downloadG1XML(){
+  if(!gstr1Records.length){showToast('Pehle file upload karo.');return;}
+
+  let xml='<?xml version="1.0" encoding="UTF-8"?>\n<ENVELOPE>\n';
+  xml+='<HEADER><TALLYREQUEST>Import Data</TALLYREQUEST></HEADER>\n<BODY>\n<IMPORTDATA>\n';
+  xml+='<REQUESTDESC>\n<REPORTNAME>Vouchers</REPORTNAME>\n';
+  xml+='<STATICVARIABLES><SVCURRENTCOMPANY></SVCURRENTCOMPANY></STATICVARIABLES>\n</REQUESTDESC>\n<REQUESTDATA>\n';
+
+  for(const r of gstr1Records){
+    const dt=tallyDate(r.invDt);
+    const isCredit=r.type.includes('Credit');
+    const isDebit=r.type.includes('Debit');
+    const vt=isCredit?'Credit Note':isDebit?'Debit Note':'Sales';
+
+    const customerLedger=escX(getG1CustomerLedger(r));
+    const salesLedger=escX(getG1SalesLedger(r.gstRate));
+    const cgstLedger=escX(getG1TaxLedger('cgst'));
+    const sgstLedger=escX(getG1TaxLedger('sgst'));
+    const igstLedger=escX(getG1TaxLedger('igst'));
+
+    // Sales: Customer Dr (+), Sales Cr (-), Tax Cr (-)
+    // Credit Note: Customer Cr (-), Sales Dr (+), Tax Dr (+)
+    const custAmt=isCredit?-r.total:r.total;
+    const salesAmt=isCredit?r.taxable:-r.taxable;
+    const taxSign=isCredit?1:-1;
+
+    xml+=`<TALLYMESSAGE xmlns:UDF="TallyUDF">\n`;
+    xml+=`<VOUCHER VCHTYPE="${escX(vt)}" ACTION="Create" OBJVIEW="Accounting Voucher View">\n`;
+    xml+=`<DATE>${dt}</DATE>\n`;
+    xml+=`<GUID>akrg1-${dt}-${escX(r.invNo)}</GUID>\n`;
+    xml+=`<VOUCHERTYPENAME>${escX(vt)}</VOUCHERTYPENAME>\n`;
+    xml+=`<VOUCHERNUMBER>${escX(r.invNo)}</VOUCHERNUMBER>\n`;
+    xml+=`<REFERENCE>${escX(r.invNo)}</REFERENCE>\n`;
+    xml+=`<PARTYLEDGERNAME>${customerLedger}</PARTYLEDGERNAME>\n`;
+    xml+=`<NARRATION>GSTR-1 | ${escX(r.type)} | GSTIN: ${escX(r.gstin||'B2C')} | ${escX(r.invNo)}</NARRATION>\n`;
+    xml+=`<ISINVOICE>Yes</ISINVOICE>\n`;
+
+    // Customer
+    xml+=`<ALLLEDGERENTRIES.LIST>\n<LEDGERNAME>${customerLedger}</LEDGERNAME>\n`;
+    xml+=`<ISDEEMEDPOSITIVE>${custAmt>0?'Yes':'No'}</ISDEEMEDPOSITIVE>\n`;
+    xml+=`<ISPARTYLEDGER>Yes</ISPARTYLEDGER>\n<LEDGERFROMITEM>No</LEDGERFROMITEM>\n<REMOVEZEROENTRIES>No</REMOVEZEROENTRIES>\n`;
+    xml+=`<AMOUNT>${fmt(-custAmt)}</AMOUNT>\n</ALLLEDGERENTRIES.LIST>\n`;
+
+    // Sales
+    xml+=`<ALLLEDGERENTRIES.LIST>\n<LEDGERNAME>${salesLedger}</LEDGERNAME>\n`;
+    xml+=`<ISDEEMEDPOSITIVE>${salesAmt>0?'Yes':'No'}</ISDEEMEDPOSITIVE>\n`;
+    xml+=`<ISPARTYLEDGER>No</ISPARTYLEDGER>\n<LEDGERFROMITEM>No</LEDGERFROMITEM>\n<REMOVEZEROENTRIES>No</REMOVEZEROENTRIES>\n`;
+    xml+=`<AMOUNT>${fmt(-salesAmt)}</AMOUNT>\n</ALLLEDGERENTRIES.LIST>\n`;
+
+    // IGST
+    if(r.igst>0){
+      const a=taxSign*r.igst;
+      xml+=`<ALLLEDGERENTRIES.LIST>\n<LEDGERNAME>${igstLedger}</LEDGERNAME>\n<GSTCLASS>Integrated Tax</GSTCLASS>\n`;
+      xml+=`<ISDEEMEDPOSITIVE>${a>0?'Yes':'No'}</ISDEEMEDPOSITIVE>\n<ISPARTYLEDGER>No</ISPARTYLEDGER>\n<LEDGERFROMITEM>No</LEDGERFROMITEM>\n<REMOVEZEROENTRIES>No</REMOVEZEROENTRIES>\n`;
+      xml+=`<AMOUNT>${fmt(-a)}</AMOUNT>\n</ALLLEDGERENTRIES.LIST>\n`;
+    }
+    // CGST
+    if(r.cgst>0){
+      const a=taxSign*r.cgst;
+      xml+=`<ALLLEDGERENTRIES.LIST>\n<LEDGERNAME>${cgstLedger}</LEDGERNAME>\n<GSTCLASS>Central Tax</GSTCLASS>\n`;
+      xml+=`<ISDEEMEDPOSITIVE>${a>0?'Yes':'No'}</ISDEEMEDPOSITIVE>\n<ISPARTYLEDGER>No</ISPARTYLEDGER>\n<LEDGERFROMITEM>No</LEDGERFROMITEM>\n<REMOVEZEROENTRIES>No</REMOVEZEROENTRIES>\n`;
+      xml+=`<AMOUNT>${fmt(-a)}</AMOUNT>\n</ALLLEDGERENTRIES.LIST>\n`;
+    }
+    // SGST
+    if(r.sgst>0){
+      const a=taxSign*r.sgst;
+      xml+=`<ALLLEDGERENTRIES.LIST>\n<LEDGERNAME>${sgstLedger}</LEDGERNAME>\n<GSTCLASS>State Tax</GSTCLASS>\n`;
+      xml+=`<ISDEEMEDPOSITIVE>${a>0?'Yes':'No'}</ISDEEMEDPOSITIVE>\n<ISPARTYLEDGER>No</ISPARTYLEDGER>\n<LEDGERFROMITEM>No</LEDGERFROMITEM>\n<REMOVEZEROENTRIES>No</REMOVEZEROENTRIES>\n`;
+      xml+=`<AMOUNT>${fmt(-a)}</AMOUNT>\n</ALLLEDGERENTRIES.LIST>\n`;
+    }
+    xml+=`</VOUCHER>\n</TALLYMESSAGE>\n`;
+  }
+
+  xml+='</REQUESTDATA>\n</IMPORTDATA>\n</BODY>\n</ENVELOPE>';
+  const blob=new Blob([xml],{type:'application/xml'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download='GSTR1_Tally.xml';a.click();
+  URL.revokeObjectURL(url);
+  showToast('✅ GSTR-1 Tally XML download ho gayi!');
+}
+
+function clearG1Tool(){
+  gstr1Records=[];
+  document.getElementById('gstr1File').value='';
+  document.getElementById('gstr1Summary').style.display='none';
+  document.getElementById('gstr1MappingBox').style.display='none';
+  const s=document.getElementById('gstr1Status');s.className='gstr2a-status';s.textContent='';
+  window._g1LedgerMap={};
 }
 
 // ===== GST TOOLS =====
