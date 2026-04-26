@@ -159,7 +159,39 @@ section{padding:4rem 5%;}
 .gstr2a-status.error{background:#f8d7da;color:#721c24;display:block;}
 .gstr2a-status.info{background:#d1ecf1;color:#0c5460;display:block;}
 bottom:1.5rem;right:1.5rem;z-index:999;background:#25D366;color:#fff;width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 15px rgba(37,211,102,0.4);text-decoration:none;font-size:1.4rem;}
-/* ── NEW TOOLS ── */
+.nav-premium{background:linear-gradient(135deg,#e8a020,#f5c842);color:#1a3a6b;padding:0.45rem 1.1rem;border-radius:5px;font-weight:700;font-size:0.82rem;text-decoration:none;white-space:nowrap;margin-left:0.5rem;}
+.nav-premium:hover{opacity:0.9;}
+.premium-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.65);z-index:9999;display:none;align-items:flex-start;justify-content:center;padding:1rem;overflow-y:auto;}
+.premium-overlay.open{display:flex;}
+.premium-modal{background:#fff;border-radius:16px;width:100%;max-width:700px;margin:auto;box-shadow:0 20px 60px rgba(0,0,0,0.3);}
+.premium-header{background:linear-gradient(135deg,#1a3a6b,#2a5298);padding:1.4rem 1.8rem;border-radius:16px 16px 0 0;display:flex;justify-content:space-between;align-items:center;gap:1rem;}
+.premium-header h2{color:#fff;font-size:1.05rem;font-weight:700;margin:0;}
+.premium-badge{color:#e8a020;font-size:0.72rem;font-weight:700;background:rgba(232,160,32,0.15);padding:0.2rem 0.7rem;border-radius:20px;border:1px solid rgba(232,160,32,0.4);white-space:nowrap;}
+.premium-close{background:none;border:none;color:rgba(255,255,255,0.7);font-size:1.5rem;cursor:pointer;line-height:1;padding:0;}
+.premium-close:hover{color:#fff;}
+.premium-body{padding:1.4rem 1.8rem;}
+.apikey-row{display:flex;gap:0.6rem;margin-bottom:1.2rem;}
+.apikey-row input{flex:1;padding:0.6rem 0.8rem;border:1.5px solid #d0d9e8;border-radius:6px;font-size:0.85rem;font-family:inherit;outline:none;}
+.apikey-row input:focus{border-color:#1a3a6b;}
+.apikey-row button{background:#1a3a6b;color:#fff;border:none;border-radius:6px;padding:0.6rem 1rem;font-size:0.82rem;font-weight:600;cursor:pointer;white-space:nowrap;font-family:inherit;}
+.premium-tools-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:0.7rem;margin-bottom:1.3rem;}
+.ptool-card{background:#f4f6fa;border:1.5px solid #e0e6f0;border-radius:10px;padding:0.9rem 0.7rem;text-align:center;cursor:pointer;transition:all 0.2s;}
+.ptool-card:hover,.ptool-card.active{border-color:#e8a020;background:#fffbf3;}
+.ptool-icon{font-size:1.5rem;margin-bottom:0.3rem;}
+.ptool-card h4{font-size:0.78rem;font-weight:600;color:#1a3a6b;line-height:1.3;}
+.ptool-card p{font-size:0.68rem;color:#888;margin-top:0.15rem;}
+.ai-panel{display:none;background:#f4f6fa;border-radius:10px;padding:1.2rem;border:1.5px solid #e0e6f0;margin-top:0.5rem;}
+.ai-panel.active{display:block;}
+.ai-panel h4{font-size:0.88rem;font-weight:700;color:#1a3a6b;margin-bottom:0.8rem;}
+.ai-textarea{width:100%;padding:0.7rem 1rem;border:1.5px solid #d0d9e8;border-radius:6px;font-size:0.87rem;font-family:inherit;resize:vertical;min-height:90px;outline:none;}
+.ai-textarea:focus{border-color:#1a3a6b;}
+.btn-ai{background:#1a3a6b;color:#fff;padding:0.7rem 1.5rem;border:none;border-radius:6px;font-size:0.88rem;font-weight:600;cursor:pointer;font-family:inherit;margin-top:0.7rem;}
+.btn-ai:hover{background:#14306e;}
+.btn-ai:disabled{opacity:0.6;cursor:not-allowed;}
+.ai-response{background:#fff;border-radius:8px;padding:1rem;border:1px solid #e0e6f0;margin-top:0.8rem;font-size:0.84rem;line-height:1.8;color:#333;white-space:pre-wrap;display:none;max-height:280px;overflow-y:auto;}
+.ai-loading{text-align:center;padding:1rem;color:#888;font-size:0.84rem;display:none;}
+.ai-loading::after{content:'';display:inline-block;width:14px;height:14px;border:2px solid #1a3a6b;border-top-color:transparent;border-radius:50%;animation:spin 0.8s linear infinite;margin-left:0.5rem;vertical-align:middle;}
+@keyframes spin{to{transform:rotate(360deg);}}
 .tools-section{background:#f4f6fa;}
 .tools-tabs{display:flex;gap:0;border:1.5px solid #e0e6f0;border-radius:8px;overflow:hidden;margin-bottom:2rem;max-width:600px;}
 .tools-tab{flex:1;padding:0.7rem;text-align:center;font-size:0.85rem;font-weight:600;cursor:pointer;background:#fff;color:#555;border:none;font-family:inherit;transition:all 0.2s;}
@@ -214,6 +246,25 @@ footer strong{color:#e8a020;}
   .form-2col{grid-template-columns:1fr;}
 }
 </style>
+<script>
+// SheetJS loader with multiple fallbacks
+(function(){
+  var srcs=[
+    'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js',
+    'https://unpkg.com/xlsx@0.18.5/dist/xlsx.full.min.js',
+    'https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js'
+  ];
+  function tryLoad(i){
+    if(i>=srcs.length){console.error('SheetJS load failed');return;}
+    var s=document.createElement('script');
+    s.src=srcs[i];
+    s.onload=function(){console.log('SheetJS OK: '+srcs[i]);};
+    s.onerror=function(){tryLoad(i+1);};
+    document.head.appendChild(s);
+  }
+  tryLoad(0);
+})();
+</script>
 </head>
 <body>
 
@@ -231,12 +282,14 @@ footer strong{color:#e8a020;}
     <li><a href="#gstr1">GSTR-1 Tool</a></li>
     <li><a href="#gstr3b">GSTR-3B Tool</a></li>
     <li><a href="#csv2json">CSV→JSON</a></li>
+    <li><a href="#gst-challan">GST Challan</a></li>
     <li><a href="#gst-tools">GST Tools</a></li>
     <li><a href="#itr-tools">ITR Tools</a></li>
     <li><a href="#faq">FAQ</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
   <a href="#register" class="nav-cta">Register Free</a>
+  <a href="#" class="nav-premium" id="premiumBtn">⭐ Premium Exclusive</a>
   <button class="hamburger" onclick="toggleNav()"><span></span><span></span><span></span></button>
 </nav>
 
@@ -305,7 +358,7 @@ footer strong{color:#e8a020;}
     </div>
     <div class="calc-panel active" id="panel-itr">
       <div class="calc-row"><label>Annual Income (₹)</label><input type="number" id="itr-income" placeholder="e.g. 800000"/></div>
-      <div class="calc-row"><label>Tax Regime</label><select id="itr-regime" onchange="toggleDeduction()"><option value="new">New Regime (FY 2024-25)</option><option value="old">Old Regime</option></select></div>
+      <div class="calc-row"><label>Tax Regime</label><select id="itr-regime" onchange="toggleDeduction()"><option value="new">New Regime (FY 2025-26 / AY 2026-27)</option><option value="old">Old Regime</option></select></div>
       <div class="calc-row" id="deduction-row" style="display:none;"><label>Total Deductions 80C/80D etc. (₹)</label><input type="number" id="itr-deduction" placeholder="e.g. 150000"/></div>
       <button class="btn-calc" onclick="calcITR()">Calculate Tax →</button>
       <div class="calc-result" id="itr-result"><h4>Estimated Tax Liability</h4><div class="big-num" id="itr-tax">₹0</div><div class="breakdown" id="itr-breakdown"></div></div>
@@ -699,8 +752,115 @@ footer strong{color:#e8a020;}
   </div>
 </section>
 
-<!-- GST TOOLS -->
-<section class="tools-section" id="gst-tools">
+<!-- GST PAYMENT CHALLAN GENERATOR -->
+<section class="gstr2a" id="gst-challan">
+  <div class="section-label">Free Tool</div>
+  <h2 class="section-title">GST Payment Challan Generator</h2>
+  <p class="section-sub">PMT-06 challan ki details bharo — printable challan PDF jaisi slip generate hogi jo GST payment ke time reference ke liye use kar sakte ho.</p>
+  <div class="gstr2a-wrapper" style="max-width:750px;">
+    <div style="background:#fff;border-radius:12px;padding:1.8rem;border:1.5px solid #e0e6f0;">
+
+      <!-- Taxpayer Details -->
+      <div style="font-size:0.78rem;font-weight:700;color:#e8a020;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:1rem;">👤 Taxpayer Details</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;margin-bottom:1.5rem;">
+        <div><label style="font-size:0.78rem;font-weight:600;color:#333;display:block;margin-bottom:0.3rem;">GSTIN *</label>
+        <input type="text" id="ch-gstin" placeholder="e.g. 10ANNPB6524C1ZO" maxlength="15" style="width:100%;padding:0.6rem 0.8rem;border:1.5px solid #d0d9e8;border-radius:6px;font-size:0.87rem;font-family:inherit;text-transform:uppercase;"/></div>
+        <div><label style="font-size:0.78rem;font-weight:600;color:#333;display:block;margin-bottom:0.3rem;">Taxpayer Name *</label>
+        <input type="text" id="ch-name" placeholder="e.g. AKR Consultancy Services" style="width:100%;padding:0.6rem 0.8rem;border:1.5px solid #d0d9e8;border-radius:6px;font-size:0.87rem;font-family:inherit;"/></div>
+        <div><label style="font-size:0.78rem;font-weight:600;color:#333;display:block;margin-bottom:0.3rem;">Tax Period *</label>
+        <select id="ch-period" style="width:100%;padding:0.6rem 0.8rem;border:1.5px solid #d0d9e8;border-radius:6px;font-size:0.87rem;font-family:inherit;">
+          <option value="01">January</option><option value="02">February</option><option value="03">March</option>
+          <option value="04">April</option><option value="05">May</option><option value="06">June</option>
+          <option value="07">July</option><option value="08">August</option><option value="09">September</option>
+          <option value="10">October</option><option value="11">November</option><option value="12">December</option>
+        </select></div>
+        <div><label style="font-size:0.78rem;font-weight:600;color:#333;display:block;margin-bottom:0.3rem;">Financial Year *</label>
+        <select id="ch-fy" style="width:100%;padding:0.6rem 0.8rem;border:1.5px solid #d0d9e8;border-radius:6px;font-size:0.87rem;font-family:inherit;">
+          <option>2025-26</option><option>2024-25</option><option>2023-24</option><option>2022-23</option>
+        </select></div>
+        <div><label style="font-size:0.78rem;font-weight:600;color:#333;display:block;margin-bottom:0.3rem;">Payment Type</label>
+        <select id="ch-type" style="width:100%;padding:0.6rem 0.8rem;border:1.5px solid #d0d9e8;border-radius:6px;font-size:0.87rem;font-family:inherit;">
+          <option value="M">Monthly (GSTR-3B)</option>
+          <option value="Q">Quarterly (CMP-08)</option>
+          <option value="A">Annual (GSTR-9)</option>
+          <option value="D">Demand Payment</option>
+        </select></div>
+        <div><label style="font-size:0.78rem;font-weight:600;color:#333;display:block;margin-bottom:0.3rem;">Challan Date</label>
+        <input type="date" id="ch-date" style="width:100%;padding:0.6rem 0.8rem;border:1.5px solid #d0d9e8;border-radius:6px;font-size:0.87rem;font-family:inherit;"/></div>
+      </div>
+
+      <!-- Tax Amount -->
+      <div style="font-size:0.78rem;font-weight:700;color:#e8a020;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:1rem;">💰 Tax Amount (₹)</div>
+      <div style="overflow-x:auto;margin-bottom:1.5rem;">
+        <table style="width:100%;border-collapse:collapse;font-size:0.83rem;">
+          <thead>
+            <tr style="background:#1a3a6b;color:#fff;">
+              <th style="padding:0.6rem 0.8rem;text-align:left;">Tax Head</th>
+              <th style="padding:0.6rem 0.8rem;text-align:center;">Tax (₹)</th>
+              <th style="padding:0.6rem 0.8rem;text-align:center;">Interest (₹)</th>
+              <th style="padding:0.6rem 0.8rem;text-align:center;">Penalty (₹)</th>
+              <th style="padding:0.6rem 0.8rem;text-align:center;">Fees (₹)</th>
+              <th style="padding:0.6rem 0.8rem;text-align:center;">Total (₹)</th>
+            </tr>
+          </thead>
+          <tbody id="challanRows">
+            <tr style="border-bottom:1px solid #f0f0f0;">
+              <td style="padding:0.5rem 0.8rem;font-weight:600;color:#1a3a6b;">IGST</td>
+              <td style="padding:0.4rem;"><input type="number" id="ch-igst-tax" placeholder="0" oninput="updateChallanTotal()" style="width:100%;padding:0.4rem 0.6rem;border:1.5px solid #d0d9e8;border-radius:4px;font-size:0.85rem;font-family:inherit;text-align:right;"/></td>
+              <td style="padding:0.4rem;"><input type="number" id="ch-igst-int" placeholder="0" oninput="updateChallanTotal()" style="width:100%;padding:0.4rem 0.6rem;border:1.5px solid #d0d9e8;border-radius:4px;font-size:0.85rem;font-family:inherit;text-align:right;"/></td>
+              <td style="padding:0.4rem;"><input type="number" id="ch-igst-pen" placeholder="0" oninput="updateChallanTotal()" style="width:100%;padding:0.4rem 0.6rem;border:1.5px solid #d0d9e8;border-radius:4px;font-size:0.85rem;font-family:inherit;text-align:right;"/></td>
+              <td style="padding:0.4rem;"><input type="number" id="ch-igst-fee" placeholder="0" oninput="updateChallanTotal()" style="width:100%;padding:0.4rem 0.6rem;border:1.5px solid #d0d9e8;border-radius:4px;font-size:0.85rem;font-family:inherit;text-align:right;"/></td>
+              <td style="padding:0.5rem 0.8rem;font-weight:700;color:#1a3a6b;" id="ch-igst-row-total">₹0</td>
+            </tr>
+            <tr style="border-bottom:1px solid #f0f0f0;">
+              <td style="padding:0.5rem 0.8rem;font-weight:600;color:#1a3a6b;">CGST</td>
+              <td style="padding:0.4rem;"><input type="number" id="ch-cgst-tax" placeholder="0" oninput="updateChallanTotal()" style="width:100%;padding:0.4rem 0.6rem;border:1.5px solid #d0d9e8;border-radius:4px;font-size:0.85rem;font-family:inherit;text-align:right;"/></td>
+              <td style="padding:0.4rem;"><input type="number" id="ch-cgst-int" placeholder="0" oninput="updateChallanTotal()" style="width:100%;padding:0.4rem 0.6rem;border:1.5px solid #d0d9e8;border-radius:4px;font-size:0.85rem;font-family:inherit;text-align:right;"/></td>
+              <td style="padding:0.4rem;"><input type="number" id="ch-cgst-pen" placeholder="0" oninput="updateChallanTotal()" style="width:100%;padding:0.4rem 0.6rem;border:1.5px solid #d0d9e8;border-radius:4px;font-size:0.85rem;font-family:inherit;text-align:right;"/></td>
+              <td style="padding:0.4rem;"><input type="number" id="ch-cgst-fee" placeholder="0" oninput="updateChallanTotal()" style="width:100%;padding:0.4rem 0.6rem;border:1.5px solid #d0d9e8;border-radius:4px;font-size:0.85rem;font-family:inherit;text-align:right;"/></td>
+              <td style="padding:0.5rem 0.8rem;font-weight:700;color:#1a3a6b;" id="ch-cgst-row-total">₹0</td>
+            </tr>
+            <tr style="border-bottom:1px solid #f0f0f0;">
+              <td style="padding:0.5rem 0.8rem;font-weight:600;color:#1a3a6b;">SGST/UTGST</td>
+              <td style="padding:0.4rem;"><input type="number" id="ch-sgst-tax" placeholder="0" oninput="updateChallanTotal()" style="width:100%;padding:0.4rem 0.6rem;border:1.5px solid #d0d9e8;border-radius:4px;font-size:0.85rem;font-family:inherit;text-align:right;"/></td>
+              <td style="padding:0.4rem;"><input type="number" id="ch-sgst-int" placeholder="0" oninput="updateChallanTotal()" style="width:100%;padding:0.4rem 0.6rem;border:1.5px solid #d0d9e8;border-radius:4px;font-size:0.85rem;font-family:inherit;text-align:right;"/></td>
+              <td style="padding:0.4rem;"><input type="number" id="ch-sgst-pen" placeholder="0" oninput="updateChallanTotal()" style="width:100%;padding:0.4rem 0.6rem;border:1.5px solid #d0d9e8;border-radius:4px;font-size:0.85rem;font-family:inherit;text-align:right;"/></td>
+              <td style="padding:0.4rem;"><input type="number" id="ch-sgst-fee" placeholder="0" oninput="updateChallanTotal()" style="width:100%;padding:0.4rem 0.6rem;border:1.5px solid #d0d9e8;border-radius:4px;font-size:0.85rem;font-family:inherit;text-align:right;"/></td>
+              <td style="padding:0.5rem 0.8rem;font-weight:700;color:#1a3a6b;" id="ch-sgst-row-total">₹0</td>
+            </tr>
+            <tr style="border-bottom:1px solid #f0f0f0;">
+              <td style="padding:0.5rem 0.8rem;font-weight:600;color:#1a3a6b;">Cess</td>
+              <td style="padding:0.4rem;"><input type="number" id="ch-cess-tax" placeholder="0" oninput="updateChallanTotal()" style="width:100%;padding:0.4rem 0.6rem;border:1.5px solid #d0d9e8;border-radius:4px;font-size:0.85rem;font-family:inherit;text-align:right;"/></td>
+              <td style="padding:0.4rem;"><input type="number" id="ch-cess-int" placeholder="0" oninput="updateChallanTotal()" style="width:100%;padding:0.4rem 0.6rem;border:1.5px solid #d0d9e8;border-radius:4px;font-size:0.85rem;font-family:inherit;text-align:right;"/></td>
+              <td style="padding:0.4rem;"><input type="number" id="ch-cess-pen" placeholder="0" oninput="updateChallanTotal()" style="width:100%;padding:0.4rem 0.6rem;border:1.5px solid #d0d9e8;border-radius:4px;font-size:0.85rem;font-family:inherit;text-align:right;"/></td>
+              <td style="padding:0.4rem;"><input type="number" id="ch-cess-fee" placeholder="0" oninput="updateChallanTotal()" style="width:100%;padding:0.4rem 0.6rem;border:1.5px solid #d0d9e8;border-radius:4px;font-size:0.85rem;font-family:inherit;text-align:right;"/></td>
+              <td style="padding:0.5rem 0.8rem;font-weight:700;color:#1a3a6b;" id="ch-cess-row-total">₹0</td>
+            </tr>
+            <tr style="background:#1a3a6b;color:#fff;">
+              <td colspan="5" style="padding:0.7rem 0.8rem;font-weight:700;color:#e8a020;">GRAND TOTAL</td>
+              <td style="padding:0.7rem 0.8rem;font-weight:700;font-size:1rem;color:#e8a020;" id="ch-grand-total">₹0</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Payment Mode -->
+      <div style="font-size:0.78rem;font-weight:700;color:#e8a020;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:1rem;">🏦 Payment Mode</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;margin-bottom:1.5rem;">
+        <div><label style="font-size:0.78rem;font-weight:600;color:#333;display:block;margin-bottom:0.3rem;">Payment Mode</label>
+        <select id="ch-paymode" style="width:100%;padding:0.6rem 0.8rem;border:1.5px solid #d0d9e8;border-radius:6px;font-size:0.87rem;font-family:inherit;">
+          <option>Net Banking</option><option>NEFT/RTGS</option><option>Over the Counter</option><option>Credit/Debit Card</option>
+        </select></div>
+        <div><label style="font-size:0.78rem;font-weight:600;color:#333;display:block;margin-bottom:0.3rem;">Bank Name</label>
+        <input type="text" id="ch-bank" placeholder="e.g. State Bank of India" style="width:100%;padding:0.6rem 0.8rem;border:1.5px solid #d0d9e8;border-radius:6px;font-size:0.87rem;font-family:inherit;"/></div>
+      </div>
+
+      <button class="btn-xml" onclick="generateChallan()" style="width:100%;">🖨 Generate & Print Challan</button>
+    </div>
+  </div>
+</section>
+
+
   <div class="section-label">GST Tools</div>
   <h2 class="section-title">GST Calculators & Utilities</h2>
   <p class="section-sub">GSTR-1 vs 2A Reconciliation aur Late Fee Calculator — bilkul free.</p>
@@ -716,8 +876,7 @@ footer strong{color:#e8a020;}
       <p style="font-size:0.85rem;color:#555;margin-bottom:1.2rem;">GSTR-1 (Sales) aur GSTR-2A (Purchase) ki Excel files upload karo — mismatched invoices automatically highlight honge.</p>
       <div class="tool-2col">
         <div>
-          <div class="upload2" onclick="document.getElementById('gstr1File').click()">
-            <input type="file" id="gstr1File" accept=".xlsx,.xls" onchange="loadReconFile('gstr1',event)"/>
+          <div class="upload2" onclick="document.getElementById('recon-gstr1File').click()">
             <strong>📤 GSTR-1 File Upload</strong>
             <p id="gstr1Label">Excel select karo (.xlsx)</p>
           </div>
@@ -923,25 +1082,125 @@ footer strong{color:#e8a020;}
 
 <div class="toast" id="toast">✅ Done!</div>
 
-<script>
-// SheetJS loader with multiple fallbacks
-(function(){
-  var srcs=[
-    'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js',
-    'https://unpkg.com/xlsx@0.18.5/dist/xlsx.full.min.js',
-    'https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js'
-  ];
-  function tryLoad(i){
-    if(i>=srcs.length){console.error('SheetJS load failed from all CDNs');return;}
-    var s=document.createElement('script');
-    s.src=srcs[i];
-    s.onload=function(){console.log('SheetJS loaded from: '+srcs[i]);};
-    s.onerror=function(){tryLoad(i+1);};
-    document.head.appendChild(s);
-  }
-  tryLoad(0);
-})();
-</script>
+<!-- PREMIUM EXCLUSIVE MODAL -->
+<div class="premium-overlay" id="premiumOverlay" onclick="closePremiumOutside(event)">
+  <div class="premium-modal">
+    <div class="premium-header">
+      <div>
+        <h2>⭐ Premium Exclusive Tools</h2>
+        <div style="font-size:0.75rem;color:rgba(255,255,255,0.6);margin-top:0.2rem;">Powered by Claude AI — AKR Consultancy Services</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:0.8rem;">
+        <span class="premium-badge">AI Powered</span>
+        <button class="premium-close" onclick="closePremium()">✕</button>
+      </div>
+    </div>
+    <div class="premium-body">
+      <!-- API Key -->
+      <div style="margin-bottom:1.2rem;">
+        <label style="font-size:0.78rem;font-weight:700;color:#333;display:block;margin-bottom:0.4rem;">🔑 Anthropic API Key (Claude AI)</label>
+        <div class="apikey-row">
+          <input type="password" id="premiumApiKey" placeholder="sk-ant-api03-..." />
+          <button onclick="saveApiKey()">Save Key</button>
+        </div>
+        <p style="font-size:0.72rem;color:#999;">Key browser mein save hoti hai — kisi ko share nahi hoti. <a href="https://console.anthropic.com" target="_blank" style="color:#1a3a6b;">API key kahan milegi?</a></p>
+      </div>
+
+      <!-- Tools Grid -->
+      <div style="font-size:0.78rem;font-weight:700;color:#e8a020;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.8rem;">AI Tools Select Karo</div>
+      <div class="premium-tools-grid">
+        <div class="ptool-card active" onclick="switchAITool('ledger',this)">
+          <div class="ptool-icon">🗂</div>
+          <h4>Ledger Mapping Suggest</h4>
+          <p>AI se auto suggest</p>
+        </div>
+        <div class="ptool-card" onclick="switchAITool('notice',this)">
+          <div class="ptool-icon">📨</div>
+          <h4>GST Notice Reply</h4>
+          <p>Draft karo instantly</p>
+        </div>
+        <div class="ptool-card" onclick="switchAITool('taxsaving',this)">
+          <div class="ptool-icon">💡</div>
+          <h4>Tax Saving Tips</h4>
+          <p>Personalized advice</p>
+        </div>
+        <div class="ptool-card" onclick="switchAITool('gstquery',this)">
+          <div class="ptool-icon">❓</div>
+          <h4>GST Query Solver</h4>
+          <p>Koi bhi GST sawaal</p>
+        </div>
+        <div class="ptool-card" onclick="switchAITool('itrhelp',this)">
+          <div class="ptool-icon">📋</div>
+          <h4>ITR Help</h4>
+          <p>Which ITR form?</p>
+        </div>
+        <div class="ptool-card" onclick="switchAITool('compliance',this)">
+          <div class="ptool-icon">✅</div>
+          <h4>Compliance Check</h4>
+          <p>Due dates & filing</p>
+        </div>
+      </div>
+
+      <!-- AI Panels -->
+      <div class="ai-panel active" id="ai-ledger">
+        <h4>🗂 Ledger Mapping Suggest</h4>
+        <p style="font-size:0.8rem;color:#666;margin-bottom:0.8rem;">Apne business type aur accounting software details batao — AI sahi Tally ledger names suggest karega.</p>
+        <textarea class="ai-textarea" id="ai-ledger-input" placeholder="e.g. Mera retail business hai, Tally Prime use karta hun. GST 18% purchase ki entries ke liye ledger names suggest karo..."></textarea>
+        <button class="btn-ai" onclick="callAI('ledger')">🤖 AI se Suggest Karwao</button>
+        <div class="ai-loading" id="ai-ledger-loading">Claude AI soch raha hai</div>
+        <div class="ai-response" id="ai-ledger-response"></div>
+      </div>
+
+      <div class="ai-panel" id="ai-notice">
+        <h4>📨 GST Notice Reply Draft</h4>
+        <p style="font-size:0.8rem;color:#666;margin-bottom:0.8rem;">Notice ki details paste karo — AI professional reply draft karega.</p>
+        <textarea class="ai-textarea" id="ai-notice-input" placeholder="Notice type, section, demand amount, period, reason paste karo... e.g. GSTR-3B vs GSTR-2A mismatch notice, ₹50,000 demand, FY 2023-24..."></textarea>
+        <button class="btn-ai" onclick="callAI('notice')">🤖 Reply Draft Karo</button>
+        <div class="ai-loading" id="ai-notice-loading">Claude AI draft bana raha hai</div>
+        <div class="ai-response" id="ai-notice-response"></div>
+      </div>
+
+      <div class="ai-panel" id="ai-taxsaving">
+        <h4>💡 Tax Saving Tips</h4>
+        <p style="font-size:0.8rem;color:#666;margin-bottom:0.8rem;">Apni income aur situation batao — personalized tax saving tips pao.</p>
+        <textarea class="ai-textarea" id="ai-taxsaving-input" placeholder="e.g. Salaried person, ₹15 lakh annual income, 30 saal, HRA milta hai, NPS mein invest nahi kiya, home loan nahi hai..."></textarea>
+        <button class="btn-ai" onclick="callAI('taxsaving')">🤖 Tips Generate Karo</button>
+        <div class="ai-loading" id="ai-taxsaving-loading">Claude AI analyze kar raha hai</div>
+        <div class="ai-response" id="ai-taxsaving-response"></div>
+      </div>
+
+      <div class="ai-panel" id="ai-gstquery">
+        <h4>❓ GST Query Solver</h4>
+        <p style="font-size:0.8rem;color:#666;margin-bottom:0.8rem;">Koi bhi GST related sawaal poochho.</p>
+        <textarea class="ai-textarea" id="ai-gstquery-input" placeholder="e.g. RCM kab applicable hota hai? Input tax credit kab nahi milta? E-way bill ki limit kya hai?"></textarea>
+        <button class="btn-ai" onclick="callAI('gstquery')">🤖 Jawab Do</button>
+        <div class="ai-loading" id="ai-gstquery-loading">Claude AI jawab dhoondh raha hai</div>
+        <div class="ai-response" id="ai-gstquery-response"></div>
+      </div>
+
+      <div class="ai-panel" id="ai-itrhelp">
+        <h4>📋 ITR Form Helper</h4>
+        <p style="font-size:0.8rem;color:#666;margin-bottom:0.8rem;">Apni income sources batao — kaunsa ITR form bharna hai aur kya documents chahiye.</p>
+        <textarea class="ai-textarea" id="ai-itrhelp-input" placeholder="e.g. Salary income hai, 1 house property hai rent pe, FD interest bhi aata hai, koi business nahi..."></textarea>
+        <button class="btn-ai" onclick="callAI('itrhelp')">🤖 Guide Karo</button>
+        <div class="ai-loading" id="ai-itrhelp-loading">Claude AI guide kar raha hai</div>
+        <div class="ai-response" id="ai-itrhelp-response"></div>
+      </div>
+
+      <div class="ai-panel" id="ai-compliance">
+        <h4>✅ Compliance Checker</h4>
+        <p style="font-size:0.8rem;color:#666;margin-bottom:0.8rem;">Business type aur turnover batao — due dates aur compliance checklist pao.</p>
+        <textarea class="ai-textarea" id="ai-compliance-input" placeholder="e.g. Pvt Ltd company, manufacturing, ₹2 crore turnover, GST registered, Bihar mein..."></textarea>
+        <button class="btn-ai" onclick="callAI('compliance')">🤖 Checklist Banao</button>
+        <div class="ai-loading" id="ai-compliance-loading">Claude AI checklist bana raha hai</div>
+        <div class="ai-response" id="ai-compliance-response"></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
 <script>
 function toggleNav(){document.getElementById('navLinks').classList.toggle('open');}
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),4000);}
@@ -957,27 +1216,36 @@ function calcITR(){
   const deduction=parseFloat(document.getElementById('itr-deduction').value)||0;
   if(income<=0){showToast('Please enter your annual income.');return;}
   let tax=0,breakdown='';
+
   if(regime==='new'){
-    if(income<=300000)tax=0;
-    else if(income<=700000)tax=(income-300000)*0.05;
-    else if(income<=1000000)tax=20000+(income-700000)*0.10;
-    else if(income<=1200000)tax=50000+(income-1000000)*0.15;
-    else if(income<=1500000)tax=80000+(income-1200000)*0.20;
-    else tax=140000+(income-1500000)*0.30;
-    if(income<=700000)tax=0;
-    breakdown='Regime: New (FY 2024-25)\nTaxable Income: ₹'+income.toLocaleString('en-IN')+'\nRebate u/s 87A: '+(income<=700000?'Applied (nil tax)':'Not applicable');
+    // FY 2025-26 New Regime slabs
+    // Standard deduction ₹75,000 for salaried
+    const taxable=income;
+    if(taxable<=400000) tax=0;
+    else if(taxable<=800000) tax=(taxable-400000)*0.05;
+    else if(taxable<=1200000) tax=20000+(taxable-800000)*0.10;
+    else if(taxable<=1600000) tax=60000+(taxable-1200000)*0.15;
+    else if(taxable<=2000000) tax=120000+(taxable-1600000)*0.20;
+    else if(taxable<=2400000) tax=200000+(taxable-2000000)*0.25;
+    else tax=300000+(taxable-2400000)*0.30;
+    // Rebate u/s 87A — nil tax upto ₹12 lakh
+    if(taxable<=1200000) tax=0;
+    breakdown=`Regime: New (FY 2025-26 / AY 2026-27)\nTaxable Income: ₹${taxable.toLocaleString('en-IN')}\nRebate u/s 87A: ${taxable<=1200000?'Applied — Nil tax upto ₹12L':'Not applicable'}\nStandard Deduction: ₹75,000 (salaried)`;
   } else {
+    // Old Regime — unchanged
     const taxable=Math.max(0,income-deduction-50000);
-    if(taxable<=250000)tax=0;
-    else if(taxable<=500000)tax=(taxable-250000)*0.05;
-    else if(taxable<=1000000)tax=12500+(taxable-500000)*0.20;
+    if(taxable<=250000) tax=0;
+    else if(taxable<=500000) tax=(taxable-250000)*0.05;
+    else if(taxable<=1000000) tax=12500+(taxable-500000)*0.20;
     else tax=112500+(taxable-1000000)*0.30;
-    if(taxable<=500000)tax=0;
-    breakdown='Regime: Old\nTaxable Income: ₹'+taxable.toLocaleString('en-IN')+'\nDeductions: ₹'+(deduction+50000).toLocaleString('en-IN')+'\nRebate u/s 87A: '+(taxable<=500000?'Applied (nil tax)':'Not applicable');
+    // Rebate u/s 87A — nil tax upto ₹5 lakh
+    if(taxable<=500000) tax=0;
+    breakdown=`Regime: Old (FY 2025-26)\nTaxable Income: ₹${taxable.toLocaleString('en-IN')}\nDeductions: ₹${(deduction+50000).toLocaleString('en-IN')}\nRebate u/s 87A: ${taxable<=500000?'Applied — Nil tax upto ₹5L':'Not applicable'}`;
   }
-  const cess=tax*0.04;const total=tax+cess;
+  const cess=tax*0.04;
+  const total=tax+cess;
   document.getElementById('itr-tax').textContent='₹'+Math.round(total).toLocaleString('en-IN');
-  document.getElementById('itr-breakdown').textContent=breakdown+'\nCess (4%): ₹'+Math.round(cess).toLocaleString('en-IN');
+  document.getElementById('itr-breakdown').textContent=breakdown+`\nHealth & Education Cess (4%): ₹${Math.round(cess).toLocaleString('en-IN')}`;
   document.getElementById('itr-result').style.display='block';
 }
 function calcGST(){
@@ -1029,10 +1297,12 @@ let gstr2aRecords = [];
 document.addEventListener('DOMContentLoaded', function(){
   var fi = document.getElementById('gstr2aFile');
   if(fi) fi.addEventListener('change', function(e){ handleFile(e); });
-  // init appt date min
+  var f1 = document.getElementById('gstr1File');
+  if(f1) f1.addEventListener('change', function(e){ processG1File(e.target.files[0]); });
+  var pb = document.getElementById('premiumBtn');
+  if(pb) pb.addEventListener('click', function(e){ e.preventDefault(); openPremium(); });
   var ad = document.getElementById('appt-date');
   if(ad) ad.min = new Date().toISOString().split('T')[0];
-  // init TDS rows
   setTimeout(function(){ addTDSRow();addTDSRow();addTDSRow(); }, 200);
 });
 
@@ -1381,7 +1651,93 @@ function clearTool(){
   window._ledgerMap={};window._b2bCount=0;window._cdnrCount=0;
 }
 
-// ===== GSTR-3B TO TALLY XML =====
+// ===== PREMIUM EXCLUSIVE =====
+function openPremium(){
+  document.getElementById('premiumOverlay').classList.add('open');
+  document.body.style.overflow='hidden';
+  // Load saved API key
+  try{
+    const k=localStorage.getItem('akr_api_key')||'';
+    if(k) document.getElementById('premiumApiKey').value=k;
+  }catch(e){}
+}
+function closePremium(){
+  document.getElementById('premiumOverlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+function closePremiumOutside(e){
+  if(e.target.id==='premiumOverlay') closePremium();
+}
+function saveApiKey(){
+  const k=document.getElementById('premiumApiKey').value.trim();
+  try{localStorage.setItem('akr_api_key',k);}catch(e){}
+  showToast('✅ API Key saved!');
+}
+function getApiKey(){
+  try{return localStorage.getItem('akr_api_key')||'';}catch(e){return '';}
+}
+function switchAITool(tool,btn){
+  document.querySelectorAll('.ptool-card').forEach(c=>c.classList.remove('active'));
+  document.querySelectorAll('.ai-panel').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('ai-'+tool).classList.add('active');
+}
+
+const AI_PROMPTS={
+  ledger: u=>`You are an expert Tally accountant in India. The user wants Tally ledger name suggestions for GST entries.\nUser query: ${u}\n\nProvide specific Tally ledger names for: Purchase ledgers (rate-wise), Sales ledgers (rate-wise), CGST/SGST/IGST Input, CGST/SGST/IGST Output, and party ledger groups. Be specific and practical. Answer in simple Hindi/English mix.`,
+  notice: u=>`You are a senior CA specializing in GST litigation in India. Draft a professional reply to this GST notice.\nNotice details: ${u}\n\nDraft a formal reply letter with: proper salutation, reference to notice, point-wise response, legal grounds, and conclusion. Include relevant sections of CGST Act if applicable.`,
+  taxsaving: u=>`You are a CA advising on income tax planning in India for FY 2025-26.\nClient details: ${u}\n\nProvide specific, actionable tax saving tips mentioning:\n1. Section 80C investments\n2. 80D health insurance\n3. HRA/home loan benefits\n4. NPS benefits\n5. New vs Old regime comparison\n6. Other applicable deductions\nBe specific with amounts and limits. Answer in Hindi/English mix.`,
+  gstquery: u=>`You are an expert GST consultant in India with deep knowledge of CGST Act, 2017.\nQuery: ${u}\n\nProvide a clear, accurate answer with relevant sections, rules, and practical examples. Keep it concise and actionable. Answer in Hindi/English mix.`,
+  itrhelp: u=>`You are a CA helping with Income Tax Return filing in India for AY 2026-27.\nClient situation: ${u}\n\nAdvise on:\n1. Which ITR form to use and why\n2. Documents required\n3. Key schedules to fill\n4. Common mistakes to avoid\n5. Deductions they can claim\nAnswer in simple Hindi/English mix.`,
+  compliance: u=>`You are a compliance expert CA in India.\nBusiness details: ${u}\n\nProvide a comprehensive compliance checklist including:\n1. GST filing due dates (monthly/quarterly)\n2. TDS/TCS obligations\n3. ROC/MCA filings if applicable\n4. Income tax due dates\n5. Other state-specific compliances\n6. Penalties for non-compliance\nAnswer in Hindi/English mix with specific dates.`
+};
+
+async function callAI(tool){
+  const apiKey=getApiKey();
+  if(!apiKey||!apiKey.startsWith('sk-ant')){
+    showToast('⚠ Pehle API Key save karo!');
+    document.getElementById('premiumApiKey').focus();
+    return;
+  }
+  const inputEl=document.getElementById('ai-'+tool+'-input');
+  const userInput=inputEl.value.trim();
+  if(!userInput){showToast('Pehle apna sawaal ya details likho.');return;}
+
+  const loadingEl=document.getElementById('ai-'+tool+'-loading');
+  const responseEl=document.getElementById('ai-'+tool+'-response');
+  const btn=document.querySelector('#ai-'+tool+' .btn-ai');
+
+  loadingEl.style.display='block';
+  responseEl.style.display='none';
+  if(btn) btn.disabled=true;
+
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:1000,
+        messages:[{role:'user',content:AI_PROMPTS[tool](userInput)}]
+      })
+    });
+    const data=await res.json();
+    if(data.error){
+      responseEl.textContent='❌ Error: '+data.error.message;
+    } else {
+      const text=data.content&&data.content[0]?data.content[0].text:'No response';
+      responseEl.textContent=text;
+    }
+    responseEl.style.display='block';
+  }catch(err){
+    responseEl.textContent='❌ Network error: '+err.message+'\n\nCheck karo ki API key sahi hai aur internet connected hai.';
+    responseEl.style.display='block';
+  }finally{
+    loadingEl.style.display='none';
+    if(btn) btn.disabled=false;
+  }
+}
+
 function downloadG3BXML(){
   const month=document.getElementById('g3b-month').value;
   const year=document.getElementById('g3b-year').value;
@@ -1603,10 +1959,6 @@ function downloadJSON(){
 let gstr1Records=[];
 let _g1SavedMap={};
 
-document.addEventListener('DOMContentLoaded',function(){
-  var f=document.getElementById('gstr1File');
-  if(f) f.addEventListener('change',function(e){processG1File(e.target.files[0]);});
-});
 
 function dragOver1(e){e.preventDefault();e.stopPropagation();document.getElementById('dropZone1').classList.add('drag');}
 function dragLeave1(e){e.stopPropagation();document.getElementById('dropZone1').classList.remove('drag');}
@@ -1640,65 +1992,117 @@ function processG1File(file){
 }
 
 function parseG1Excel(wb){
-  // Sheet configs: {name, gstin, receiver, invNo, invDt, rate, taxable, igst, cgst, sgst, dataRow, type}
-  const sheetConfigs=[
-    // b2b: row4=header, row5+=data. Cols: 0=GSTIN,1=Name,2=InvNo,3=InvDt,4=InvVal,5=POS,6=RC,7=ApplTax,8=InvType,9=ECom,10=Rate,11=Taxable,12=Cess
-    {name:'b2b',  gstin:0,recv:1,invNo:2,invDt:3,rate:10,taxable:11,igst:-1,cgst:-1,sgst:-1,dataRow:5,type:'Sales'},
-    // b2ba: row4=header, row5+=data. Cols: 0=GSTIN,1=Name,2=OrgInvNo,3=OrgInvDt,4=RevInvNo,5=RevInvDt,6=InvVal,7=POS,8=RC,9=ApplTax,10=InvType,11=ECom,12=Rate,13=Taxable,14=Cess
-    {name:'b2ba', gstin:0,recv:1,invNo:4,invDt:5,rate:12,taxable:13,igst:-1,cgst:-1,sgst:-1,dataRow:5,type:'Sales (Amended)'},
-    // cdnr: row4=header, row5+=data. Cols: 0=GSTIN,1=Name,2=NoteNo,3=NoteDt,4=NoteType,5=POS,6=RC,7=NoteSupplyType,8=NoteVal,9=ApplTax,10=Rate,11=Taxable,12=Cess
-    {name:'cdnr', gstin:0,recv:1,invNo:2,invDt:3,rate:10,taxable:11,igst:-1,cgst:-1,sgst:-1,dataRow:5,type:'Credit/Debit Note',noteType:4},
-    // cdnra: row4=header. Cols: 0=GSTIN,1=Name,2=OrgNoteNo,3=OrgNoteDt,4=RevNoteNo,5=RevNoteDt,6=NoteType,7=POS,8=RC,9=SupplyType,10=NoteVal,11=ApplTax,12=Rate,13=Taxable,14=Cess
-    {name:'cdnra',gstin:0,recv:1,invNo:4,invDt:5,rate:12,taxable:13,igst:-1,cgst:-1,sgst:-1,dataRow:5,type:'Credit/Debit Note (Amended)',noteType:6},
-    // b2cl: row4=header. Cols: 0=InvNo,1=InvDt,2=InvVal,3=POS,4=ApplTax,5=Rate,6=Taxable,7=Cess,8=ECom (no GSTIN/name)
-    {name:'b2cl', gstin:-1,recv:-1,invNo:0,invDt:1,rate:5,taxable:6,igst:-1,cgst:-1,sgst:-1,dataRow:5,type:'B2C Large'},
-  ];
+  let counts={b2b:0,b2ba:0,cdnr:0,cdnra:0,b2cl:0};
 
-  let counts={};
-  for(const cfg of sheetConfigs){
-    const ws=wb.Sheets[cfg.name];if(!ws)continue;
-    const rows=XLSX.utils.sheet_to_json(ws,{header:1,defval:'',raw:true,blankrows:false});
-    if(!rows||rows.length<cfg.dataRow)continue;
-    let sheetCount=0;
-    for(let i=cfg.dataRow-1;i<rows.length;i++){
-      const r=rows[i];
-      const invNo=String(r[cfg.invNo]||'').trim();
-      if(!invNo||invNo===cfg.name)continue;
-      const taxable=toNum(r[cfg.taxable]);
-      const rate=toNum(r[cfg.rate]);
-      if(!taxable&&!rate)continue;
-
-      // Calculate tax from rate since GSTR-1 doesn't have tax columns directly
-      // But HSN sheet has it — for now compute from rate
-      let igst=0,cgst=0,sgst=0;
-      const pos=String(r[cfg.name==='b2b'?5:cfg.name==='b2ba'?7:3]||'').trim();
-      // If inter-state (POS != Bihar=10): IGST
-      // If intra-state: CGST+SGST
-      const isInterState=pos&&!pos.includes('10-');
-      if(isInterState){igst=Math.round(taxable*rate/100*100)/100;}
-      else{cgst=Math.round(taxable*rate/2/100*100)/100;sgst=cgst;}
-
-      const gstin=cfg.gstin>=0?String(r[cfg.gstin]||'').trim():'';
-      const recv=cfg.recv>=0?String(r[cfg.recv]||''):'B2C Customer';
-      const noteType=cfg.noteType>=0?String(r[cfg.noteType]||'').trim():'';
-      const recType=cfg.noteType>=0?(noteType==='D'?'Debit Note':'Credit Note'):cfg.type;
-
-      gstr1Records.push({
-        gstin,name:recv.trim()||'Unknown',
-        invNo,invDt:fmtDate(r[cfg.invDt]),
-        taxable,igst,cgst,sgst,
-        total:Math.round((taxable+igst+cgst+sgst)*100)/100,
-        gstRate:rate,type:recType,sheet:cfg.name
-      });
-      sheetCount++;
+  // Helper: find data start row by looking for GSTIN-like value or invoice number
+  function findDataStart(rows, gstinCol, invCol){
+    for(let i=0;i<Math.min(rows.length,15);i++){
+      const v=String(rows[i][gstinCol>=0?gstinCol:invCol]||'').trim();
+      if(v && v!=='' && !v.toLowerCase().includes('gstin') && !v.toLowerCase().includes('invoice') && !v.toLowerCase().includes('sr.')){
+        // Check if it looks like data (not header)
+        if(gstinCol>=0&&v.length===15&&/^[0-9A-Z]{15}$/i.test(v)) return i;
+        if(gstinCol<0&&v.length>2) return i;
+      }
     }
-    counts[cfg.name]=sheetCount;
+    return 5; // default
+  }
+
+  // B2B sheet
+  const wsB2B=wb.Sheets['b2b']||wb.Sheets['B2B'];
+  if(wsB2B){
+    const rows=XLSX.utils.sheet_to_json(wsB2B,{header:1,defval:'',raw:true,blankrows:false});
+    const ds=findDataStart(rows,0,2);
+    for(let i=ds;i<rows.length;i++){
+      const r=rows[i];
+      const gstin=String(r[0]||'').trim().toUpperCase();
+      if(!gstin||gstin.length!==15||!/^[0-9A-Z]{15}$/.test(gstin))continue;
+      const invNo=String(r[2]||'').trim();
+      const invDt=fmtDate(r[3]);
+      const rate=toNum(r[10]);
+      const taxable=toNum(r[11]);
+      if(!invNo||(!taxable&&!rate))continue;
+      const pos=String(r[5]||'').trim();
+      const isInter=pos&&!pos.startsWith('10');
+      const igst=isInter?Math.round(taxable*rate/100*100)/100:0;
+      const cgst=isInter?0:Math.round(taxable*rate/2/100*100)/100;
+      const sgst=cgst;
+      gstr1Records.push({gstin,name:String(r[1]||'').trim()||'Unknown',invNo,invDt,taxable,igst,cgst,sgst,total:Math.round((taxable+igst+cgst+sgst)*100)/100,gstRate:rate,type:'Sales',sheet:'b2b'});
+      counts.b2b++;
+    }
+  }
+
+  // B2BA sheet
+  const wsB2BA=wb.Sheets['b2ba']||wb.Sheets['B2BA'];
+  if(wsB2BA){
+    const rows=XLSX.utils.sheet_to_json(wsB2BA,{header:1,defval:'',raw:true,blankrows:false});
+    const ds=findDataStart(rows,0,4);
+    for(let i=ds;i<rows.length;i++){
+      const r=rows[i];
+      const gstin=String(r[0]||'').trim().toUpperCase();
+      if(!gstin||gstin.length!==15||!/^[0-9A-Z]{15}$/.test(gstin))continue;
+      const invNo=String(r[4]||'').trim();
+      const invDt=fmtDate(r[5]);
+      const rate=toNum(r[12]);
+      const taxable=toNum(r[13]);
+      if(!invNo||(!taxable&&!rate))continue;
+      const pos=String(r[7]||'').trim();
+      const isInter=pos&&!pos.startsWith('10');
+      const igst=isInter?Math.round(taxable*rate/100*100)/100:0;
+      const cgst=isInter?0:Math.round(taxable*rate/2/100*100)/100;
+      const sgst=cgst;
+      gstr1Records.push({gstin,name:String(r[1]||'').trim()||'Unknown',invNo,invDt,taxable,igst,cgst,sgst,total:Math.round((taxable+igst+cgst+sgst)*100)/100,gstRate:rate,type:'Sales (Amended)',sheet:'b2ba'});
+      counts.b2ba++;
+    }
+  }
+
+  // CDNR sheet
+  const wsCDNR=wb.Sheets['cdnr']||wb.Sheets['CDNR'];
+  if(wsCDNR){
+    const rows=XLSX.utils.sheet_to_json(wsCDNR,{header:1,defval:'',raw:true,blankrows:false});
+    const ds=findDataStart(rows,0,2);
+    for(let i=ds;i<rows.length;i++){
+      const r=rows[i];
+      const gstin=String(r[0]||'').trim().toUpperCase();
+      if(!gstin||gstin.length!==15||!/^[0-9A-Z]{15}$/.test(gstin))continue;
+      const invNo=String(r[2]||'').trim();
+      const invDt=fmtDate(r[3]);
+      const noteType=String(r[4]||'').trim().toUpperCase();
+      const rate=toNum(r[10]);
+      const taxable=toNum(r[11]);
+      if(!invNo||(!taxable&&!rate))continue;
+      const pos=String(r[5]||'').trim();
+      const isInter=pos&&!pos.startsWith('10');
+      const igst=isInter?Math.round(taxable*rate/100*100)/100:0;
+      const cgst=isInter?0:Math.round(taxable*rate/2/100*100)/100;
+      const sgst=cgst;
+      const recType=noteType==='D'?'Debit Note':'Credit Note';
+      gstr1Records.push({gstin,name:String(r[1]||'').trim()||'Unknown',invNo,invDt,taxable,igst,cgst,sgst,total:Math.round((taxable+igst+cgst+sgst)*100)/100,gstRate:rate,type:recType,sheet:'cdnr'});
+      counts.cdnr++;
+    }
+  }
+
+  // B2CL sheet
+  const wsB2CL=wb.Sheets['b2cl']||wb.Sheets['B2CL'];
+  if(wsB2CL){
+    const rows=XLSX.utils.sheet_to_json(wsB2CL,{header:1,defval:'',raw:true,blankrows:false});
+    const ds=findDataStart(rows,-1,0);
+    for(let i=ds;i<rows.length;i++){
+      const r=rows[i];
+      const invNo=String(r[0]||'').trim();
+      const invDt=fmtDate(r[1]);
+      const rate=toNum(r[5]);
+      const taxable=toNum(r[6]);
+      if(!invNo||(!taxable&&!rate))continue;
+      const igst=Math.round(taxable*rate/100*100)/100;
+      gstr1Records.push({gstin:'',name:'B2C Customer',invNo,invDt,taxable,igst,cgst:0,sgst:0,total:Math.round((taxable+igst)*100)/100,gstRate:rate,type:'B2C Large',sheet:'b2cl'});
+      counts.b2cl++;
+    }
   }
 
   if(!gstr1Records.length){
     setG1Status('❌ Data nahi mila. Valid GSTN GSTR-1 Excel template upload karo.','error');return;
   }
-  setG1Status(`✅ ${gstr1Records.length} records mili — B2B:${counts.b2b||0}, B2BA:${counts.b2ba||0}, CDNR:${counts.cdnr||0}, B2CL:${counts.b2cl||0}. Mapping set karo.`,'success');
+  setG1Status(`✅ ${gstr1Records.length} records mili — B2B:${counts.b2b}, B2BA:${counts.b2ba}, CDNR:${counts.cdnr}, B2CL:${counts.b2cl}. Mapping set karo.`,'success');
   showG1MappingScreen(counts);
 }
 
@@ -1831,6 +2235,7 @@ function downloadG1XML(){
     xml+=`<VOUCHERTYPENAME>${escX(vt)}</VOUCHERTYPENAME>\n`;
     xml+=`<VOUCHERNUMBER>${escX(r.invNo)}</VOUCHERNUMBER>\n`;
     xml+=`<REFERENCE>${escX(r.invNo)}</REFERENCE>\n`;
+    xml+=`<INVOICENO>${escX(r.invNo)}</INVOICENO>\n`;
     xml+=`<PARTYLEDGERNAME>${customerLedger}</PARTYLEDGERNAME>\n`;
     xml+=`<NARRATION>GSTR-1 | ${escX(r.type)} | GSTIN: ${escX(r.gstin||'B2C')} | ${escX(r.invNo)}</NARRATION>\n`;
     xml+=`<ISINVOICE>Yes</ISINVOICE>\n`;
