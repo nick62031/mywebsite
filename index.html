@@ -1156,16 +1156,23 @@ function showMappingScreen(b2bCount,cdnrCount){
 
   const container=document.getElementById('purchaseMappingRows');
   container.innerHTML='';
+  // Header
+  const hdr=document.createElement('div');
+  hdr.style.cssText='display:grid;grid-template-columns:160px 1fr 1fr;gap:1rem;margin-bottom:0.4rem;';
+  hdr.innerHTML='<div></div><div style="font-size:0.75rem;font-weight:700;color:#27ae60;text-align:center;">🏠 Local Purchase (CGST+SGST)</div><div style="font-size:0.75rem;font-weight:700;color:#1a3a6b;text-align:center;">✈️ Interstate Purchase (IGST)</div>';
+  container.appendChild(hdr);
   uniqueRates.forEach(rate=>{
-    const savedVal=savedMap['purchase_'+rate]||'Purchase@'+rate+'%';
+    const hasIGST=gstr2aRecords.some(r=>r.gstRate===rate&&r.igst>0);
+    const hasLocal=gstr2aRecords.some(r=>r.gstRate===rate&&(r.cgst>0||r.sgst>0));
+    const savedLocal=savedMap['purchase_local_'+rate]||savedMap['purchase_'+rate]||'Purchase@'+rate+'%';
+    const savedIGST=savedMap['purchase_igst_'+rate]||('Interstate Purchase@'+rate+'%');
     const div=document.createElement('div');
-    div.style.cssText='display:grid;grid-template-columns:180px 1fr;align-items:center;gap:1rem;margin-bottom:0.7rem;';
-    div.innerHTML=`
-      <div style="background:#f4f6fa;border-radius:6px;padding:0.55rem 0.8rem;font-size:0.85rem;font-weight:600;color:#1a3a6b;text-align:center;">
-        Purchase @ ${rate}%
-      </div>
-      <input type="text" id="map-purchase-${rate}" value="${savedVal}" placeholder="Tally ledger name..." 
-        style="width:100%;padding:0.6rem 0.8rem;border:1.5px solid #d0d9e8;border-radius:6px;font-size:0.87rem;font-family:inherit;"/>`;
+    div.style.cssText='display:grid;grid-template-columns:160px 1fr 1fr;align-items:center;gap:1rem;margin-bottom:0.7rem;';
+    const localStyle=hasLocal?'border:1.5px solid #d0d9e8;':'border:1.5px dashed #ccc;opacity:0.5;';
+    const igstStyle=hasIGST?'border:1.5px solid #1a3a6b;':'border:1.5px dashed #ccc;opacity:0.5;';
+    div.innerHTML='<div style="background:#f4f6fa;border-radius:6px;padding:0.55rem 0.8rem;font-size:0.85rem;font-weight:600;color:#1a3a6b;text-align:center;">@ '+rate+'%</div>'
+      +'<input type="text" id="map-local-'+rate+'" value="'+savedLocal+'" placeholder="Local ledger name..." style="width:100%;padding:0.6rem 0.8rem;'+localStyle+'border-radius:6px;font-size:0.87rem;font-family:inherit;"/>'
+      +'<input type="text" id="map-igst-purchase-'+rate+'" value="'+savedIGST+'" placeholder="Interstate ledger name..." style="width:100%;padding:0.6rem 0.8rem;'+igstStyle+'border-radius:6px;font-size:0.87rem;font-family:inherit;"/>';
     container.appendChild(div);
   });
 
@@ -1192,8 +1199,10 @@ function confirmMapping(){
   const uniqueRates=[...new Set(gstr2aRecords.map(r=>r.gstRate).filter(r=>r>0))].sort((a,b)=>a-b);
   const map={};
   uniqueRates.forEach(rate=>{
-    const val=document.getElementById('map-purchase-'+rate)?.value.trim();
-    if(val) map['purchase_'+rate]=val;
+    const localVal=document.getElementById('map-local-'+rate)?.value.trim();
+    const igstVal=document.getElementById('map-igst-purchase-'+rate)?.value.trim();
+    if(localVal) map['purchase_local_'+rate]=localVal;
+    if(igstVal)  map['purchase_igst_'+rate]=igstVal;
   });
   map['cgst']=document.getElementById('map-cgst').value.trim()||'CGST Input';
   map['sgst']=document.getElementById('map-sgst').value.trim()||'SGST Input';
@@ -1226,9 +1235,12 @@ function getSupplierLedger(r){
   if(mode==='custom') return map.supplierCustom||r.name;
   return r.name;
 }
-function getPurchaseLedger(rate){
+function getPurchaseLedger(rate,isIGST){
   const map=window._ledgerMap||{};
-  return map['purchase_'+rate]||('Purchase@'+rate+'%');
+  if(isIGST){
+    return map['purchase_igst_'+rate]||('Interstate Purchase@'+rate+'%');
+  }
+  return map['purchase_local_'+rate]||map['purchase_'+rate]||('Purchase@'+rate+'%');
 }
 function getTaxLedger(type){
   const map=window._ledgerMap||{};
@@ -1287,12 +1299,13 @@ function downloadXML(){
     v.igst     += r.igst;
     v.cgst     += r.cgst;
     v.sgst     += r.sgst;
-    // Check if a line for this rate already exists; if yes, add to it
-    const existing = v.purchaseLines.find(l => l.rate === r.gstRate);
+    // Separate lines for local vs interstate (same rate but different ledger)
+    const isIGST = r.igst > 0;
+    const existing = v.purchaseLines.find(l => l.rate === r.gstRate && l.isIGST === isIGST);
     if(existing){
       existing.taxable += r.taxable;
     } else {
-      v.purchaseLines.push({rate: r.gstRate, taxable: r.taxable});
+      v.purchaseLines.push({rate: r.gstRate, taxable: r.taxable, isIGST: isIGST});
     }
   }
 
@@ -1345,9 +1358,9 @@ function downloadXML(){
     xml+=`<AMOUNT>${fmt(partyAmt)}</AMOUNT>\n`;
     xml+=`</ALLLEDGERENTRIES.LIST>\n`;
 
-    // Purchase Ledger Entries — one per GST rate (merged taxable amounts)
+    // Purchase Ledger Entries — one per GST rate per type (local/interstate)
     for(const line of v.purchaseLines){
-      const purchaseLedger=escX(getPurchaseLedger(line.rate));
+      const purchaseLedger=escX(getPurchaseLedger(line.rate, line.isIGST));
       const taxableAmt = isCredit ? line.taxable : -line.taxable;
       xml+=`<ALLLEDGERENTRIES.LIST>\n`;
       xml+=`<LEDGERNAME>${purchaseLedger}</LEDGERNAME>\n`;
