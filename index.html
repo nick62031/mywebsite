@@ -1156,11 +1156,10 @@ function showMappingScreen(b2bCount,cdnrCount){
 
   const container=document.getElementById('purchaseMappingRows');
   container.innerHTML='';
-  // Header
-  const hdr=document.createElement('div');
-  hdr.style.cssText='display:grid;grid-template-columns:160px 1fr 1fr;gap:1rem;margin-bottom:0.4rem;';
-  hdr.innerHTML='<div></div><div style="font-size:0.75rem;font-weight:700;color:#27ae60;text-align:center;">🏠 Local Purchase (CGST+SGST)</div><div style="font-size:0.75rem;font-weight:700;color:#1a3a6b;text-align:center;">✈️ Interstate Purchase (IGST)</div>';
-  container.appendChild(hdr);
+  const hdrP=document.createElement('div');
+  hdrP.style.cssText='display:grid;grid-template-columns:160px 1fr 1fr;gap:1rem;margin-bottom:0.4rem;';
+  hdrP.innerHTML='<div></div><div style="font-size:0.75rem;font-weight:700;color:#27ae60;text-align:center;">🏠 Local Purchase (CGST+SGST)</div><div style="font-size:0.75rem;font-weight:700;color:#1a3a6b;text-align:center;">✈️ Interstate Purchase (IGST)</div>';
+  container.appendChild(hdrP);
   uniqueRates.forEach(rate=>{
     const hasIGST=gstr2aRecords.some(r=>r.gstRate===rate&&r.igst>0);
     const hasLocal=gstr2aRecords.some(r=>r.gstRate===rate&&(r.cgst>0||r.sgst>0));
@@ -1237,9 +1236,7 @@ function getSupplierLedger(r){
 }
 function getPurchaseLedger(rate,isIGST){
   const map=window._ledgerMap||{};
-  if(isIGST){
-    return map['purchase_igst_'+rate]||('Interstate Purchase@'+rate+'%');
-  }
+  if(isIGST) return map['purchase_igst_'+rate]||('Interstate Purchase@'+rate+'%');
   return map['purchase_local_'+rate]||map['purchase_'+rate]||('Purchase@'+rate+'%');
 }
 function getTaxLedger(type){
@@ -1274,39 +1271,26 @@ function showPreviewTable(b2bCount,cdnrCount){
 function downloadXML(){
   if(!gstr2aRecords.length){showToast('Pehle file upload karo.');return;}
 
-  // --- MERGE same invoice number + same supplier + same type into one voucher ---
-  // Key = invNo + '||' + gstin + '||' + type
-  const voucherMap = new Map();
+  // --- MERGE same invoice number + same supplier + same type ---
+  const voucherMap=new Map();
   for(const r of gstr2aRecords){
-    const key = r.invNo + '||' + r.gstin + '||' + r.type;
+    const key=r.invNo+'||'+r.gstin+'||'+r.type;
     if(!voucherMap.has(key)){
-      // Deep clone base fields, purchaseLines will hold per-rate entries
-      voucherMap.set(key, {
-        gstin: r.gstin,
-        name: r.name,
-        invNo: r.invNo,
-        invDt: r.invDt,
-        type: r.type,
-        totalAmt: 0,      // sum of all totals (party ledger amount)
-        igst: 0,
-        cgst: 0,
-        sgst: 0,
-        purchaseLines: [] // [{rate, taxable}]
+      voucherMap.set(key,{
+        gstin:r.gstin,name:r.name,invNo:r.invNo,invDt:r.invDt,type:r.type,
+        totalAmt:0,igst:0,cgst:0,sgst:0,
+        purchaseLines:[] // [{rate, taxable, isIGST}]
       });
     }
-    const v = voucherMap.get(key);
-    v.totalAmt += r.total;
-    v.igst     += r.igst;
-    v.cgst     += r.cgst;
-    v.sgst     += r.sgst;
-    // Separate lines for local vs interstate (same rate but different ledger)
-    const isIGST = r.igst > 0;
-    const existing = v.purchaseLines.find(l => l.rate === r.gstRate && l.isIGST === isIGST);
-    if(existing){
-      existing.taxable += r.taxable;
-    } else {
-      v.purchaseLines.push({rate: r.gstRate, taxable: r.taxable, isIGST: isIGST});
-    }
+    const v=voucherMap.get(key);
+    v.totalAmt+=r.total;
+    v.igst+=r.igst;
+    v.cgst+=r.cgst;
+    v.sgst+=r.sgst;
+    const isIGST=r.igst>0;
+    const existing=v.purchaseLines.find(l=>l.rate===r.gstRate&&l.isIGST===isIGST);
+    if(existing){existing.taxable+=r.taxable;}
+    else{v.purchaseLines.push({rate:r.gstRate,taxable:r.taxable,isIGST:isIGST});}
   }
 
   let xml='<?xml version="1.0" encoding="UTF-8"?>\n';
@@ -1322,19 +1306,16 @@ function downloadXML(){
     const vt=v.type==='Credit Note'?'Credit Note':v.type==='Debit Note'?'Debit Note':'Purchase';
     const isCredit=v.type==='Credit Note';
 
-    // Construct a temp record with gstin/name for getSupplierLedger
-    const tempR={gstin:v.gstin, name:v.name};
+    const tempR={gstin:v.gstin,name:v.name};
     const supplierLedger=escX(getSupplierLedger(tempR));
     const cgstLedger=escX(getTaxLedger('cgst'));
     const sgstLedger=escX(getTaxLedger('sgst'));
     const igstLedger=escX(getTaxLedger('igst'));
 
-    // Signs: Purchase = party Cr (positive), Purchase/Tax ledgers Dr (negative)
-    //        Credit Note = party Dr (negative), Purchase/Tax ledgers Cr (positive)
-    const partyAmt   = isCredit ? -(Math.round(v.totalAmt*100)/100) :  (Math.round(v.totalAmt*100)/100);
-    const igstAmt    = isCredit ?  v.igst : -v.igst;
-    const cgstAmt    = isCredit ?  v.cgst : -v.cgst;
-    const sgstAmt    = isCredit ?  v.sgst : -v.sgst;
+    const partyAmt=isCredit?-(Math.round(v.totalAmt*100)/100):(Math.round(v.totalAmt*100)/100);
+    const igstAmt=isCredit?v.igst:-v.igst;
+    const cgstAmt=isCredit?v.cgst:-v.cgst;
+    const sgstAmt=isCredit?v.sgst:-v.sgst;
 
     xml+=`<TALLYMESSAGE xmlns:UDF="TallyUDF">\n`;
     xml+=`<VOUCHER VCHTYPE="${escX(vt)}" ACTION="Create" OBJVIEW="Accounting Voucher View">\n`;
@@ -1347,69 +1328,37 @@ function downloadXML(){
     xml+=`<NARRATION>GSTR-2A | ${escX(v.type)} | GSTIN: ${escX(v.gstin)} | Inv: ${escX(v.invNo)}</NARRATION>\n`;
     xml+=`<ISINVOICE>Yes</ISINVOICE>\n`;
 
-    // Party Ledger Entry (single)
-    xml+=`<ALLLEDGERENTRIES.LIST>\n`;
-    xml+=`<LEDGERNAME>${supplierLedger}</LEDGERNAME>\n`;
-    xml+=`<GSTCLASS></GSTCLASS>\n`;
-    xml+=`<ISDEEMEDPOSITIVE>${partyAmt>0?'No':'Yes'}</ISDEEMEDPOSITIVE>\n`;
-    xml+=`<LEDGERFROMITEM>No</LEDGERFROMITEM>\n`;
-    xml+=`<REMOVEZEROENTRIES>No</REMOVEZEROENTRIES>\n`;
-    xml+=`<ISPARTYLEDGER>Yes</ISPARTYLEDGER>\n`;
-    xml+=`<AMOUNT>${fmt(partyAmt)}</AMOUNT>\n`;
-    xml+=`</ALLLEDGERENTRIES.LIST>\n`;
+    // Party Ledger (single merged)
+    xml+=`<ALLLEDGERENTRIES.LIST>\n<LEDGERNAME>${supplierLedger}</LEDGERNAME>\n<GSTCLASS></GSTCLASS>\n`;
+    xml+=`<ISDEEMEDPOSITIVE>${partyAmt>0?'No':'Yes'}</ISDEEMEDPOSITIVE>\n<LEDGERFROMITEM>No</LEDGERFROMITEM>\n<REMOVEZEROENTRIES>No</REMOVEZEROENTRIES>\n<ISPARTYLEDGER>Yes</ISPARTYLEDGER>\n`;
+    xml+=`<AMOUNT>${fmt(partyAmt)}</AMOUNT>\n</ALLLEDGERENTRIES.LIST>\n`;
 
-    // Purchase Ledger Entries — one per GST rate per type (local/interstate)
+    // Purchase lines - per rate per type (local/interstate)
     for(const line of v.purchaseLines){
-      const purchaseLedger=escX(getPurchaseLedger(line.rate, line.isIGST));
-      const taxableAmt = isCredit ? line.taxable : -line.taxable;
-      xml+=`<ALLLEDGERENTRIES.LIST>\n`;
-      xml+=`<LEDGERNAME>${purchaseLedger}</LEDGERNAME>\n`;
-      xml+=`<GSTCLASS></GSTCLASS>\n`;
-      xml+=`<ISDEEMEDPOSITIVE>${taxableAmt>0?'No':'Yes'}</ISDEEMEDPOSITIVE>\n`;
-      xml+=`<LEDGERFROMITEM>No</LEDGERFROMITEM>\n`;
-      xml+=`<REMOVEZEROENTRIES>No</REMOVEZEROENTRIES>\n`;
-      xml+=`<ISPARTYLEDGER>No</ISPARTYLEDGER>\n`;
-      xml+=`<AMOUNT>${fmt(taxableAmt)}</AMOUNT>\n`;
-      xml+=`</ALLLEDGERENTRIES.LIST>\n`;
+      const purchaseLedger=escX(getPurchaseLedger(line.rate,line.isIGST));
+      const taxableAmt=isCredit?line.taxable:-line.taxable;
+      xml+=`<ALLLEDGERENTRIES.LIST>\n<LEDGERNAME>${purchaseLedger}</LEDGERNAME>\n<GSTCLASS></GSTCLASS>\n`;
+      xml+=`<ISDEEMEDPOSITIVE>${taxableAmt>0?'No':'Yes'}</ISDEEMEDPOSITIVE>\n<LEDGERFROMITEM>No</LEDGERFROMITEM>\n<REMOVEZEROENTRIES>No</REMOVEZEROENTRIES>\n<ISPARTYLEDGER>No</ISPARTYLEDGER>\n`;
+      xml+=`<AMOUNT>${fmt(taxableAmt)}</AMOUNT>\n</ALLLEDGERENTRIES.LIST>\n`;
     }
 
-    // IGST (merged)
+    // IGST
     if(v.igst>0){
-      xml+=`<ALLLEDGERENTRIES.LIST>\n`;
-      xml+=`<LEDGERNAME>${igstLedger}</LEDGERNAME>\n`;
-      xml+=`<GSTCLASS>Integrated Tax</GSTCLASS>\n`;
-      xml+=`<ISDEEMEDPOSITIVE>${igstAmt>0?'No':'Yes'}</ISDEEMEDPOSITIVE>\n`;
-      xml+=`<LEDGERFROMITEM>No</LEDGERFROMITEM>\n`;
-      xml+=`<REMOVEZEROENTRIES>No</REMOVEZEROENTRIES>\n`;
-      xml+=`<ISPARTYLEDGER>No</ISPARTYLEDGER>\n`;
-      xml+=`<AMOUNT>${fmt(igstAmt)}</AMOUNT>\n`;
-      xml+=`</ALLLEDGERENTRIES.LIST>\n`;
+      xml+=`<ALLLEDGERENTRIES.LIST>\n<LEDGERNAME>${igstLedger}</LEDGERNAME>\n<GSTCLASS>Integrated Tax</GSTCLASS>\n`;
+      xml+=`<ISDEEMEDPOSITIVE>${igstAmt>0?'No':'Yes'}</ISDEEMEDPOSITIVE>\n<LEDGERFROMITEM>No</LEDGERFROMITEM>\n<REMOVEZEROENTRIES>No</REMOVEZEROENTRIES>\n<ISPARTYLEDGER>No</ISPARTYLEDGER>\n`;
+      xml+=`<AMOUNT>${fmt(igstAmt)}</AMOUNT>\n</ALLLEDGERENTRIES.LIST>\n`;
     }
-
-    // CGST (merged)
+    // CGST
     if(v.cgst>0){
-      xml+=`<ALLLEDGERENTRIES.LIST>\n`;
-      xml+=`<LEDGERNAME>${cgstLedger}</LEDGERNAME>\n`;
-      xml+=`<GSTCLASS>Central Tax</GSTCLASS>\n`;
-      xml+=`<ISDEEMEDPOSITIVE>${cgstAmt>0?'No':'Yes'}</ISDEEMEDPOSITIVE>\n`;
-      xml+=`<LEDGERFROMITEM>No</LEDGERFROMITEM>\n`;
-      xml+=`<REMOVEZEROENTRIES>No</REMOVEZEROENTRIES>\n`;
-      xml+=`<ISPARTYLEDGER>No</ISPARTYLEDGER>\n`;
-      xml+=`<AMOUNT>${fmt(cgstAmt)}</AMOUNT>\n`;
-      xml+=`</ALLLEDGERENTRIES.LIST>\n`;
+      xml+=`<ALLLEDGERENTRIES.LIST>\n<LEDGERNAME>${cgstLedger}</LEDGERNAME>\n<GSTCLASS>Central Tax</GSTCLASS>\n`;
+      xml+=`<ISDEEMEDPOSITIVE>${cgstAmt>0?'No':'Yes'}</ISDEEMEDPOSITIVE>\n<LEDGERFROMITEM>No</LEDGERFROMITEM>\n<REMOVEZEROENTRIES>No</REMOVEZEROENTRIES>\n<ISPARTYLEDGER>No</ISPARTYLEDGER>\n`;
+      xml+=`<AMOUNT>${fmt(cgstAmt)}</AMOUNT>\n</ALLLEDGERENTRIES.LIST>\n`;
     }
-
-    // SGST (merged)
+    // SGST
     if(v.sgst>0){
-      xml+=`<ALLLEDGERENTRIES.LIST>\n`;
-      xml+=`<LEDGERNAME>${sgstLedger}</LEDGERNAME>\n`;
-      xml+=`<GSTCLASS>State Tax</GSTCLASS>\n`;
-      xml+=`<ISDEEMEDPOSITIVE>${sgstAmt>0?'No':'Yes'}</ISDEEMEDPOSITIVE>\n`;
-      xml+=`<LEDGERFROMITEM>No</LEDGERFROMITEM>\n`;
-      xml+=`<REMOVEZEROENTRIES>No</REMOVEZEROENTRIES>\n`;
-      xml+=`<ISPARTYLEDGER>No</ISPARTYLEDGER>\n`;
-      xml+=`<AMOUNT>${fmt(sgstAmt)}</AMOUNT>\n`;
-      xml+=`</ALLLEDGERENTRIES.LIST>\n`;
+      xml+=`<ALLLEDGERENTRIES.LIST>\n<LEDGERNAME>${sgstLedger}</LEDGERNAME>\n<GSTCLASS>State Tax</GSTCLASS>\n`;
+      xml+=`<ISDEEMEDPOSITIVE>${sgstAmt>0?'No':'Yes'}</ISDEEMEDPOSITIVE>\n<LEDGERFROMITEM>No</LEDGERFROMITEM>\n<REMOVEZEROENTRIES>No</REMOVEZEROENTRIES>\n<ISPARTYLEDGER>No</ISPARTYLEDGER>\n`;
+      xml+=`<AMOUNT>${fmt(sgstAmt)}</AMOUNT>\n</ALLLEDGERENTRIES.LIST>\n`;
     }
 
     xml+=`</VOUCHER>\n</TALLYMESSAGE>\n`;
@@ -1761,12 +1710,22 @@ function showG1MappingScreen(counts){
 
   const container=document.getElementById('gstr1SalesMappingRows');
   container.innerHTML='';
+  const hdr=document.createElement('div');
+  hdr.style.cssText='display:grid;grid-template-columns:160px 1fr 1fr;gap:1rem;margin-bottom:0.4rem;';
+  hdr.innerHTML='<div></div><div style="font-size:0.75rem;font-weight:700;color:#27ae60;text-align:center;">🏠 Local Sales (CGST+SGST)</div><div style="font-size:0.75rem;font-weight:700;color:#1a3a6b;text-align:center;">✈️ Interstate Sales (IGST)</div>';
+  container.appendChild(hdr);
   uniqueRates.forEach(rate=>{
-    const saved=savedMap['sales_'+rate]||'Sales@'+rate+'%';
+    const hasIGST=gstr1Records.some(r=>r.gstRate===rate&&r.igst>0);
+    const hasLocal=gstr1Records.some(r=>r.gstRate===rate&&(r.cgst>0||r.sgst>0));
+    const savedLocal=savedMap['sales_local_'+rate]||savedMap['sales_'+rate]||'Sales@'+rate+'%';
+    const savedIGST=savedMap['sales_igst_'+rate]||('Interstate Sales@'+rate+'%');
     const div=document.createElement('div');
-    div.style.cssText='display:grid;grid-template-columns:180px 1fr;align-items:center;gap:1rem;margin-bottom:0.7rem;';
-    div.innerHTML=`<div style="background:#f4f6fa;border-radius:6px;padding:0.55rem 0.8rem;font-size:0.85rem;font-weight:600;color:#1a3a6b;text-align:center;">Sales @ ${rate}%</div>
-    <input type="text" id="g1-map-sales-${rate}" value="${saved}" style="width:100%;padding:0.6rem 0.8rem;border:1.5px solid #d0d9e8;border-radius:6px;font-size:0.87rem;font-family:inherit;"/>`;
+    div.style.cssText='display:grid;grid-template-columns:160px 1fr 1fr;align-items:center;gap:1rem;margin-bottom:0.7rem;';
+    const localStyle=hasLocal?'border:1.5px solid #d0d9e8;':'border:1.5px dashed #ccc;opacity:0.5;';
+    const igstStyle=hasIGST?'border:1.5px solid #1a3a6b;':'border:1.5px dashed #ccc;opacity:0.5;';
+    div.innerHTML='<div style="background:#f4f6fa;border-radius:6px;padding:0.55rem 0.8rem;font-size:0.85rem;font-weight:600;color:#1a3a6b;text-align:center;">@ '+rate+'%</div>'
+      +'<input type="text" id="g1-map-local-'+rate+'" value="'+savedLocal+'" placeholder="Local sales ledger..." style="width:100%;padding:0.6rem 0.8rem;'+localStyle+'border-radius:6px;font-size:0.87rem;font-family:inherit;"/>'
+      +'<input type="text" id="g1-map-igst-sales-'+rate+'" value="'+savedIGST+'" placeholder="Interstate sales ledger..." style="width:100%;padding:0.6rem 0.8rem;'+igstStyle+'border-radius:6px;font-size:0.87rem;font-family:inherit;"/>';
     container.appendChild(div);
   });
 
@@ -1789,8 +1748,10 @@ function confirmG1Mapping(){
   const uniqueRates=[...new Set(gstr1Records.map(r=>r.gstRate).filter(r=>r>0))].sort((a,b)=>a-b);
   const map={};
   uniqueRates.forEach(rate=>{
-    const v=document.getElementById('g1-map-sales-'+rate)?.value.trim();
-    if(v) map['sales_'+rate]=v;
+    const localV=document.getElementById('g1-map-local-'+rate)?.value.trim();
+    const igstV=document.getElementById('g1-map-igst-sales-'+rate)?.value.trim();
+    if(localV) map['sales_local_'+rate]=localV;
+    if(igstV)  map['sales_igst_'+rate]=igstV;
   });
   map.cgst=document.getElementById('g1-map-cgst').value.trim()||'CGST Output';
   map.sgst=document.getElementById('g1-map-sgst').value.trim()||'SGST Output';
@@ -1809,9 +1770,10 @@ function editG1Mapping(){
   document.getElementById('gstr1MappingBox').style.display='block';
 }
 
-function getG1SalesLedger(rate){
+function getG1SalesLedger(rate,isIGST){
   const map=window._g1LedgerMap||{};
-  return map['sales_'+rate]||('Sales@'+rate+'%');
+  if(isIGST) return map['sales_igst_'+rate]||('Interstate Sales@'+rate+'%');
+  return map['sales_local_'+rate]||map['sales_'+rate]||('Sales@'+rate+'%');
 }
 function getG1TaxLedger(type){
   const map=window._g1LedgerMap||{};
@@ -1854,69 +1816,92 @@ function showG1PreviewTable(){
 function downloadG1XML(){
   if(!gstr1Records.length){showToast('Pehle file upload karo.');return;}
 
+  // --- MERGE same invoice number + same customer + same type into one voucher ---
+  const voucherMap=new Map();
+  for(const r of gstr1Records){
+    const key=r.invNo+'||'+(r.gstin||r.name)+'||'+r.type;
+    if(!voucherMap.has(key)){
+      voucherMap.set(key,{
+        gstin:r.gstin,name:r.name,invNo:r.invNo,invDt:r.invDt,type:r.type,
+        totalAmt:0,igst:0,cgst:0,sgst:0,
+        salesLines:[] // [{rate, taxable, isIGST}]
+      });
+    }
+    const v=voucherMap.get(key);
+    v.totalAmt+=r.total;
+    v.igst+=r.igst;
+    v.cgst+=r.cgst;
+    v.sgst+=r.sgst;
+    const isIGST=r.igst>0;
+    const existing=v.salesLines.find(l=>l.rate===r.gstRate&&l.isIGST===isIGST);
+    if(existing){existing.taxable+=r.taxable;}
+    else{v.salesLines.push({rate:r.gstRate,taxable:r.taxable,isIGST:isIGST});}
+  }
+
   let xml='<?xml version="1.0" encoding="UTF-8"?>\n<ENVELOPE>\n';
   xml+='<HEADER><TALLYREQUEST>Import Data</TALLYREQUEST></HEADER>\n<BODY>\n<IMPORTDATA>\n';
   xml+='<REQUESTDESC>\n<REPORTNAME>Vouchers</REPORTNAME>\n';
   xml+='<STATICVARIABLES><SVCURRENTCOMPANY></SVCURRENTCOMPANY></STATICVARIABLES>\n</REQUESTDESC>\n<REQUESTDATA>\n';
 
-  for(const r of gstr1Records){
-    const dt=tallyDate(r.invDt);
-    const isCredit=r.type.includes('Credit');
-    const isDebit=r.type.includes('Debit');
+  for(const [,v] of voucherMap){
+    const dt=tallyDate(v.invDt);
+    const isCredit=v.type.includes('Credit');
+    const isDebit=v.type.includes('Debit');
     const vt=isCredit?'Credit Note':isDebit?'Debit Note':'Sales';
 
-    const customerLedger=escX(getG1CustomerLedger(r));
-    const salesLedger=escX(getG1SalesLedger(r.gstRate));
+    const tempR={gstin:v.gstin,name:v.name};
+    const customerLedger=escX(getG1CustomerLedger(tempR));
     const cgstLedger=escX(getG1TaxLedger('cgst'));
     const sgstLedger=escX(getG1TaxLedger('sgst'));
     const igstLedger=escX(getG1TaxLedger('igst'));
 
-    // Sales: Customer Dr (+), Sales Cr (-), Tax Cr (-)
-    // Credit Note: Customer Cr (-), Sales Dr (+), Tax Dr (+)
-    const custAmt=isCredit?-r.total:r.total;
-    const salesAmt=isCredit?r.taxable:-r.taxable;
+    const custAmt=isCredit?-v.totalAmt:v.totalAmt;
     const taxSign=isCredit?1:-1;
 
     xml+=`<TALLYMESSAGE xmlns:UDF="TallyUDF">\n`;
     xml+=`<VOUCHER VCHTYPE="${escX(vt)}" ACTION="Create" OBJVIEW="Accounting Voucher View">\n`;
     xml+=`<DATE>${dt}</DATE>\n`;
-    xml+=`<GUID>akrg1-${dt}-${escX(r.invNo)}</GUID>\n`;
+    xml+=`<GUID>akrg1-${dt}-${escX(v.invNo)}</GUID>\n`;
     xml+=`<VOUCHERTYPENAME>${escX(vt)}</VOUCHERTYPENAME>\n`;
-    xml+=`<VOUCHERNUMBER>${escX(r.invNo)}</VOUCHERNUMBER>\n`;
-    xml+=`<REFERENCE>${escX(r.invNo)}</REFERENCE>\n`;
+    xml+=`<VOUCHERNUMBER>${escX(v.invNo)}</VOUCHERNUMBER>\n`;
+    xml+=`<REFERENCE>${escX(v.invNo)}</REFERENCE>\n`;
     xml+=`<PARTYLEDGERNAME>${customerLedger}</PARTYLEDGERNAME>\n`;
-    xml+=`<NARRATION>GSTR-1 | ${escX(r.type)} | GSTIN: ${escX(r.gstin||'B2C')} | ${escX(r.invNo)}</NARRATION>\n`;
+    xml+=`<NARRATION>GSTR-1 | ${escX(v.type)} | GSTIN: ${escX(v.gstin||'B2C')} | ${escX(v.invNo)}</NARRATION>\n`;
     xml+=`<ISINVOICE>Yes</ISINVOICE>\n`;
 
-    // Customer
+    // Customer (party) - single merged entry
     xml+=`<ALLLEDGERENTRIES.LIST>\n<LEDGERNAME>${customerLedger}</LEDGERNAME>\n`;
     xml+=`<ISDEEMEDPOSITIVE>${custAmt>0?'Yes':'No'}</ISDEEMEDPOSITIVE>\n`;
     xml+=`<ISPARTYLEDGER>Yes</ISPARTYLEDGER>\n<LEDGERFROMITEM>No</LEDGERFROMITEM>\n<REMOVEZEROENTRIES>No</REMOVEZEROENTRIES>\n`;
     xml+=`<AMOUNT>${fmt(-custAmt)}</AMOUNT>\n</ALLLEDGERENTRIES.LIST>\n`;
 
-    // Sales
-    xml+=`<ALLLEDGERENTRIES.LIST>\n<LEDGERNAME>${salesLedger}</LEDGERNAME>\n`;
-    xml+=`<ISDEEMEDPOSITIVE>${salesAmt>0?'Yes':'No'}</ISDEEMEDPOSITIVE>\n`;
-    xml+=`<ISPARTYLEDGER>No</ISPARTYLEDGER>\n<LEDGERFROMITEM>No</LEDGERFROMITEM>\n<REMOVEZEROENTRIES>No</REMOVEZEROENTRIES>\n`;
-    xml+=`<AMOUNT>${fmt(-salesAmt)}</AMOUNT>\n</ALLLEDGERENTRIES.LIST>\n`;
+    // Sales ledger entries - per rate per type (local/interstate)
+    for(const line of v.salesLines){
+      const salesLedger=escX(getG1SalesLedger(line.rate,line.isIGST));
+      const salesAmt=isCredit?line.taxable:-line.taxable;
+      xml+=`<ALLLEDGERENTRIES.LIST>\n<LEDGERNAME>${salesLedger}</LEDGERNAME>\n`;
+      xml+=`<ISDEEMEDPOSITIVE>${salesAmt>0?'Yes':'No'}</ISDEEMEDPOSITIVE>\n`;
+      xml+=`<ISPARTYLEDGER>No</ISPARTYLEDGER>\n<LEDGERFROMITEM>No</LEDGERFROMITEM>\n<REMOVEZEROENTRIES>No</REMOVEZEROENTRIES>\n`;
+      xml+=`<AMOUNT>${fmt(-salesAmt)}</AMOUNT>\n</ALLLEDGERENTRIES.LIST>\n`;
+    }
 
-    // IGST
-    if(r.igst>0){
-      const a=taxSign*r.igst;
+    // IGST (merged)
+    if(v.igst>0){
+      const a=taxSign*v.igst;
       xml+=`<ALLLEDGERENTRIES.LIST>\n<LEDGERNAME>${igstLedger}</LEDGERNAME>\n<GSTCLASS>Integrated Tax</GSTCLASS>\n`;
       xml+=`<ISDEEMEDPOSITIVE>${a>0?'Yes':'No'}</ISDEEMEDPOSITIVE>\n<ISPARTYLEDGER>No</ISPARTYLEDGER>\n<LEDGERFROMITEM>No</LEDGERFROMITEM>\n<REMOVEZEROENTRIES>No</REMOVEZEROENTRIES>\n`;
       xml+=`<AMOUNT>${fmt(-a)}</AMOUNT>\n</ALLLEDGERENTRIES.LIST>\n`;
     }
-    // CGST
-    if(r.cgst>0){
-      const a=taxSign*r.cgst;
+    // CGST (merged)
+    if(v.cgst>0){
+      const a=taxSign*v.cgst;
       xml+=`<ALLLEDGERENTRIES.LIST>\n<LEDGERNAME>${cgstLedger}</LEDGERNAME>\n<GSTCLASS>Central Tax</GSTCLASS>\n`;
       xml+=`<ISDEEMEDPOSITIVE>${a>0?'Yes':'No'}</ISDEEMEDPOSITIVE>\n<ISPARTYLEDGER>No</ISPARTYLEDGER>\n<LEDGERFROMITEM>No</LEDGERFROMITEM>\n<REMOVEZEROENTRIES>No</REMOVEZEROENTRIES>\n`;
       xml+=`<AMOUNT>${fmt(-a)}</AMOUNT>\n</ALLLEDGERENTRIES.LIST>\n`;
     }
-    // SGST
-    if(r.sgst>0){
-      const a=taxSign*r.sgst;
+    // SGST (merged)
+    if(v.sgst>0){
+      const a=taxSign*v.sgst;
       xml+=`<ALLLEDGERENTRIES.LIST>\n<LEDGERNAME>${sgstLedger}</LEDGERNAME>\n<GSTCLASS>State Tax</GSTCLASS>\n`;
       xml+=`<ISDEEMEDPOSITIVE>${a>0?'Yes':'No'}</ISDEEMEDPOSITIVE>\n<ISPARTYLEDGER>No</ISPARTYLEDGER>\n<LEDGERFROMITEM>No</LEDGERFROMITEM>\n<REMOVEZEROENTRIES>No</REMOVEZEROENTRIES>\n`;
       xml+=`<AMOUNT>${fmt(-a)}</AMOUNT>\n</ALLLEDGERENTRIES.LIST>\n`;
