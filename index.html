@@ -56,22 +56,46 @@ section{padding:4rem 5%;}
 .dl-card h4{font-size:0.86rem;font-weight:600;color:#1a3a6b;margin-bottom:0.2rem;}
 .dl-card p{font-size:0.77rem;color:#666;}
 .dl-card .dl-date{font-size:0.8rem;font-weight:600;color:#555;margin-top:0.4rem;}
-.calculator{background:#f4f6fa;}
-.calc-wrapper{max-width:580px;margin:0 auto;background:#fff;border-radius:12px;padding:2rem;border:1.5px solid #e0e6f0;}
-.calc-tabs{display:flex;margin-bottom:1.8rem;border:1.5px solid #e0e6f0;border-radius:8px;overflow:hidden;}
-.calc-tab{flex:1;padding:0.62rem;text-align:center;font-size:0.84rem;font-weight:600;cursor:pointer;background:#f4f6fa;color:#555;border:none;font-family:inherit;}
-.calc-tab.active{background:#1a3a6b;color:#fff;}
-.calc-panel{display:none;}
+.calculator{background:linear-gradient(135deg,#f0f4ff 0%,#f8f9ff 100%);}
+.calc-wrapper{max-width:700px;margin:0 auto;background:#fff;border-radius:16px;padding:0;border:1.5px solid #e0e6f0;box-shadow:0 4px 32px rgba(26,58,107,0.08);overflow:hidden;}
+.calc-tabs{display:flex;background:#f4f6fa;border-bottom:1.5px solid #e0e6f0;}
+.calc-tab{flex:1;padding:0.85rem 1rem;text-align:center;font-size:0.84rem;font-weight:700;cursor:pointer;background:transparent;color:#666;border:none;font-family:inherit;letter-spacing:0.02em;transition:all 0.2s;position:relative;}
+.calc-tab.active{background:#fff;color:#1a3a6b;box-shadow:none;}
+.calc-tab.active::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:2px;background:#e8a020;}
+.calc-panel{display:none;padding:1.8rem 2rem 2rem;}
 .calc-panel.active{display:block;}
-.calc-row{margin-bottom:0.9rem;}
-.calc-row label{display:block;font-size:0.8rem;font-weight:600;color:#333;margin-bottom:0.3rem;}
-.calc-row input,.calc-row select{width:100%;padding:0.62rem 1rem;border:1.5px solid #d0d9e8;border-radius:6px;font-size:0.88rem;font-family:inherit;background:#fff;color:#1a1a1a;outline:none;}
-.calc-row input:focus,.calc-row select:focus{border-color:#1a3a6b;}
-.calc-result{background:#1a3a6b;color:#fff;border-radius:8px;padding:1.2rem;margin-top:1rem;display:none;}
-.calc-result h4{font-size:0.78rem;color:rgba(255,255,255,0.7);margin-bottom:0.3rem;}
-.calc-result .big-num{font-size:1.5rem;font-weight:700;color:#e8a020;}
-.calc-result .breakdown{font-size:0.76rem;color:rgba(255,255,255,0.65);margin-top:0.5rem;line-height:1.9;white-space:pre-line;}
-.btn-calc{background:#e8a020;color:#1a3a6b;padding:0.75rem 2rem;border:none;border-radius:6px;font-size:0.9rem;font-weight:600;cursor:pointer;width:100%;font-family:inherit;margin-top:0.4rem;}
+.calc-row{margin-bottom:1rem;}
+.calc-row label{display:block;font-size:0.79rem;font-weight:700;color:#444;margin-bottom:0.35rem;letter-spacing:0.02em;text-transform:uppercase;}
+.calc-row input,.calc-row select{width:100%;padding:0.7rem 1rem;border:1.5px solid #d0d9e8;border-radius:8px;font-size:0.9rem;font-family:inherit;background:#fff;color:#1a1a1a;outline:none;transition:border-color 0.2s;box-sizing:border-box;}
+.calc-row input:focus,.calc-row select:focus{border-color:#1a3a6b;box-shadow:0 0 0 3px rgba(26,58,107,0.08);}
+.calc-2col{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.calc-toggle{display:flex;gap:0;border:1.5px solid #d0d9e8;border-radius:8px;overflow:hidden;margin-top:0;}
+.calc-toggle button{flex:1;padding:0.65rem;font-size:0.82rem;font-weight:600;cursor:pointer;background:#f4f6fa;color:#555;border:none;font-family:inherit;transition:all 0.15s;}
+.calc-toggle button.active{background:#1a3a6b;color:#fff;}
+.calc-result-new{margin-top:1.4rem;display:none;}
+.calc-summary{background:linear-gradient(135deg,#1a3a6b,#1e4d8c);border-radius:12px;padding:1.4rem 1.6rem;color:#fff;margin-bottom:1rem;}
+.calc-summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1rem;}
+.calc-sum-card{background:rgba(255,255,255,0.1);border-radius:8px;padding:0.8rem;text-align:center;}
+.calc-sum-card .val{font-size:1.1rem;font-weight:700;color:#e8a020;}
+.calc-sum-card .lbl{font-size:0.7rem;color:rgba(255,255,255,0.7);margin-top:0.2rem;}
+.calc-sum-total{font-size:1.8rem;font-weight:800;color:#e8a020;margin-top:0.3rem;}
+.calc-sum-label{font-size:0.75rem;color:rgba(255,255,255,0.65);}
+.slab-table{width:100%;border-collapse:collapse;font-size:0.82rem;border-radius:10px;overflow:hidden;border:1.5px solid #e0e6f0;}
+.slab-table th{background:#f4f6fa;color:#1a3a6b;font-weight:700;padding:0.6rem 0.8rem;text-align:left;font-size:0.75rem;text-transform:uppercase;}
+.slab-table td{padding:0.55rem 0.8rem;border-bottom:1px solid #f0f0f0;color:#333;}
+.slab-table tr.active-slab{background:#fff8e6;}
+.slab-table tr.active-slab td{font-weight:700;color:#1a3a6b;}
+.slab-table tr.tax-row td{color:#c0392b;font-weight:600;}
+.calc-regime-note{font-size:0.75rem;color:#888;margin-top:0.8rem;padding:0.6rem 0.8rem;background:#f8f9ff;border-radius:6px;border-left:3px solid #1a3a6b;}
+.gst-result-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:0.8rem;margin-bottom:1rem;}
+.gst-card{background:#f4f6fa;border-radius:10px;padding:1rem 1.1rem;border:1.5px solid #e0e6f0;}
+.gst-card.highlight{background:#1a3a6b;color:#fff;border-color:#1a3a6b;}
+.gst-card .g-label{font-size:0.72rem;font-weight:700;color:#888;text-transform:uppercase;margin-bottom:0.3rem;}
+.gst-card.highlight .g-label{color:rgba(255,255,255,0.6);}
+.gst-card .g-val{font-size:1.3rem;font-weight:800;color:#1a3a6b;}
+.gst-card.highlight .g-val{color:#e8a020;}
+.btn-calc{background:linear-gradient(135deg,#e8a020,#f0b030);color:#1a3a6b;padding:0.82rem 2rem;border:none;border-radius:8px;font-size:0.92rem;font-weight:700;cursor:pointer;width:100%;font-family:inherit;margin-top:0.6rem;letter-spacing:0.02em;transition:transform 0.1s,box-shadow 0.1s;box-shadow:0 2px 8px rgba(232,160,32,0.3);}
+.btn-calc:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(232,160,32,0.4);}
 .appointment{background:#fff;}
 .appt-wrapper{max-width:550px;margin:0 auto;background:#f4f6fa;border-radius:12px;padding:2rem;border:1.5px solid #e0e6f0;}
 .appt-wrapper h3{font-size:1.1rem;font-weight:700;color:#1a3a6b;margin-bottom:0.3rem;text-align:center;}
@@ -299,27 +323,110 @@ footer strong{color:#e8a020;}
 <section class="calculator" id="calculator">
   <div class="section-label">Free Tool</div>
   <h2 class="section-title">Tax Calculator</h2>
-  <p class="section-sub">Quick estimate of Income Tax or GST — for guidance only.</p>
+  <p class="section-sub">Income Tax aur GST ka quick estimate — FY 2025-26 ke updated slabs ke saath.</p>
   <div class="calc-wrapper">
     <div class="calc-tabs">
-      <button class="calc-tab active" onclick="switchCalc('itr',this)">Income Tax (ITR)</button>
-      <button class="calc-tab" onclick="switchCalc('gst',this)">GST Calculator</button>
+      <button class="calc-tab active" onclick="switchCalc('itr',this)">🧾 Income Tax (ITR)</button>
+      <button class="calc-tab" onclick="switchCalc('gst',this)">📦 GST Calculator</button>
     </div>
+
+    <!-- ITR Panel -->
     <div class="calc-panel active" id="panel-itr">
-      <div class="calc-row"><label>Annual Income (₹)</label><input type="number" id="itr-income" placeholder="e.g. 800000"/></div>
-      <div class="calc-row"><label>Tax Regime</label><select id="itr-regime" onchange="toggleDeduction()"><option value="new">New Regime (FY 2024-25)</option><option value="old">Old Regime</option></select></div>
-      <div class="calc-row" id="deduction-row" style="display:none;"><label>Total Deductions 80C/80D etc. (₹)</label><input type="number" id="itr-deduction" placeholder="e.g. 150000"/></div>
-      <button class="btn-calc" onclick="calcITR()">Calculate Tax →</button>
-      <div class="calc-result" id="itr-result"><h4>Estimated Tax Liability</h4><div class="big-num" id="itr-tax">₹0</div><div class="breakdown" id="itr-breakdown"></div></div>
+      <div class="calc-2col">
+        <div class="calc-row">
+          <label>Annual Income (₹)</label>
+          <input type="number" id="itr-income" placeholder="e.g. 1200000" oninput="calcITR()"/>
+        </div>
+        <div class="calc-row">
+          <label>Tax Regime</label>
+          <select id="itr-regime" onchange="toggleDeduction();calcITR()">
+            <option value="new">New Regime (FY 2025-26)</option>
+            <option value="old">Old Regime</option>
+          </select>
+        </div>
+      </div>
+      <div id="deduction-rows" style="display:none;">
+        <div class="calc-2col">
+          <div class="calc-row"><label>80C Deductions (₹)</label><input type="number" id="itr-80c" placeholder="max ₹1,50,000" oninput="calcITR()"/></div>
+          <div class="calc-row"><label>80D Health Insurance (₹)</label><input type="number" id="itr-80d" placeholder="max ₹25,000" oninput="calcITR()"/></div>
+        </div>
+        <div class="calc-2col">
+          <div class="calc-row"><label>HRA Exemption (₹)</label><input type="number" id="itr-hra" placeholder="if applicable" oninput="calcITR()"/></div>
+          <div class="calc-row"><label>Other Deductions (₹)</label><input type="number" id="itr-other" placeholder="NPS, 80G etc." oninput="calcITR()"/></div>
+        </div>
+      </div>
+      <div class="calc-result-new" id="itr-result">
+        <div class="calc-summary">
+          <div class="calc-sum-label" id="itr-regime-label">New Regime · FY 2025-26</div>
+          <div class="calc-sum-total" id="itr-tax">₹0</div>
+          <div class="calc-sum-label" style="margin-top:0.2rem;">Total Tax Payable (incl. 4% cess)</div>
+          <div class="calc-summary-grid">
+            <div class="calc-sum-card"><div class="val" id="itr-base-tax">₹0</div><div class="lbl">Base Tax</div></div>
+            <div class="calc-sum-card"><div class="val" id="itr-cess">₹0</div><div class="lbl">Cess (4%)</div></div>
+            <div class="calc-sum-card"><div class="val" id="itr-eff-rate">0%</div><div class="lbl">Effective Rate</div></div>
+          </div>
+        </div>
+        <table class="slab-table" id="itr-slab-table"></table>
+        <div class="calc-regime-note" id="itr-note"></div>
+      </div>
     </div>
+
+    <!-- GST Panel -->
     <div class="calc-panel" id="panel-gst">
-      <div class="calc-row"><label>Amount (₹)</label><input type="number" id="gst-amount" placeholder="e.g. 50000"/></div>
-      <div class="calc-row"><label>GST Rate</label><select id="gst-rate"><option value="5">5% — Essential goods, transport</option><option value="12">12% — Processed food, medicines</option><option value="18" selected>18% — Most services, electronics</option><option value="28">28% — Luxury goods, cars</option></select></div>
-      <div class="calc-row"><label>Amount Type</label><select id="gst-type"><option value="excl">Exclusive (add GST to amount)</option><option value="incl">Inclusive (GST already included)</option></select></div>
-      <button class="btn-calc" onclick="calcGST()">Calculate GST →</button>
-      <div class="calc-result" id="gst-result"><h4>GST Breakdown</h4><div class="big-num" id="gst-total">₹0</div><div class="breakdown" id="gst-breakdown"></div></div>
+      <div class="calc-2col">
+        <div class="calc-row">
+          <label>Amount (₹)</label>
+          <input type="number" id="gst-amount" placeholder="e.g. 50000" oninput="calcGST()"/>
+        </div>
+        <div class="calc-row">
+          <label>GST Rate</label>
+          <select id="gst-rate" onchange="calcGST()">
+            <option value="0">0% — Exempt goods</option>
+            <option value="0.1">0.1% — Diamonds, precious stones</option>
+            <option value="3">3% — Gold, silver jewellery</option>
+            <option value="5">5% — Essential goods, transport</option>
+            <option value="12">12% — Processed food, medicines</option>
+            <option value="18" selected>18% — Most services, electronics</option>
+            <option value="28">28% — Luxury goods, cars</option>
+            <option value="custom">Custom Rate...</option>
+          </select>
+        </div>
+      </div>
+      <div class="calc-row" id="gst-custom-row" style="display:none;">
+        <label>Custom GST Rate (%)</label>
+        <input type="number" id="gst-custom-rate" placeholder="e.g. 14" min="0" max="100" oninput="calcGST()"/>
+      </div>
+      <div class="calc-2col">
+        <div class="calc-row">
+          <label>Amount Type</label>
+          <div class="calc-toggle">
+            <button id="gst-excl-btn" class="active" onclick="setGSTType('excl')">Exclusive (+ GST)</button>
+            <button id="gst-incl-btn" onclick="setGSTType('incl')">Inclusive (incl. GST)</button>
+          </div>
+        </div>
+        <div class="calc-row">
+          <label>Transaction Type</label>
+          <div class="calc-toggle">
+            <button id="gst-local-btn" class="active" onclick="setGSTTxn('local')">🏠 Local</button>
+            <button id="gst-inter-btn" onclick="setGSTTxn('inter')">✈️ Interstate</button>
+          </div>
+        </div>
+      </div>
+      <div class="calc-result-new" id="gst-result">
+        <div class="gst-result-cards">
+          <div class="gst-card"><div class="g-label">Base Amount</div><div class="g-val" id="gst-base">₹0</div></div>
+          <div class="gst-card highlight"><div class="g-label">Total GST</div><div class="g-val" id="gst-total">₹0</div></div>
+          <div class="gst-card" id="gst-cgst-card"><div class="g-label" id="gst-tax1-lbl">CGST</div><div class="g-val" id="gst-tax1">₹0</div></div>
+          <div class="gst-card" id="gst-sgst-card"><div class="g-label" id="gst-tax2-lbl">SGST</div><div class="g-val" id="gst-tax2">₹0</div></div>
+        </div>
+        <div class="calc-summary" style="display:flex;align-items:center;justify-content:space-between;">
+          <div><div class="calc-sum-label">Final Invoice Amount</div><div class="calc-sum-total" id="gst-final">₹0</div></div>
+          <div style="text-align:right;"><div class="calc-sum-label" id="gst-rate-label">GST @ 18%</div><div style="font-size:0.78rem;color:rgba(255,255,255,0.55);margin-top:0.2rem;" id="gst-txn-label">Local (CGST + SGST)</div></div>
+        </div>
+      </div>
     </div>
   </div>
+  <p style="text-align:center;font-size:0.72rem;color:#aaa;margin-top:1rem;">* Estimate only. Consult a CA for exact liability.</p>
 </section>
 
 <section class="appointment" id="appointment">
@@ -947,51 +1054,115 @@ footer strong{color:#e8a020;}
 <script>
 function toggleNav(){document.getElementById('navLinks').classList.toggle('open');}
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),4000);}
-function toggleDeduction(){document.getElementById('deduction-row').style.display=document.getElementById('itr-regime').value==='old'?'block':'none';}
+let _gstType='excl', _gstTxn='local';
+function setGSTType(t){_gstType=t;document.getElementById('gst-excl-btn').classList.toggle('active',t==='excl');document.getElementById('gst-incl-btn').classList.toggle('active',t==='incl');calcGST();}
+function setGSTTxn(t){_gstTxn=t;document.getElementById('gst-local-btn').classList.toggle('active',t==='local');document.getElementById('gst-inter-btn').classList.toggle('active',t==='inter');calcGST();}
+function toggleDeduction(){
+  const isOld=document.getElementById('itr-regime').value==='old';
+  document.getElementById('deduction-rows').style.display=isOld?'block':'none';
+}
 function switchCalc(tab,btn){
   document.querySelectorAll('.calc-tab').forEach(b=>b.classList.remove('active'));
   document.querySelectorAll('.calc-panel').forEach(p=>p.classList.remove('active'));
   btn.classList.add('active');document.getElementById('panel-'+tab).classList.add('active');
 }
+function fmtINR(n){return '₹'+Math.round(n).toLocaleString('en-IN');}
 function calcITR(){
   const income=parseFloat(document.getElementById('itr-income').value)||0;
   const regime=document.getElementById('itr-regime').value;
-  const deduction=parseFloat(document.getElementById('itr-deduction').value)||0;
-  if(income<=0){showToast('Please enter your annual income.');return;}
-  let tax=0,breakdown='';
+  if(income<=0){document.getElementById('itr-result').style.display='none';return;}
+  let tax=0, taxable=0, slabs=[], note='', rebate=false;
   if(regime==='new'){
-    if(income<=300000)tax=0;
-    else if(income<=700000)tax=(income-300000)*0.05;
-    else if(income<=1000000)tax=20000+(income-700000)*0.10;
-    else if(income<=1200000)tax=50000+(income-1000000)*0.15;
-    else if(income<=1500000)tax=80000+(income-1200000)*0.20;
-    else tax=140000+(income-1500000)*0.30;
-    if(income<=700000)tax=0;
-    breakdown='Regime: New (FY 2024-25)\nTaxable Income: ₹'+income.toLocaleString('en-IN')+'\nRebate u/s 87A: '+(income<=700000?'Applied (nil tax)':'Not applicable');
+    // FY 2025-26 New Regime slabs (Budget 2025)
+    const stdDed=75000;
+    taxable=Math.max(0,income-stdDed);
+    slabs=[
+      {from:0,       to:400000,  rate:0,   label:'Up to ₹4L'},
+      {from:400000,  to:800000,  rate:5,   label:'₹4L – ₹8L'},
+      {from:800000,  to:1200000, rate:10,  label:'₹8L – ₹12L'},
+      {from:1200000, to:1600000, rate:15,  label:'₹12L – ₹16L'},
+      {from:1600000, to:2000000, rate:20,  label:'₹16L – ₹20L'},
+      {from:2000000, to:2400000, rate:25,  label:'₹20L – ₹24L'},
+      {from:2400000, to:Infinity,rate:30,  label:'Above ₹24L'},
+    ];
+    for(const s of slabs){
+      if(taxable>s.from) tax+=(Math.min(taxable,s.to===Infinity?taxable:s.to)-s.from)*s.rate/100;
+    }
+    // Rebate u/s 87A: if taxable ≤ ₹12L, full tax rebate
+    if(taxable<=1200000){tax=0;rebate=true;}
+    note='Standard Deduction ₹75,000 applied · Rebate u/s 87A: '+(rebate?'✅ Applied (nil tax upto ₹12L taxable income)':'❌ Not applicable');
+    document.getElementById('itr-regime-label').textContent='New Regime · FY 2025-26';
   } else {
-    const taxable=Math.max(0,income-deduction-50000);
-    if(taxable<=250000)tax=0;
-    else if(taxable<=500000)tax=(taxable-250000)*0.05;
-    else if(taxable<=1000000)tax=12500+(taxable-500000)*0.20;
-    else tax=112500+(taxable-1000000)*0.30;
-    if(taxable<=500000)tax=0;
-    breakdown='Regime: Old\nTaxable Income: ₹'+taxable.toLocaleString('en-IN')+'\nDeductions: ₹'+(deduction+50000).toLocaleString('en-IN')+'\nRebate u/s 87A: '+(taxable<=500000?'Applied (nil tax)':'Not applicable');
+    // Old Regime
+    const d80c=Math.min(parseFloat(document.getElementById('itr-80c').value)||0,150000);
+    const d80d=Math.min(parseFloat(document.getElementById('itr-80d').value)||0,25000);
+    const hra=parseFloat(document.getElementById('itr-hra').value)||0;
+    const other=parseFloat(document.getElementById('itr-other').value)||0;
+    const totalDed=50000+d80c+d80d+hra+other; // 50k standard deduction
+    taxable=Math.max(0,income-totalDed);
+    slabs=[
+      {from:0,      to:250000,  rate:0,  label:'Up to ₹2.5L'},
+      {from:250000, to:500000,  rate:5,  label:'₹2.5L – ₹5L'},
+      {from:500000, to:1000000, rate:20, label:'₹5L – ₹10L'},
+      {from:1000000,to:Infinity,rate:30, label:'Above ₹10L'},
+    ];
+    for(const s of slabs){
+      if(taxable>s.from) tax+=(Math.min(taxable,s.to===Infinity?taxable:s.to)-s.from)*s.rate/100;
+    }
+    if(taxable<=500000){tax=0;rebate=true;}
+    note='Std. Deduction ₹50,000 + 80C ₹'+d80c.toLocaleString('en-IN')+' + 80D ₹'+d80d.toLocaleString('en-IN')+(hra?' + HRA ₹'+hra.toLocaleString('en-IN'):'')+' · Total deductions: ₹'+totalDed.toLocaleString('en-IN')+'\nRebate u/s 87A: '+(rebate?'✅ Applied':'❌ Not applicable');
+    document.getElementById('itr-regime-label').textContent='Old Regime · FY 2025-26';
   }
-  const cess=tax*0.04;const total=tax+cess;
-  document.getElementById('itr-tax').textContent='₹'+Math.round(total).toLocaleString('en-IN');
-  document.getElementById('itr-breakdown').textContent=breakdown+'\nCess (4%): ₹'+Math.round(cess).toLocaleString('en-IN');
+  const cess=tax*0.04;
+  const total=tax+cess;
+  const effRate=income>0?(total/income*100):0;
+  document.getElementById('itr-tax').textContent=fmtINR(total);
+  document.getElementById('itr-base-tax').textContent=fmtINR(tax);
+  document.getElementById('itr-cess').textContent=fmtINR(cess);
+  document.getElementById('itr-eff-rate').textContent=effRate.toFixed(1)+'%';
+  document.getElementById('itr-note').textContent=note;
+  // Build slab table
+  let tbl='<thead><tr><th>Income Slab</th><th>Rate</th><th>Tax on this slab</th></tr></thead><tbody>';
+  for(const s of slabs){
+    if(taxable<=s.from) break;
+    const slabTax=(Math.min(taxable,s.to===Infinity?taxable:s.to)-s.from)*s.rate/100;
+    const isCurrent=taxable>s.from&&(s.to===Infinity||taxable<=s.to);
+    tbl+=`<tr class="${isCurrent?'active-slab':''}${slabTax>0?'':''}">`
+      +`<td>${s.label}</td><td>${s.rate}%</td><td class="${slabTax>0?'tax-row':''}">${slabTax>0?fmtINR(slabTax):'—'}</td></tr>`;
+  }
+  tbl+='</tbody>';
+  document.getElementById('itr-slab-table').innerHTML=tbl;
   document.getElementById('itr-result').style.display='block';
 }
 function calcGST(){
   const amt=parseFloat(document.getElementById('gst-amount').value)||0;
-  const rate=parseFloat(document.getElementById('gst-rate').value);
-  const type=document.getElementById('gst-type').value;
-  if(amt<=0){showToast('Please enter an amount.');return;}
+  const rateVal=document.getElementById('gst-rate').value;
+  document.getElementById('gst-custom-row').style.display=rateVal==='custom'?'block':'none';
+  const rate=rateVal==='custom'?(parseFloat(document.getElementById('gst-custom-rate').value)||0):parseFloat(rateVal);
+  if(amt<=0){document.getElementById('gst-result').style.display='none';return;}
   let base,gst,total;
-  if(type==='excl'){base=amt;gst=base*rate/100;total=base+gst;}
+  if(_gstType==='excl'){base=amt;gst=base*rate/100;total=base+gst;}
   else{total=amt;base=amt*100/(100+rate);gst=total-base;}
-  document.getElementById('gst-total').textContent='GST Amount: ₹'+Math.round(gst).toLocaleString('en-IN');
-  document.getElementById('gst-breakdown').textContent='Base Amount: ₹'+Math.round(base).toLocaleString('en-IN')+'\nCGST ('+rate/2+'%): ₹'+Math.round(gst/2).toLocaleString('en-IN')+'\nSGST ('+rate/2+'%): ₹'+Math.round(gst/2).toLocaleString('en-IN')+'\nTotal Amount: ₹'+Math.round(total).toLocaleString('en-IN');
+  const isInter=_gstTxn==='inter';
+  document.getElementById('gst-base').textContent=fmtINR(base);
+  document.getElementById('gst-total').textContent=fmtINR(gst);
+  document.getElementById('gst-final').textContent=fmtINR(total);
+  document.getElementById('gst-rate-label').textContent='GST @ '+rate+'%';
+  if(isInter){
+    document.getElementById('gst-tax1-lbl').textContent='IGST ('+rate+'%)';
+    document.getElementById('gst-tax1').textContent=fmtINR(gst);
+    document.getElementById('gst-tax2-lbl').textContent='CGST';
+    document.getElementById('gst-tax2').textContent='—';
+    document.getElementById('gst-sgst-card').style.display='none';
+    document.getElementById('gst-txn-label').textContent='Interstate (IGST only)';
+  } else {
+    document.getElementById('gst-tax1-lbl').textContent='CGST ('+(rate/2)+'%)';
+    document.getElementById('gst-tax1').textContent=fmtINR(gst/2);
+    document.getElementById('gst-tax2-lbl').textContent='SGST ('+(rate/2)+'%)';
+    document.getElementById('gst-tax2').textContent=fmtINR(gst/2);
+    document.getElementById('gst-sgst-card').style.display='';
+    document.getElementById('gst-txn-label').textContent='Local (CGST + SGST)';
+  }
   document.getElementById('gst-result').style.display='block';
 }
 function submitAppt(){
